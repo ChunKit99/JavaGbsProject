@@ -66,7 +66,7 @@ public class GymBookingManagement {
             if (cus == null) {// empty object
                 break;
             }
-            if (cus.getUsername() == usernameCheck) {
+            if (cus.getUsername() == usernameCheck) {//found the username
                 isExist = true;
                 break;
             }
