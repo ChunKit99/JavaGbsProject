@@ -51,8 +51,25 @@ public class GymBookingManagement {
      */
     public static boolean isValidPassword(String usernameCheck, String passwordCheck, int userType) {
         boolean isValid = false;
-
-        return isValid;
+		Account userLogin = null;
+		
+		if(isExistUsername(usernameCheck)) {//exist
+			if (userType == 1) {// get user type
+				userLogin = customer[findIndexCustomer(usernameCheck)];
+			} else {// admin
+				userLogin = admin;
+			}
+			if (userLogin.getUsername() == usernameCheck) {//check match password
+				if (userLogin.getPassword() == passwordCheck) {
+					isValid = true;
+				}
+			} else {// username correct but wrong passwd
+				System.out.println("Invalid password");
+			}
+		}else {//not exist
+			System.out.println("Invalid Username or User Type");
+		}
+		return isValid;
     }
 
     /**
