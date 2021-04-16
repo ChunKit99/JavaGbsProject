@@ -379,6 +379,34 @@ public class GymBookingManagement {
 		 * 
 		 * }
          */
+        int askMenu = 1;
+        
+        while(askMenu != 0){
+            System.out.println("Please select the option below."); 
+            System.out.println("1 = Add \n2 = Edit \n3 = View\n");
+            System.out.println("Option: ");
+            askMenu = input.nextInt();
+            switch (askMenu){
+                case 1://add booking
+                    System.out.println("\nAdd Booking:");
+                    addBooking();
+                    break;
+                case 2://edit booking
+                    System.out.println("\nEdit Booking:");
+                    editBooking();
+                    break;
+                case 3://view booking
+                    System.out.println("\nView Booking:");
+                    viewBooking();
+                    break;
+                case 0://exit
+                    System.out.println("\nExit Manage Gym Romm\n");
+                    askMenu = 0;
+                    break;
+                default:
+                    System.out.println("\nPlease only input the available option above!\n");
+            }
+        }
     }
 
     /**
