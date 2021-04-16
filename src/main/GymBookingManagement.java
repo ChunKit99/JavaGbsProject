@@ -181,7 +181,7 @@ public class GymBookingManagement {
         System.out.println("1 = Add Booking");
         System.out.println("2 = Edit/Delete Booking");
         System.out.println("3 = View Booking");
-        System.out.println("3 = View Personal detail");
+        System.out.println("4 = View Personal detail");
         System.out.println("0 = Log out");
     }
 
@@ -192,7 +192,7 @@ public class GymBookingManagement {
     public static void promptAdminMenu() {
         System.out.println("1 = Manage Gym Room");
         System.out.println("2 = Manage Time Slot");
-        System.out.println("23 = View All Booking");
+        System.out.println("3 = View All Booking");
         System.out.println("0 = Log out");
     }
 
