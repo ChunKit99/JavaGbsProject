@@ -51,25 +51,25 @@ public class GymBookingManagement {
      */
     public static boolean isValidPassword(String usernameCheck, String passwordCheck, int userType) {
         boolean isValid = false;
-		Account userLogin = null;
-		
-		if(isExistUsername(usernameCheck)) {//exist
-			if (userType == 1) {// get user type
-				userLogin = customer[findIndexCustomer(usernameCheck)];
-			} else {// admin
-				userLogin = admin;
-			}
-			if (userLogin.getUsername() == usernameCheck) {//check match password
-				if (userLogin.getPassword() == passwordCheck) {
-					isValid = true;
-				}
-			} else {// username correct but wrong passwd
-				System.out.println("Invalid password");
-			}
-		}else {//not exist
-			System.out.println("Invalid Username or User Type");
-		}
-		return isValid;
+        Account userLogin = null;
+
+        if (isExistUsername(usernameCheck)) {//exist
+            if (userType == 1) {// get user type
+                userLogin = customer[findIndexCustomer(usernameCheck)];
+            } else {// admin
+                userLogin = admin;
+            }
+            if (userLogin.getUsername() == usernameCheck) {//check match password
+                if (userLogin.getPassword() == passwordCheck) {
+                    isValid = true;
+                }
+            } else {// username correct but wrong passwd
+                System.out.println("Invalid password");
+            }
+        } else {//not exist
+            System.out.println("Invalid Username or User Type");
+        }
+        return isValid;
     }
 
     /**
@@ -181,7 +181,7 @@ public class GymBookingManagement {
         System.out.println("1 = Add Booking");
         System.out.println("2 = Edit/Delete Booking");
         System.out.println("3 = View Booking");
-        System.out.println("3 = View Personal detail");
+        System.out.println("4 = View Personal detail");
         System.out.println("0 = Log out");
     }
 
@@ -192,7 +192,7 @@ public class GymBookingManagement {
     public static void promptAdminMenu() {
         System.out.println("1 = Manage Gym Room");
         System.out.println("2 = Manage Time Slot");
-        System.out.println("23 = View All Booking");
+        System.out.println("3 = View All Booking");
         System.out.println("0 = Log out");
     }
 
@@ -233,14 +233,31 @@ public class GymBookingManagement {
      *
      */
     public static void login() {
+        String usernameInput;
+        String passwordInput;
+        int typeUser;
 
         System.out.println("Please Enter Username");
+        usernameInput = input.nextLine();
         System.out.println("Please Enter Password");
+        passwordInput = input.nextLine();
         System.out.println("Please Select User");
         System.out.println("1 = Customer");
         System.out.println("2 = Admin");
-        customerMenu();
-        adminMenu();
+        typeUser = Integer.parseInt(input.nextLine());//convert String to int
+
+        // check username password type
+        if (isValidPassword(usernameInput, passwordInput, typeUser)) {
+            if (typeUser == 1) {// customer
+                // into customer menu
+                customerMenu();
+            } else {// admin
+                // into admin menu
+                adminMenu();
+            }
+        } else {// fail to valid
+            System.out.println("Please Try Again");
+        }
     }
 
     /**
@@ -302,7 +319,7 @@ public class GymBookingManagement {
      */
     // add booking
     public static void addBooking() {
-        
+
     }
 
     /**
