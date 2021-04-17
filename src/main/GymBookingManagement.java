@@ -251,7 +251,7 @@ public class GymBookingManagement {
      */
     public static void main(String[] args) {
         initialize();
-        viewBooking();
+        
         int askMenu = 1;
         while (askMenu != 0) {
             promptMenu();
@@ -323,7 +323,35 @@ public class GymBookingManagement {
         // check valid of password, using do while repeat until valid
         // find empty object location of customer array, create new customer object
         // using the data
+        String newUserName;
+        String newPassword;
+        String newName;
+        String newEmail;
+        String newPhoneNumber;
+        String newGender;
         
+        System.out.println("Please Enter Username: ");
+        newUserName = input.nextLine();
+        
+        if (isExistUsername(newUserName)==true){
+             System.out.println("Username have been use, please change a username.");
+             register();
+             }
+        else if (isExistUsername(newUserName)==false){
+            System.out.println("Please Enter Password: ");
+            newPassword = input.nextLine();
+            System.out.println("Customer name: ");
+            newName = input.nextLine();
+            System.out.println("Customer email: ");
+            newEmail = input.nextLine();
+            System.out.println("Customer phone number: ");
+            newPhoneNumber = input.nextLine();
+            System.out.println("Customer gender: ");
+            newGender = input.nextLine();
+            int indexRegister = findNullObject(customer);
+            customer[indexRegister] = new Customer(newUserName, newPassword, newName, newEmail, newPhoneNumber, newGender);
+        
+    }
     }
 
     /**
@@ -375,6 +403,24 @@ public class GymBookingManagement {
      */
     // add booking
     public static void addBooking() {
+        int idGymRoom;
+        int idTimeSlot;
+        int indexGymRoom;
+        int indexTimeSlot;
+        
+        System.out.println("Gym Room to be choose: ");
+        viewGymRoom();
+        System.out.println("Please Enter Gym Room ID For Booking: ");
+        idGymRoom = input.nextInt(); 
+        
+        System.out.println("Time Slot to be choose: ");
+        viewTimeSlot();
+        System.out.println("Please Enter Time Slot For Booking: ");
+        idTimeSlot = input.nextInt();
+        
+        indexGymRoom = findIndexGymRoomList(idGymRoom);
+        indexTimeSlot = findIndexTimeSlotList(idTimeSlot);
+        bookingRecord[findNullObject(bookingRecord)] = new BookingGym(findLatestIDBooking(), usernameLogin, LocalDate.now(), gymRoomList[indexGymRoom],timeSlotList[indexTimeSlot]);
 
     }
 
@@ -400,7 +446,49 @@ public class GymBookingManagement {
      */
     // edit booking
     public static void editBooking() {
-
+        System.out.println("Current Booking:");
+        viewBooking();
+        System.out.println("Please Select Which Line To Edit:");
+        int ID = input.nextInt();
+        int indexToEdit = findIndexBookingRecord(ID);
+        bookingRecord[indexToEdit].setDate(LocalDate.now());
+        System.out.println("Please Select Which To Edit(1-Gym Room, 2-Time Slot, 3-Both :)");
+        int option = input.nextInt();
+        if (option == 1){
+            System.out.println("Your Choice: 1 - Gym Room");
+            System.out.println("Gym Room Option Have:");
+            viewGymRoom();
+            System.out.println("Please Enter New Gym Room ID: ");
+            int RoomID = input.nextInt();
+            bookingRecord[indexToEdit].setGymRoom(gymRoomList[findIndexGymRoomList(RoomID)]);
+            System.out.println("Your Choice Has Been Recorded.");
+        } 
+        else if (option == 2) {
+            System.out.println("Your Choice: 2 - Time Slot");
+            System.out.println("Time Slot Option Have:");
+            viewTimeSlot();
+            System.out.println("Please Enter New Time Slot ID: ");
+            int TimeID = input.nextInt();
+            bookingRecord[indexToEdit].setTimeSlot(timeSlotList[findIndexTimeSlotList(TimeID)]);
+            System.out.println("Your Choice Has Been Recorded.");
+        } 
+        else if (option == 3) {
+            System.out.println("Your Choice: 3 - Both");
+            System.out.println("Gym Room Option Have:");
+            viewGymRoom();
+            System.out.println("Please Enter New Gym Room ID: ");
+            int RoomID = input.nextInt();
+            bookingRecord[indexToEdit].setGymRoom(gymRoomList[findIndexGymRoomList(RoomID)]);
+            System.out.println("Time Slot Option Have:");
+            viewTimeSlot();
+            System.out.println("Please Enter New Time Slot ID: ");
+            int TimeID = input.nextInt();
+            bookingRecord[indexToEdit].setTimeSlot(timeSlotList[findIndexTimeSlotList(TimeID)]);
+            System.out.println("Your Choice Has Been Recorded.");
+        } 
+        else {
+            System.out.println("Invalid Option");
+        }
     }
 
     /**
@@ -428,6 +516,13 @@ public class GymBookingManagement {
      */
     // view Personal Detail
     public static void viewPersonalDetail() {
+        int index = findIndexCustomer(usernameLogin);
+        
+        System.out.println("Username: " + customer[index].getUsername());
+        System.out.println("Name: " + customer[index].getName());
+        System.out.println("Email: " + customer[index].getEmail());
+        System.out.println("Phone Number: " + customer[index].getPhoneNumber());
+        System.out.println("Gender: " + customer[index].getGender());
 
     }
 
@@ -585,13 +680,20 @@ public class GymBookingManagement {
 
     }
 
+    public static void viewTimeSlot() {
+
+    }
+
     /**
      * view all customer booking record in system arrange well the record
      *
      * @author LWC
      */
     public static void viewAllBooking() {
-
+         for (int i = 0; i < findNullObject(bookingRecord); i++) {
+                System.out.println("Customer Name" + "\t" + "Booking Date" + "\t" + "Gym Room ID" + "\t" + "Time Slot ID:");
+                System.out.println(bookingRecord[i].getCustomer() + "\t" + bookingRecord[i].getDate() + "\t" + bookingRecord[i].getGymRoom() + "\t" + bookingRecord[i].getTimeSlot()); 
+        }
     }
 
 }
