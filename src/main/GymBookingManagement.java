@@ -53,15 +53,14 @@ public class GymBookingManagement {
     public static boolean isValidPassword(String usernameCheck, String passwordCheck, int userType) {
         boolean isValid = false;
         Account userLogin = null;
-
         if (isExistUsername(usernameCheck)) {//exist
             if (userType == 1) {// get user type
                 userLogin = customer[findIndexCustomer(usernameCheck)];
             } else {// admin
                 userLogin = admin;
             }
-            if (userLogin.getUsername() == usernameCheck) {//check match password
-                if (userLogin.getPassword() == passwordCheck) {
+            if (userLogin.getUsername().equals(usernameCheck)) {//check match password
+                if (userLogin.getPassword().equals(passwordCheck)) {
                     isValid = true;
                 }
             } else {// username correct but wrong passwd
@@ -84,7 +83,8 @@ public class GymBookingManagement {
             if (cus == null) {// empty object
                 break;
             }
-            if (cus.getUsername() == usernameCheck) {//found the username
+            //s1.equals(s2)
+            if (cus.getUsername().equals(usernameCheck)) {//found the username
                 isExist = true;
                 break;
             }
@@ -101,7 +101,7 @@ public class GymBookingManagement {
     public static int findIndexCustomer(String username) {
         int index = 0;
         for (Customer cus : customer) {
-            if (cus.getUsername() == username) {
+            if (cus.getUsername().equals(username)) {
                 break;
             }
             index++;
@@ -256,7 +256,7 @@ public class GymBookingManagement {
         while (askMenu != 0) {
             promptMenu();
             askMenu = input.nextInt();
-
+            input.nextLine();//clear buffer
             switch (askMenu) {
                 case 1:// login
                     System.out.println("Login:");
@@ -374,10 +374,12 @@ public class GymBookingManagement {
      */
     // add booking
     public static void addBooking() {
-       
+
     }
-    /**find the latest id in booking record
-     * 
+
+    /**
+     * find the latest id in booking record
+     *
      * @author Liew Chun Kit
      */
     public static int findLatestIDBooking() {
@@ -397,7 +399,6 @@ public class GymBookingManagement {
      */
     // edit booking
     public static void editBooking() {
-
 
     }
 
@@ -426,7 +427,7 @@ public class GymBookingManagement {
      */
     // view Personal Detail
     public static void viewPersonalDetail() {
-        
+
     }
 
     /**
