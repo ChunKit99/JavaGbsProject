@@ -251,7 +251,7 @@ public class GymBookingManagement {
      */
     public static void main(String[] args) {
         initialize();
-        addBooking();
+        viewBooking();
         int askMenu = 1;
         while (askMenu != 0) {
             promptMenu();
@@ -419,7 +419,7 @@ public class GymBookingManagement {
      */
     // view booking
     public static void viewBooking() {
-
+        
     }
 
     /**
@@ -468,40 +468,40 @@ public class GymBookingManagement {
 
     /**
      *
-     * @author TYL base on user input option, do the add edit delete view add
+     * @author TYL 
+     * prompt user based on the input option, do the add, edit, delete, view and exit
      * promptManageGymRoom
      */
     // manage gym Room
     public static void manageGymRoom() {
-        /*
-		 * while(){ //new //view //edit
-		 * 
-		 * }
-         */
-        int askMenu = 1;
+        int option = 1;
 
-        while (askMenu != 0) {
+        while (option != 0) {
             System.out.println("Please select the option below.");
             System.out.println("1 = Add \n2 = Edit \n3 = View\n");
             System.out.println("Option: ");
-            askMenu = input.nextInt();
+            option = input.nextInt();
             input.nextLine();
-            switch (askMenu) {
-                case 1://add booking
+            switch (option) {
+                case 1://add gymRoom
                     System.out.println("\nAdd Booking:");
                     addGymRoom();
                     break;
-                case 2://edit booking
+                case 2://edit gymRoom
                     System.out.println("\nEdit Booking:");
-                    editBooking();
+                    editGymRoom();
                     break;
-                case 3://view booking
+                case 3://delete gymRoom
+                    System.out.println("\nEdit Booking:");
+                    deleteGymRoom();
+                    break;
+                case 4://view gymRoom
                     System.out.println("\nView Booking:");
-                    viewBooking();
+                    viewGymRoom();
                     break;
-                case 0://exit
-                    System.out.println("\nExit Manage Gym Romm\n");
-                    askMenu = 0;
+                case 0://exit manageGymRoom
+                    System.out.println("\nExit Manage Gym Room...\n");
+                    option = 0;
                     break;
                 default:
                     System.out.println("\nPlease only input the available option above!\n");
@@ -510,7 +510,16 @@ public class GymBookingManagement {
     }
 
     public static void addGymRoom() {
-
+        viewGymRoom();
+        System.out.println("Add Gym Room Detail...");
+        System.out.println("\nID: ");
+        int ID = input.nextInt();
+        String name = "Room " + input.nextInt();
+        System.out.println("Level ( Gold / Silver / Bronze ): ");
+        String level = input.nextLine();
+        gymRoomList[findNullObject(gymRoomList)] = new GymRoom(ID, name, level);
+        viewGymRoom();
+        System.out.println("\nSuccessful Added Gym Room!");
     }
 
     public static void editGymRoom() {
