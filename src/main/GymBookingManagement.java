@@ -336,6 +336,7 @@ public class GymBookingManagement {
         while (askMenu != 0) {
             promptCustomerMenu();
             askMenu = input.nextInt();
+            input.nextLine();
             switch (askMenu) {
                 case 1:// add
                     System.out.println("Add Booking:");
@@ -347,7 +348,7 @@ public class GymBookingManagement {
                     break;
                 case 3:// delete
                     System.out.println("Delete Booking:");
-                    editBooking();
+                    deleteBooking();
                     break;
                 case 4:// View
                     System.out.println("View Booking:");
@@ -440,6 +441,7 @@ public class GymBookingManagement {
         while (askMenu != 0) {
             promptAdminMenu();
             askMenu = input.nextInt();
+            input.nextLine();
             switch (askMenu) {
                 case 1:// manage gym Room
                     System.out.println("Manage Gym Room:");
@@ -483,6 +485,7 @@ public class GymBookingManagement {
             System.out.println("1 = Add \n2 = Edit \n3 = View\n");
             System.out.println("Option: ");
             askMenu = input.nextInt();
+            input.nextLine();
             switch (askMenu) {
                 case 1://add booking
                     System.out.println("\nAdd Booking:");
@@ -547,6 +550,7 @@ public class GymBookingManagement {
             System.out.println("1 = Add Time Slot\n 2 = Edit\n 3 = View \n 0 = Log Out");
             System.out.println("Your Option: ");
             askMenu = input.nextInt();
+            input.nextLine();
             switch (askMenu) {
                 case 1:// manage gym Room
                     System.out.println("Add New Time Slot:");
