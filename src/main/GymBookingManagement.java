@@ -38,7 +38,7 @@ public class GymBookingManagement {
 
         timeSlotList[0] = new TimeSlot(1, "0800", "1000");
         timeSlotList[1] = new TimeSlot(2, "1000", "1200");
-        timeSlotList[1] = new TimeSlot(3, "1400", "1600");
+        timeSlotList[2] = new TimeSlot(3, "1400", "1600");
 
         bookingRecord[0] = new BookingGym(1, "user1", LocalDate.now(), gymRoomList[0], timeSlotList[0]);
         bookingRecord[1] = new BookingGym(2, "user1", LocalDate.now().plusDays(1), gymRoomList[0], timeSlotList[0]);
@@ -323,7 +323,7 @@ public class GymBookingManagement {
         // check valid of password, using do while repeat until valid
         // find empty object location of customer array, create new customer object
         // using the data
-
+        
     }
 
     /**
