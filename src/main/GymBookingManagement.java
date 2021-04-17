@@ -376,7 +376,10 @@ public class GymBookingManagement {
     public static void addBooking() {
        
     }
-
+    /**find the latest id in booking record
+     * 
+     * @author Liew Chun Kit
+     */
     public static int findLatestIDBooking() {
         int id = 0;
         for (int i = 0; i < findNullObject(bookingRecord); i++) {
