@@ -19,6 +19,7 @@ public class GymBookingManagement {
     static GymRoom[] gymRoomList = new GymRoom[maxArrNum];
     static TimeSlot[] timeSlotList = new TimeSlot[maxArrNum];
     static String usernameLogin;//username for login success
+
     /**
      * create some default data
      *
@@ -116,7 +117,7 @@ public class GymBookingManagement {
      */
     public static int findIndexGymRoomList(int ID) {
         int index = 0;
-        for (int i = 0; i < findNullObejct(gymRoomList); i++) {
+        for (int i = 0; i < findNullObject(gymRoomList); i++) {
             if (gymRoomList[i].ID == ID) {
                 index = i;
                 break;
@@ -132,7 +133,7 @@ public class GymBookingManagement {
      */
     public static int findIndexTimeSlotList(int ID) {
         int index = 0;
-        for (int i = 0; i < findNullObejct(timeSlotList); i++) {
+        for (int i = 0; i < findNullObject(timeSlotList); i++) {
             if (timeSlotList[i].ID == ID) {
                 index = i;
                 break;
@@ -147,7 +148,7 @@ public class GymBookingManagement {
      *
      * @author Liew Chun Kit
      */
-    public static int findNullObejct(Object[] objCheck) {// use for check empty space array in object array
+    public static int findNullObject(Object[] objCheck) {// use for check empty space array in object array
         int num = 0;
         for (Object ob : objCheck) {
             if (ob == null) {
@@ -211,9 +212,10 @@ public class GymBookingManagement {
      */
     public static void promptCustomerMenu() {
         System.out.println("1 = Add Booking");
-        System.out.println("2 = Edit/Delete Booking");
-        System.out.println("3 = View Booking");
-        System.out.println("4 = View Personal detail");
+        System.out.println("2 = Edit Booking");
+        System.out.println("3 = Delete Booking");
+        System.out.println("4 = View Booking");
+        System.out.println("5 = View Personal detail");
         System.out.println("0 = Log out");
     }
 
@@ -282,7 +284,7 @@ public class GymBookingManagement {
         if (isValidPassword(usernameInput, passwordInput, typeUser)) {
             if (typeUser == 1) {// customer
                 // into customer menu
-                usernameLogin =  usernameInput;
+                usernameLogin = usernameInput;
                 customerMenu();
             } else {// admin
                 // into admin menu
@@ -324,14 +326,18 @@ public class GymBookingManagement {
                     addBooking();
                     break;
                 case 2:// edit
-                    System.out.println("Edit Delete Booking:");
+                    System.out.println("Edit Booking:");
                     editBooking();
                     break;
-                case 3:// View
+                case 3:// delete
+                    System.out.println("Delete Booking:");
+                    editBooking();
+                    break;
+                case 4:// View
                     System.out.println("View Booking:");
                     viewBooking();
                     break;
-                case 4:// personal
+                case 5:// personal
                     System.out.println("View Personal Detail:");
                     viewPersonalDetail();
                     break;
@@ -361,6 +367,15 @@ public class GymBookingManagement {
      */
     // edit or delete booking
     public static void editBooking() {
+        //newnewnew
+    }
+
+    /**
+     *
+     * @author TYL
+     */
+    // edit or delete booking
+    public static void deleteBooking() {
         //newnewnew
     }
 
@@ -430,16 +445,16 @@ public class GymBookingManagement {
 		 * }
          */
         int askMenu = 1;
-        
-        while(askMenu != 0){
-            System.out.println("Please select the option below."); 
+
+        while (askMenu != 0) {
+            System.out.println("Please select the option below.");
             System.out.println("1 = Add \n2 = Edit \n3 = View\n");
             System.out.println("Option: ");
             askMenu = input.nextInt();
-            switch (askMenu){
+            switch (askMenu) {
                 case 1://add booking
                     System.out.println("\nAdd Booking:");
-                    addBooking();
+                    addGymRoom();
                     break;
                 case 2://edit booking
                     System.out.println("\nEdit Booking:");
@@ -459,45 +474,71 @@ public class GymBookingManagement {
         }
     }
 
-    	/**
-	 * base on user input option, do the add edit delete view add
-	 * promptManageTimeSlot
-	 * 
-	 * @author KC
-	 */
-	// manage time slot
-	public static void manageTimeSlot() {
-            int askMenu = 1;
-		while (askMenu != 0) {
-                    System.out.println("Please Select The Option Below.");
-                    System.out.println("1 = Add Time Slot\n 2 = Edit\n 3 = View \n 0 = Log Out");
-                    System.out.println("Your Option: ");
-                        askMenu = input.nextInt();
-			switch (askMenu) {
-			case 1:// manage gym Room
-				System.out.println("Add New Time Slot:");
-				addBooking();
-				break;
-			case 2:// manage time slot
-				System.out.println("Edit Time Slot:");
-				editBooking();
-				break;
-                        case 3:// view all booking in system
-				System.out.println("View Time Slot");
-				viewBooking();
-				break;
-			case 0:// exit
-				System.out.println("Log out!");
-				askMenu = 0;
-				break;
-			default:
-				System.out.println("Please only input above");
-				break;
-			}
-		}
-	
-	}
-        
+    public static void addGymRoom() {
+
+    }
+
+    public static void editGymRoom() {
+
+    }
+
+    public static void deleteGymRoom() {
+
+    }
+
+    public static void deleteElementArrayCustomer(int indexDelete) {
+
+        Customer[] customerCopy = new Customer[customer.length];
+        for (int i = 0, j = 0; i < customer.length; i++) {
+            if (i != indexDelete) {
+                customerCopy[j++] = customer[i];
+            }
+        }
+        customer = customerCopy;
+    }
+
+    public static void viewGymRoom() {
+
+    }
+
+    /**
+     * base on user input option, do the add edit delete view add
+     * promptManageTimeSlot
+     *
+     * @author KC
+     */
+    // manage time slot
+    public static void manageTimeSlot() {
+        int askMenu = 1;
+        while (askMenu != 0) {
+            System.out.println("Please Select The Option Below.");
+            System.out.println("1 = Add Time Slot\n 2 = Edit\n 3 = View \n 0 = Log Out");
+            System.out.println("Your Option: ");
+            askMenu = input.nextInt();
+            switch (askMenu) {
+                case 1:// manage gym Room
+                    System.out.println("Add New Time Slot:");
+                    addBooking();
+                    break;
+                case 2:// manage time slot
+                    System.out.println("Edit Time Slot:");
+                    editBooking();
+                    break;
+                case 3:// view all booking in system
+                    System.out.println("View Time Slot");
+                    viewBooking();
+                    break;
+                case 0:// exit
+                    System.out.println("Exit!");
+                    askMenu = 0;
+                    break;
+                default:
+                    System.out.println("Please only input above");
+                    break;
+            }
+        }
+
+    }
 
     /**
      * view all customer booking record in system arrange well the record
