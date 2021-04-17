@@ -38,7 +38,7 @@ public class GymBookingManagement {
 
         timeSlotList[0] = new TimeSlot(1, "0800", "1000");
         timeSlotList[1] = new TimeSlot(2, "1000", "1200");
-        timeSlotList[1] = new TimeSlot(3, "1400", "1600");
+        timeSlotList[2] = new TimeSlot(3, "1400", "1600");
 
         bookingRecord[0] = new BookingGym(1, "user1", LocalDate.now(), gymRoomList[0], timeSlotList[0]);
         bookingRecord[1] = new BookingGym(2, "user1", LocalDate.now().plusDays(1), gymRoomList[0], timeSlotList[0]);
@@ -98,13 +98,14 @@ public class GymBookingManagement {
      *
      * @author Liew Chun Kit
      */
-    public static int findIndexCustomer(String username) {
+    public static int findIndexCustomer(String newUserName) {
         int index = 0;
         for (Customer cus : customer) {
-            if (cus.getUsername().equals(username)) {
+            if (cus.getUsername().equals(newUserName)) {
                 break;
             }
             index++;
+         
         }
         return index;
     }
@@ -251,7 +252,6 @@ public class GymBookingManagement {
      */
     public static void main(String[] args) {
         initialize();
-        addBooking();
         int askMenu = 1;
         while (askMenu != 0) {
             promptMenu();
@@ -322,10 +322,38 @@ public class GymBookingManagement {
         // check repeat of username, using do while repeat until valid
         // check valid of password, using do while repeat until valid
         // find empty object location of customer array, create new customer object
-        // using the data
-
-    }
-
+        // using the data        
+        String newUserName;
+        String newPassword;
+        String newName;
+        String newEmail;
+        String newPhoneNumber;
+        String newGender;
+        
+        System.out.println("Please Enter Username: ");
+        newUserName = input.nextLine();
+        
+        if (isExistUsername(newUserName)==true){
+             System.out.println("Username have been use, please change a username.");
+             register();
+             }
+        else if (isExistUsername(newUserName)==false){
+            System.out.println("Please Enter Password: ");
+            newPassword = input.nextLine();
+            System.out.println("Customer name: ");
+            newName = input.nextLine();
+            System.out.println("Customer email: ");
+            newEmail = input.nextLine();
+            System.out.println("Customer phone number: ");
+            newPhoneNumber = input.nextLine();
+            System.out.println("Customer gender: ");
+            newGender = input.nextLine();
+            int indexRegister = findNullObject(customer);
+            customer[indexRegister] = new Customer(newUserName, newPassword, newName, newEmail, newPhoneNumber, newGender);
+            }
+     }
+    
+        
     /**
      *
      * @author Liew Chun Kit
@@ -374,7 +402,28 @@ public class GymBookingManagement {
      */
     // add booking
     public static void addBooking() {
-
+        //prompt timeslot gymroom //viewGymRoom() viewTimeSlot()
+        //ask user select id for gymroom and timeslot
+        //findindexgymroomlist findindextieslotlist
+        int idGymRoom;
+        int idTimeSlot;
+        int indexGymRoom;
+        int indexTimeSlot;
+        
+        System.out.println("Gym Room to be choose: ");
+        viewGymRoom();
+        System.out.println("Please Enter Gym Room ID For Booking: ");
+        idGymRoom = input.nextInt(); 
+        
+        System.out.println("Time Slot to be choose: ");
+        viewTimeSlot();
+        System.out.println("Please Enter Time Slot For Booking: ");
+        idTimeSlot = input.nextInt();
+        
+        indexGymRoom = findIndexGymRoomList(idGymRoom);
+        indexTimeSlot = findIndexTimeSlotList(idTimeSlot);
+        bookingRecord[findNullObject(bookingRecord)] = new BookingGym(findLatestIDBooking(), usernameLogin, LocalDate.now(), gymRoomList[indexGymRoom],timeSlotList[indexTimeSlot]);
+        
     }
 
     /**
@@ -418,7 +467,7 @@ public class GymBookingManagement {
      */
     // view booking
     public static void viewBooking() {
-
+ 
     }
 
     /**
@@ -427,7 +476,13 @@ public class GymBookingManagement {
      */
     // view Personal Detail
     public static void viewPersonalDetail() {
-
+        int index = findIndexCustomer(usernameLogin);
+        
+        System.out.println("Username: " + customer[index].getUsername());
+        System.out.println("Name: " + customer[index].getName());
+        System.out.println("Email: " + customer[index].getEmail());
+        System.out.println("Phone Number: " + customer[index].getPhoneNumber());
+        System.out.println("Gender: " + customer[index].getGender());
     }
 
     /**
