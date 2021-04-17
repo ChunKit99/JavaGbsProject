@@ -38,7 +38,7 @@ public class GymBookingManagement {
 
         timeSlotList[0] = new TimeSlot(1, "0800", "1000");
         timeSlotList[1] = new TimeSlot(2, "1000", "1200");
-        timeSlotList[1] = new TimeSlot(3, "1400", "1600");
+        timeSlotList[2] = new TimeSlot(3, "1400", "1600");
 
         bookingRecord[0] = new BookingGym(1, "user1", LocalDate.now(), gymRoomList[0], timeSlotList[0]);
         bookingRecord[1] = new BookingGym(2, "user1", LocalDate.now().plusDays(1), gymRoomList[0], timeSlotList[0]);
@@ -322,7 +322,7 @@ public class GymBookingManagement {
         // check valid of password, using do while repeat until valid
         // find empty object location of customer array, create new customer object
         // using the data
-
+        
     }
 
     /**
@@ -335,6 +335,7 @@ public class GymBookingManagement {
         while (askMenu != 0) {
             promptCustomerMenu();
             askMenu = input.nextInt();
+            input.nextLine();
             switch (askMenu) {
                 case 1:// add
                     System.out.println("Add Booking:");
@@ -346,7 +347,7 @@ public class GymBookingManagement {
                     break;
                 case 3:// delete
                     System.out.println("Delete Booking:");
-                    editBooking();
+                    deleteBooking();
                     break;
                 case 4:// View
                     System.out.println("View Booking:");
@@ -489,6 +490,7 @@ public class GymBookingManagement {
         while (askMenu != 0) {
             promptAdminMenu();
             askMenu = input.nextInt();
+            input.nextLine();
             switch (askMenu) {
                 case 1:// manage gym Room
                     System.out.println("Manage Gym Room:");
@@ -532,6 +534,7 @@ public class GymBookingManagement {
             System.out.println("1 = Add \n2 = Edit \n3 = View\n");
             System.out.println("Option: ");
             askMenu = input.nextInt();
+            input.nextLine();
             switch (askMenu) {
                 case 1://add booking
                     System.out.println("\nAdd Booking:");
@@ -596,6 +599,7 @@ public class GymBookingManagement {
             System.out.println("1 = Add Time Slot\n 2 = Edit\n 3 = View \n 0 = Log Out");
             System.out.println("Your Option: ");
             askMenu = input.nextInt();
+            input.nextLine();
             switch (askMenu) {
                 case 1:// manage gym Room
                     System.out.println("Add New Time Slot:");
