@@ -392,7 +392,7 @@ public class GymBookingManagement {
      *
      * @author LWC
      */
-    // edit or delete booking
+    // edit booking
     public static void editBooking() {
 
 
@@ -402,7 +402,7 @@ public class GymBookingManagement {
      *
      * @author TYL
      */
-    // edit or delete booking
+    // delete booking
     public static void deleteBooking() {
         //newnewnew
     }
