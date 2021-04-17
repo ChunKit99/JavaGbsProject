@@ -458,16 +458,45 @@ public class GymBookingManagement {
         }
     }
 
-    /**
-     * base on user input option, do the add edit delete view add
-     * promptManageTimeSlot
-     *
-     * @author KC
-     */
-    // manage time slot
-    public static void manageTimeSlot() {
-
-    }
+    	/**
+	 * base on user input option, do the add edit delete view add
+	 * promptManageTimeSlot
+	 * 
+	 * @author KC
+	 */
+	// manage time slot
+	public static void manageTimeSlot() {
+            int askMenu = 1;
+		while (askMenu != 0) {
+                    System.out.println("Please Select The Option Below.");
+                    System.out.println("1 = Add Time Slot\n 2 = Edit\n 3 = View \n 0 = Log Out");
+                    System.out.println("Your Option: ");
+                        askMenu = input.nextInt();
+			switch (askMenu) {
+			case 1:// manage gym Room
+				System.out.println("Add New Time Slot:");
+				addBooking();
+				break;
+			case 2:// manage time slot
+				System.out.println("Edit Time Slot:");
+				editBooking();
+				break;
+                        case 3:// view all booking in system
+				System.out.println("View Time Slot");
+				viewBooking();
+				break;
+			case 0:// exit
+				System.out.println("Log out!");
+				askMenu = 0;
+				break;
+			default:
+				System.out.println("Please only input above");
+				break;
+			}
+		}
+	
+	}
+        
 
     /**
      * view all customer booking record in system arrange well the record
