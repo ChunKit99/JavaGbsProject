@@ -105,7 +105,6 @@ public class GymBookingManagement {
                 break;
             }
             index++;
-
         }
         return index;
     }
@@ -135,6 +134,22 @@ public class GymBookingManagement {
         int index = 0;
         for (int i = 0; i < findNullObject(timeSlotList); i++) {
             if (timeSlotList[i].ID == ID) {
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
+
+    /**
+     * find index of array base on id input
+     *
+     * @author Liew Chun Kit
+     */
+    public static int findIndexBookingRecord(int ID) {
+        int index = 0;
+        for (int i = 0; i < findNullObject(bookingRecord); i++) {
+            if (bookingRecord[i].ID == ID) {
                 index = i;
                 break;
             }
@@ -236,6 +251,7 @@ public class GymBookingManagement {
      */
     public static void main(String[] args) {
         initialize();
+        addBooking();
         int askMenu = 1;
         while (askMenu != 0) {
             promptMenu();
@@ -358,7 +374,18 @@ public class GymBookingManagement {
      */
     // add booking
     public static void addBooking() {
+       
+    }
 
+    public static int findLatestIDBooking() {
+        int id = 0;
+        for (int i = 0; i < findNullObject(bookingRecord); i++) {
+            if (bookingRecord[i].ID > id) {
+                id = bookingRecord[i].ID;
+            }
+        }
+        id++;
+        return id;
     }
 
     /**
@@ -367,7 +394,8 @@ public class GymBookingManagement {
      */
     // edit or delete booking
     public static void editBooking() {
-        //newnewnew
+
+
     }
 
     /**
@@ -395,7 +423,7 @@ public class GymBookingManagement {
      */
     // view Personal Detail
     public static void viewPersonalDetail() {
-
+        
     }
 
     /**
