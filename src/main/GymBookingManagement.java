@@ -110,6 +110,38 @@ public class GymBookingManagement {
     }
 
     /**
+     * find index of array base on id input
+     *
+     * @author Liew Chun Kit
+     */
+    public static int findIndexGymRoomList(int ID) {
+        int index = 0;
+        for (int i = 0; i < findNullObejct(gymRoomList); i++) {
+            if (gymRoomList[i].ID == ID) {
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
+
+    /**
+     * find index of array base on id input
+     *
+     * @author Liew Chun Kit
+     */
+    public static int findIndexTimeSlotList(int ID) {
+        int index = 0;
+        for (int i = 0; i < findNullObejct(timeSlotList); i++) {
+            if (timeSlotList[i].ID == ID) {
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
+
+    /**
      * can know current object array use until where, example use to add new
      * object into array, print and stop before empty object
      *
@@ -229,7 +261,7 @@ public class GymBookingManagement {
 
     /**
      *
-     * @author LCK
+     * @author Liew Chun Kit
      *
      */
     public static void login() {
