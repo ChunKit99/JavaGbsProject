@@ -18,7 +18,7 @@ public class GymBookingManagement {
     static BookingGym[] bookingRecord = new BookingGym[maxArrNum];
     static GymRoom[] gymRoomList = new GymRoom[maxArrNum];
     static TimeSlot[] timeSlotList = new TimeSlot[maxArrNum];
-
+    static String usernameLogin;//username for login success
     /**
      * create some default data
      *
@@ -282,6 +282,7 @@ public class GymBookingManagement {
         if (isValidPassword(usernameInput, passwordInput, typeUser)) {
             if (typeUser == 1) {// customer
                 // into customer menu
+                usernameLogin =  usernameInput;
                 customerMenu();
             } else {// admin
                 // into admin menu
