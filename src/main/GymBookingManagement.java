@@ -533,7 +533,14 @@ public class GymBookingManagement {
      */
     // view booking
     public static void viewBooking() {
-
+        for (int i = 0; i < findNullObject(bookingRecord); i++) {
+            if (bookingRecord[i].getCustomer().equals(usernameLogin)) {
+                System.out.println("Customer Name" + "\t" + "Booking Date" + "\t" + "Gym Room ID" + "\t" + "Time Slot ID:");
+                System.out.println(bookingRecord[i].getCustomer() + "\t" + bookingRecord[i].getDate() + "\t" + bookingRecord[i].getGymRoom() + "\t" + bookingRecord[i].getTimeSlot());
+            } else {
+                System.out.println("Error");
+            }
+        }
     }
 
     /**
@@ -588,7 +595,7 @@ public class GymBookingManagement {
         }
     }
 
-/**
+    /**
      *
      * @author TYL prompt user based on the input option, do the add, edit,
      * delete, view and exit promptManageGymRoom
@@ -655,7 +662,7 @@ public class GymBookingManagement {
         System.out.println("\nPlease select which section to edit (1 = Gym Room Name \t2 = Level \t3 = Both Name & Level): ");
         int option = input.nextInt();
 
-        while(option != 0){
+        while (option != 0) {
             if (option == 1) {
                 System.out.println("Edit Gym Room Name...\n");
                 /*int newID = gymRoomList[findIndexGymRoomList(ID)].ID;
@@ -664,14 +671,12 @@ public class GymBookingManagement {
                 String newName = input.nextLine();
                 //gymRoomList[editIndex].setName(gymRoomList[findIndexGymRoomList(newName)]);
                 gymRoomList[editIndex].setName(newName);
-            } 
-            else if (option == 2) {
+            } else if (option == 2) {
                 System.out.println("Delete Gym Room Level...\n");
                 System.out.println("Please enter new Gym Room Level: ");
                 String newLevel = input.nextLine();
                 gymRoomList[editIndex].setLevel(newLevel);
-            } 
-            else {
+            } else {
                 System.out.println("Error input option!\n");
                 option = 0;
             }
