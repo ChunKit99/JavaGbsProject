@@ -774,23 +774,28 @@ public class GymBookingManagement {
         int askMenu = 1;
         while (askMenu != 0) {
             System.out.println("Please Select The Option Below.");
-            System.out.println("1 = Add Time Slot\n 2 = Edit\n 3 = View \n 0 = Log Out");
+            System.out.println("1 = Add Time Slot\n 2 = Edit\n 3 = Delete\n 4 = View\n 0 = Log Out");
             System.out.println("Your Option: ");
             askMenu = input.nextInt();
             input.nextLine();
             switch (askMenu) {
                 case 1:// manage gym Room
                     System.out.println("Add New Time Slot:");
-                    addBooking();
+                    addTimeSlot();
                     break;
                 case 2:// manage time slot
                     System.out.println("Edit Time Slot:");
-                    editBooking();
+                    editTimeSlot();
                     break;
                 case 3:// view all booking in system
                     System.out.println("View Time Slot");
-                    viewBooking();
+                    deleteTimeSlot();
                     break;
+                case 4:// view all booking in system
+                    System.out.println("View Time Slot");
+                    viewTimeSlot();
+                    break;
+                    
                 case 0:// exit
                     System.out.println("Exit!");
                     askMenu = 0;
@@ -803,8 +808,101 @@ public class GymBookingManagement {
 
     }
 
-    public static void viewTimeSlot() {
+     /**
+     * base on user input option, do the add new Time Slot
+     *
+     *
+     * @author KC
+     */
+    // Add Time Slot
+        public static void addTimeSlot() {
+        System.out.println("Previous Time Slot Record.");
+        viewTimeSlot();
+        System.out.println("\nADD TIME SLOT");
+        System.out.println("\nID: ");
+        int ID = input.nextInt();
+        System.out.println("ADD TIME START");
+        String timestart = input.next();
+        System.out.println("ADD TIME END");
+        String timeend = input.next();
+        timeSlotList[findNullObject(timeSlotList)] = new TimeSlot(ID, timestart, timeend);
+        viewTimeSlot();
+        System.out.println("\nSuccessful Added New Time Slot!");
+    }
+        
+        
+     /**
+     * base on user input option, do the edit Time Slot
+     *
+     *
+     * @author KC
+     */
+    // Edit Time Slot
+        public static void editTimeSlot() {
+        System.out.println("Time Slot Record.");
+        viewTimeSlot();
+        System.out.println("\nEDIT TIME SLOT");
+        System.out.println("\nID: ");
+        int ID = input.nextInt();
+        System.out.println("EDIT TIME START");
+        String timestart = input.next();
+        System.out.println("EDIT TIME END");
+        String timeend = input.next();
+        timeSlotList[findIndexTimeSlotList(ID)] = new TimeSlot(ID, timestart, timeend);
+        viewTimeSlot();
+        System.out.println("\nSuccessful Edit Time Slot!");
 
+    }
+           
+        
+     /**
+     * base on user input option, do the delete Time Slot
+     *
+     *
+     * @author KC
+     */
+    // delete Time Slot
+        public static void deleteTimeSlot() {
+        System.out.println("\nWhich Time Slot need delete?");
+        viewTimeSlot();
+        System.out.println("\nEnter the Time Slot ID need to delete: ");
+        int ID = input.nextInt();
+        System.out.println(timeSlotList[findIndexTimeSlotList(ID)].ID + " " + timeSlotList[findIndexTimeSlotList(ID)].findNameTime());
+        System.out.println("\nDeleting Time Slot Detail...");
+        int deleteIndex = findIndexTimeSlotList(ID);
+        deleteElementArrayTimeSlot(deleteIndex);
+        System.out.println("Time Slot List After Delete ID " + deleteIndex + "\n");
+        viewTimeSlot();
+    }
+        
+        public static void deleteElementArrayTimeSlot(int deleteIndex) {
+        TimeSlot[] timeSlotListCopy = new TimeSlot[timeSlotList.length];
+        for (int i = 0, j = 0; i < timeSlotList.length; i++) {
+            if (i != deleteIndex) {
+                timeSlotListCopy[j++] = timeSlotList[i];
+            }
+        }
+            timeSlotList = timeSlotListCopy;
+    }
+    
+        
+     /**
+     * base on user input option, do the view Time Slot
+     *
+     *
+     * @author KC
+     */
+    // View Time Slot
+        public static void viewTimeSlot() {
+        System.out.println("\n");
+        System.out.println("\tTIME SLOT LIST");
+        System.out.println("--------------------------------------------");
+        System.out.println("ID \t\tTime Slot");
+        System.out.println("--------------------------------------------");
+        for (int i = 0; i < findNullObject(timeSlotList); i++) {
+            System.out.println(timeSlotList[i].ID + "\t\t" + timeSlotList[i].findNameTime());
+        }
+        System.out.println("--------------------------------------------\n");
     }
 
     /**
