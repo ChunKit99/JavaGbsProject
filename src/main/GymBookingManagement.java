@@ -49,6 +49,10 @@ public class GymBookingManagement {
      * Use for check password valid or not
      *
      * @author Liew Chun Kit
+     * @param usernameCheck
+     * @param passwordCheck
+     * @param userType
+     * @return
      */
     public static boolean isValidPassword(String usernameCheck, String passwordCheck, int userType) {
         boolean isValid = false;
@@ -62,17 +66,19 @@ public class GymBookingManagement {
             }
         } else {//admin user type
             userLogin = admin;
-            isExist = true;
+            if (userLogin.username.equals(usernameCheck)) {
+                isExist = true;
+            }
         }
         if (isExist) {
-            if (userLogin.getUsername().equals(usernameCheck)) {//check match password
+            if (userLogin.username.equals(usernameCheck)) {//check match password
                 if (userLogin.getPassword().equals(passwordCheck)) {
                     isValid = true;
-                } else {
+                } else {// username correct but wrong passwd
                     System.out.println("Invalid password");
                 }
             }
-        } else {// username correct but wrong passwd
+        } else {//not exist username
             System.out.println("Invalid Username or User Type");
 
         }
@@ -84,6 +90,8 @@ public class GymBookingManagement {
      * Use for check exist username for customer when register and login
      *
      * @author Liew Chun Kit
+     * @param usernameCheck
+     * @return
      */
     public static boolean isExistUsername(String usernameCheck) {
         boolean isExist = false;
@@ -105,6 +113,8 @@ public class GymBookingManagement {
      * username exist
      *
      * @author Liew Chun Kit
+     * @param username
+     * @return
      */
     public static int findIndexCustomer(String username) {
         int index = 0;
@@ -121,6 +131,8 @@ public class GymBookingManagement {
      * find index of array base on id input
      *
      * @author Liew Chun Kit
+     * @param ID
+     * @return
      */
     public static int findIndexGymRoomList(int ID) {
         int index = 0;
@@ -137,6 +149,8 @@ public class GymBookingManagement {
      * find index of array base on id input
      *
      * @author Liew Chun Kit
+     * @param ID
+     * @return
      */
     public static int findIndexTimeSlotList(int ID) {
         int index = 0;
@@ -153,6 +167,8 @@ public class GymBookingManagement {
      * find index of array base on id input
      *
      * @author Liew Chun Kit
+     * @param ID
+     * @return
      */
     public static int findIndexBookingRecord(int ID) {
         int index = 0;
@@ -170,6 +186,8 @@ public class GymBookingManagement {
      * object into array, print and stop before empty object
      *
      * @author Liew Chun Kit
+     * @param objCheck
+     * @return
      */
     public static int findNullObject(Object[] objCheck) {// use for check empty space array in object array
         int num = 0;
@@ -186,6 +204,7 @@ public class GymBookingManagement {
      * currently an idea only, provide for delete element in array
      *
      * @author Liew Chun Kit
+     * @param indexDelete
      */
     public static void deleteElementArray(int indexDelete) {
         // let say indexDelete = 1;
@@ -223,7 +242,7 @@ public class GymBookingManagement {
      * @author Liew Chun Kit
      */
     public static void promptMenu() {
-        System.out.println("Main Menu:");
+        System.out.println("\nMain Menu:");
         System.out.println("1 = Login");
         System.out.println("2 = Register");
         System.out.println("0 = Exit");
@@ -234,7 +253,7 @@ public class GymBookingManagement {
      * @author Liew Chun Kit
      */
     public static void promptCustomerMenu() {
-        System.out.println("1 = Add Booking");
+        System.out.println("\n1 = Add Booking");
         System.out.println("2 = Edit Booking");
         System.out.println("3 = Delete Booking");
         System.out.println("4 = View Booking");
@@ -247,7 +266,7 @@ public class GymBookingManagement {
      * @author Liew Chun Kit
      */
     public static void promptAdminMenu() {
-        System.out.println("1 = Manage Gym Room");
+        System.out.println("\n1 = Manage Gym Room");
         System.out.println("2 = Manage Time Slot");
         System.out.println("3 = View All Booking");
         System.out.println("0 = Log out");
@@ -256,6 +275,7 @@ public class GymBookingManagement {
     /**
      *
      * @author Liew Chun Kit
+     * @param args
      */
     public static void main(String[] args) {
         initialize();
@@ -264,6 +284,7 @@ public class GymBookingManagement {
             promptMenu();
             askMenu = input.nextInt();
             input.nextLine();//clear buffer
+            System.out.println();//an empty line
             switch (askMenu) {
                 case 1:// login
                     System.out.println("Login:");
@@ -278,7 +299,7 @@ public class GymBookingManagement {
                     askMenu = 0;
                     break;
                 default:
-                    System.out.println("Please only input above");
+                    System.out.println("Please only input above\n");
                     break;
             }
         }
@@ -314,7 +335,7 @@ public class GymBookingManagement {
                 adminMenu();
             }
         } else {// fail to valid
-            System.out.println("Please Try Again");
+            System.out.println("Please Try Again\n");
         }
     }
 
@@ -371,6 +392,7 @@ public class GymBookingManagement {
             promptCustomerMenu();
             askMenu = input.nextInt();
             input.nextLine();
+            System.out.println();//an empty line
             switch (askMenu) {
                 case 1:// add
                     System.out.println("Add Booking:");
@@ -434,6 +456,7 @@ public class GymBookingManagement {
      * find the latest id in booking record
      *
      * @author Liew Chun Kit
+     * @return
      */
     public static int findLatestIDBooking() {
         int id = 0;
@@ -540,6 +563,7 @@ public class GymBookingManagement {
             promptAdminMenu();
             askMenu = input.nextInt();
             input.nextLine();
+            System.out.println();//an empty line
             switch (askMenu) {
                 case 1:// manage gym Room
                     System.out.println("Manage Gym Room:");
@@ -579,6 +603,7 @@ public class GymBookingManagement {
             System.out.println("Option: ");
             option = input.nextInt();
             input.nextLine();
+            System.out.println();//an empty line
             switch (option) {
                 case 1://add gymRoom
                     System.out.println("\nAdd Booking:");
@@ -657,6 +682,7 @@ public class GymBookingManagement {
             System.out.println("Your Option: ");
             askMenu = input.nextInt();
             input.nextLine();
+            System.out.println();//an empty line
             switch (askMenu) {
                 case 1:// manage gym Room
                     System.out.println("Add New Time Slot:");
@@ -675,7 +701,7 @@ public class GymBookingManagement {
                     askMenu = 0;
                     break;
                 default:
-                    System.out.println("Please only input above");
+                    System.out.println("Please only input above\n");
                     break;
             }
         }
