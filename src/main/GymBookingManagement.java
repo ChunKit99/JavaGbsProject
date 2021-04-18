@@ -677,54 +677,59 @@ public class GymBookingManagement {
     }
 
     public static void editGymRoom() {
-        System.out.println("\nWhich Gym Room need to edit?");
+        System.out.println("\nWhich Gym Room need to edit?\n");
         viewGymRoom();
-        System.out.println("\nEnter the Gym Room ID need to edit: ");
+        System.out.println("Enter the Gym Room ID need to edit: ");
         int ID = input.nextInt();
-        System.out.println("ID: " + gymRoomList[findIndexGymRoomList(ID)].ID + "\tNAME: " + gymRoomList[findIndexGymRoomList(ID)].getName() + "\tLEVEL: " + gymRoomList[findIndexGymRoomList(ID)].getLevel());
-        System.out.println("\nEditing Gym Room Detail...");
-        int editIndex = findIndexGymRoomList(ID);
-        System.out.println("\nPlease select which section to edit (1 = Gym Room Name \t2 = Level \t3 = Both Name & Level): ");
-        int option = input.nextInt();
         input.nextLine();
+        if (ID == gymRoomList[findIndexGymRoomList(ID)].ID/* == ID*/) {
+            System.out.println("ID: " + gymRoomList[findIndexGymRoomList(ID)].ID + "\tNAME: " + gymRoomList[findIndexGymRoomList(ID)].getName() + "\tLEVEL: " + gymRoomList[findIndexGymRoomList(ID)].getLevel());
+            System.out.println("\nEditing Gym Room Detail...");
+            int editIndex = findIndexGymRoomList(ID);
 
-        while (option != 0) {
-            if (option == 1) {
-                System.out.println("Edit Gym Room Name...\n");
-                System.out.println("Please enter new Gym Room Name: ");
-                System.out.println("Room Number: ");
-                String newName = "Room " + input.nextInt();
-                gymRoomList[editIndex].setName(newName);
-                option = 0;
-            } 
-            else if (option == 2) {
-                System.out.println("Edit Gym Room Level...\n");
-                System.out.println("Please enter new Gym Room Level: ");
-                System.out.println("Level: ");
-                String newLevel =input.nextLine();
-                gymRoomList[editIndex].setLevel(newLevel);
-                option = 0;
-            }
-            else if (option == 3){
-                System.out.println("Edit Gym Room Name...\n");
-                System.out.println("Please enter new Gym Room Name: ");
-                System.out.println("Room Number: ");
-                String newName = "Room " + input.nextInt();
+            int loop = 1;
+
+            while (loop != 0) {
+                System.out.println("\nPlease select which section to edit (1 = Gym Room Name / 2 = Level / 3 = Both Name & Level): ");
+                int option = input.nextInt();
                 input.nextLine();
-                gymRoomList[editIndex].setName(newName);
-                System.out.println("Edit Gym Room Level...\n");
-                System.out.println("Please enter new Gym Room Level: ");
-                System.out.println("Level: ");
-                String newLevel =input.nextLine();
-                gymRoomList[editIndex].setLevel(newLevel);
-                option = 0;
+
+                if (option == 1) {
+                    System.out.println("Edit Gym Room Name...\n");
+                    System.out.println("Please enter new Gym Room Name: ");
+                    System.out.println("Room Number: ");
+                    String newName = input.nextLine();
+                    gymRoomList[editIndex].setName(newName);
+                    loop = 0;
+                } else if (option == 2) {
+                    System.out.println("Edit Gym Room Level...\n");
+                    System.out.println("Please enter new Gym Room Level: ");
+                    System.out.println("Level: ");
+                    String newLevel = input.nextLine();
+                    gymRoomList[editIndex].setLevel(newLevel);
+                    loop = 0;
+                } else if (option == 3) {
+                    System.out.println("Edit Gym Room Name...\n");
+                    System.out.println("Please enter new Gym Room Name: ");
+                    System.out.println("Room Number: ");
+                    String newName = input.nextLine();
+                    input.nextLine();
+                    gymRoomList[editIndex].setName(newName);
+                    System.out.println("Edit Gym Room Level...\n");
+                    System.out.println("Please enter new Gym Room Level: ");
+                    System.out.println("Level: ");
+                    String newLevel = input.nextLine();
+                    gymRoomList[editIndex].setLevel(newLevel);
+                    loop = 0;
+                } else {
+                    System.out.println("Error input option! You will be exit Edit option!\n");
+                    loop = 0;
+                }
             }
-            else {
-                System.out.println("Error input option!\n");
-                option = 1;
-            }
+            viewGymRoom();
+        }else{
+            System.out.println("No such Gym Room exists! You will be exit Edit option!\n");
         }
-        viewGymRoom();
     }
 
     public static void deleteGymRoom() {
