@@ -603,7 +603,6 @@ public class GymBookingManagement {
             System.out.println("Option: ");
             option = input.nextInt();
             input.nextLine();
-            System.out.println();//an empty line
             switch (option) {
                 case 1://add gymRoom
                     System.out.println("\nAdd Booking:");
@@ -682,7 +681,6 @@ public class GymBookingManagement {
             System.out.println("Your Option: ");
             askMenu = input.nextInt();
             input.nextLine();
-            System.out.println();//an empty line
             switch (askMenu) {
                 case 1:// manage gym Room
                     System.out.println("Add New Time Slot:");
