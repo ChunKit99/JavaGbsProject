@@ -557,7 +557,7 @@ public class GymBookingManagement {
         for (int i = 0; i < findNullObject(bookingRecord); i++) {
             if (bookingRecord[i].getCustomer().equals(usernameLogin)) {
                 System.out.println("Customer Name" + "\t" + "Booking Date" + "\t" + "Gym Room ID" + "\t" + "Time Slot ID:");
-                System.out.println(bookingRecord[i].getCustomer() + "\t" + bookingRecord[i].getDate() + "\t" + bookingRecord[i].getGymRoom().ID + "\t" + bookingRecord[i].getTimeSlot().ID);
+                System.out.println(bookingRecord[i].getCustomer() + "\t" + bookingRecord[i].getDate() + "\t" + bookingRecord[i].getGymRoom() + "\t" + bookingRecord[i].getTimeSlot());
             } else {
                 System.out.println("Error");
             }
