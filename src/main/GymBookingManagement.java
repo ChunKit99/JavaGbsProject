@@ -477,7 +477,7 @@ public class GymBookingManagement {
     public static void editBooking() {
         System.out.println("Current Booking:");
         viewBooking();
-        System.out.println("Please Select Which Line To Edit:");
+        System.out.println("Please Select Which ID To Edit:");
         int ID = input.nextInt();
         int indexToEdit = findIndexBookingRecord(ID);
         bookingRecord[indexToEdit].setDate(LocalDate.now());
@@ -554,16 +554,14 @@ public class GymBookingManagement {
      */
     // view booking
     public static void viewBooking() {
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("\t\t\tBOOKING RECORD \t");
+        System.out.println("---------------------------------------------------------------------");
+        System.out.println("ID" + "\t" + "CUSTOMER NAME" + "\t" + "BOOKING DATE" + "\t" + "GYM ROOM ID" + "\t" + "TIME SLOT ID");
+        System.out.println("---------------------------------------------------------------------");
        for (int i = 0; i < findNullObject(bookingRecord); i++) {
             if (bookingRecord[i].getCustomer().equals(usernameLogin)) {
-                System.out.println("\n");
-                System.out.println("----------------------------------------------------------------------------------------------------");
-                System.out.println("\t BOOKING RECORD \t");
-                System.out.println("----------------------------------------------------------------------------------------------------");
-                System.out.println("ID" + "\t" + "CUSTOMER NAME" + "\t" + "BOOKING DATE" + "\t" + "GYM ROOM ID" + "\t" + "TIME SLOT ID:");
-                System.out.println("----------------------------------------------------------------------------------------------------");
-                System.out.println(bookingRecord[i].ID + "\t" + bookingRecord[i].getCustomer() + "\t" + bookingRecord[i].getDate() + "\t" + bookingRecord[i].getGymRoom().ID + "\t" + bookingRecord[i].getTimeSlot().ID );
-                System.out.println("\n");
+                System.out.println(bookingRecord[i].ID + "\t" + bookingRecord[i].getCustomer() + "\t\t" + bookingRecord[i].getDate() + "\t    " + bookingRecord[i].getGymRoom().ID + "\t\t    " + bookingRecord[i].getTimeSlot().ID );
             }
         }
     }
@@ -815,15 +813,13 @@ public class GymBookingManagement {
      * @author LWC
      */
     public static void viewAllBooking() {
-        for (int i = 0; i < findNullObject(bookingRecord); i++) {
-            System.out.println("\n");
-                System.out.println("----------------------------------------------------------------------------------------------------");
-                System.out.println("\t BOOKING RECORD \t");
-                System.out.println("----------------------------------------------------------------------------------------------------");
-                System.out.println("ID" + "\t" + "CUSTOMER NAME" + "\t" + "BOOKING DATE" + "\t" + "GYM ROOM ID" + "\t" + "TIME SLOT ID:");
-                System.out.println("----------------------------------------------------------------------------------------------------");
-                System.out.println(bookingRecord[i].ID + "\t" + bookingRecord[i].getCustomer() + "\t" + bookingRecord[i].getDate() + "\t" + bookingRecord[i].getGymRoom().ID + "\t" + bookingRecord[i].getTimeSlot().ID );
-                System.out.println("\n");
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("\t\t\tBOOKING RECORD \t");
+        System.out.println("---------------------------------------------------------------------");
+        System.out.println("ID" + "\t" + "CUSTOMER NAME" + "\t" + "BOOKING DATE" + "\t" + "GYM ROOM ID" + "\t" + "TIME SLOT ID");
+        System.out.println("---------------------------------------------------------------------");
+       for (int i = 0; i < findNullObject(bookingRecord); i++) {
+            System.out.println(bookingRecord[i].ID + "\t" + bookingRecord[i].getCustomer() + "\t\t" + bookingRecord[i].getDate() + "\t    " + bookingRecord[i].getGymRoom().ID + "\t\t    " + bookingRecord[i].getTimeSlot().ID );
         }
     }
 
