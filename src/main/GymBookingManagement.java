@@ -40,9 +40,9 @@ public class GymBookingManagement {
         timeSlotList[1] = new TimeSlot(2, "1000", "1200");
         timeSlotList[2] = new TimeSlot(3, "1400", "1600");
 
-        bookingRecord[0] = new BookingGym(1, "user1", LocalDate.now(), gymRoomList[0], timeSlotList[0]);
-        bookingRecord[1] = new BookingGym(2, "user1", LocalDate.now().minusDays(2), gymRoomList[0], timeSlotList[0]);
-        bookingRecord[2] = new BookingGym(3, "user2", LocalDate.now().minusDays(1), gymRoomList[0], timeSlotList[0]);
+        bookingRecord[0] = new BookingGym(1, "user1", LocalDate.now().minusDays(2), gymRoomList[0], timeSlotList[0]);
+        bookingRecord[1] = new BookingGym(2, "user1", LocalDate.now().minusDays(1), gymRoomList[0], timeSlotList[0]);
+        bookingRecord[2] = new BookingGym(3, "user2", LocalDate.now(), gymRoomList[0], timeSlotList[0]);
     }
 
     /**
