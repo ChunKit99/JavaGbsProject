@@ -599,25 +599,25 @@ public class GymBookingManagement {
 
         while (option != 0) {
             System.out.println("Please select the option below.");
-            System.out.println("1 = Add \n2 = Edit \n3 = View\n");
+            System.out.println("1 = Add \n2 = Edit \n3 = Delete \n4 = View \n0 = Exit\n");
             System.out.println("Option: ");
             option = input.nextInt();
             input.nextLine();
             switch (option) {
                 case 1://add gymRoom
-                    System.out.println("\nAdd Booking:");
+                    System.out.println("\nAdd Gym Room:");
                     addGymRoom();
                     break;
                 case 2://edit gymRoom
-                    System.out.println("\nEdit Booking:");
+                    System.out.println("\nEdit Gym Room:");
                     editGymRoom();
                     break;
                 case 3://delete gymRoom
-                    System.out.println("\nEdit Booking:");
+                    System.out.println("\nDelete Gym Room:");
                     deleteGymRoom();
                     break;
                 case 4://view gymRoom
-                    System.out.println("\nView Booking:");
+                    System.out.println("\nView Gym Room:");
                     viewGymRoom();
                     break;
                 case 0://exit manageGymRoom
@@ -631,7 +631,7 @@ public class GymBookingManagement {
     }
 
     public static void addGymRoom() {
-        System.out.println("Previous Gym Room Record.\n");
+        System.out.println("Previous Gym Room Record.");
         viewGymRoom();
         System.out.println("\nAdding Gym Room Detail...");
         System.out.println("\nID: ");
@@ -645,7 +645,7 @@ public class GymBookingManagement {
     }
 
     public static void editGymRoom() {
-        System.out.println("\nWhich Gym Room need to edit?\n");
+        System.out.println("\nWhich Gym Room need to edit?");
         viewGymRoom();
         System.out.println("\nEnter the Gym Room ID need to edit: ");
         int ID = input.nextInt();
@@ -680,7 +680,7 @@ public class GymBookingManagement {
     }
 
     public static void deleteGymRoom() {
-        System.out.println("\nWhich Gym Room need delete?\n");
+        System.out.println("\nWhich Gym Room need delete?");
         viewGymRoom();
         System.out.println("\nEnter the Gym Room ID need to delete: ");
         int ID = input.nextInt();
@@ -707,12 +707,12 @@ public class GymBookingManagement {
         System.out.println("\n");
         System.out.println("\tGYM ROOM LIST");
         System.out.println("--------------------------------------------");
-        System.out.println("ID\t NAME\t LEVEL");
+        System.out.println("ID \tNAME \t\tLEVEL");
         System.out.println("--------------------------------------------");
         for (int i = 0; i < findNullObject(gymRoomList); i++) {
-            System.out.println(gymRoomList[i].ID + "\t" + gymRoomList[i].getName() + "\t" + gymRoomList[i].getLevel());
+            System.out.println(gymRoomList[i].ID + "\t" + gymRoomList[i].getName() + "\t\t" + gymRoomList[i].getLevel());
         }
-        System.out.println("--------------------------------------------");
+        System.out.println("--------------------------------------------\n");
     }
 
     /**
