@@ -52,23 +52,31 @@ public class GymBookingManagement {
      */
     public static boolean isValidPassword(String usernameCheck, String passwordCheck, int userType) {
         boolean isValid = false;
+        boolean isExist = false;
         Account userLogin = null;
-        if (isExistUsername(usernameCheck)) {//exist
-            if (userType == 1) {// get user type
+
+        if (userType == 1) {// get user type
+            if (isExistUsername(usernameCheck)) {//exist customer username
                 userLogin = customer[findIndexCustomer(usernameCheck)];
-            } else {// admin
-                userLogin = admin;
+                isExist = true;
             }
+        } else {//admin user type
+            userLogin = admin;
+            isExist = true;
+        }
+        if (isExist) {
             if (userLogin.getUsername().equals(usernameCheck)) {//check match password
                 if (userLogin.getPassword().equals(passwordCheck)) {
                     isValid = true;
+                } else {
+                    System.out.println("Invalid password");
                 }
-            } else {// username correct but wrong passwd
-                System.out.println("Invalid password");
             }
-        } else {//not exist
+        } else {// username correct but wrong passwd
             System.out.println("Invalid Username or User Type");
+
         }
+
         return isValid;
     }
 
@@ -251,7 +259,6 @@ public class GymBookingManagement {
      */
     public static void main(String[] args) {
         initialize();
-        viewAllBooking();
         int askMenu = 1;
         while (askMenu != 0) {
             promptMenu();
