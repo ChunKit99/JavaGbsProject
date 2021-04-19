@@ -700,7 +700,6 @@ public class GymBookingManagement {
     /**
      * add gym room
      *
-     * 
      * @author TYL
      */
     public static void addGymRoom() {
