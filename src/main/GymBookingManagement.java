@@ -95,15 +95,8 @@ public class GymBookingManagement {
      */
     public static boolean isExistUsername(String usernameCheck) {
         boolean isExist = false;
-        for (Customer cus : customer) {
-            if (cus == null) {// empty object
-                break;
-            }
-            //s1.equals(s2)
-            if (cus.getUsername().equals(usernameCheck)) {//found the username
-                isExist = true;
-                break;
-            }
+        if (customer[findIndexCustomer(usernameCheck)].username.equals(usernameCheck)) {
+            isExist = true;
         }
         return isExist;
     }
@@ -118,13 +111,58 @@ public class GymBookingManagement {
      */
     public static int findIndexCustomer(String username) {
         int index = 0;
-        for (Customer cus : customer) {
-            if (cus.getUsername().equals(username)) {
+        for (int i = 0; i < findNullObject(customer); i++) {
+            if (customer[i].username.equals(username)) {
+                index = i;
                 break;
             }
-            index++;
         }
         return index;
+    }
+
+    /**
+     * Use for check exist id
+     *
+     * @author Liew Chun Kit
+     * @param idCheck
+     * @return
+     */
+    public static boolean isExistGymRoomListID(int idCheck) {
+        boolean isExist = false;
+        if (idCheck == gymRoomList[findIndexGymRoomList(idCheck)].ID) {
+            isExist = true;
+        }
+        return isExist;
+    }
+
+    /**
+     * Use for check exist id
+     *
+     * @author Liew Chun Kit
+     * @param idCheck
+     * @return
+     */
+    public static boolean isExistTimeSlotListID(int idCheck) {
+        boolean isExist = false;
+        if (idCheck == timeSlotList[findIndexTimeSlotList(idCheck)].ID) {
+            isExist = true;
+        }
+        return isExist;
+    }
+
+    /**
+     * Use for check exist id
+     *
+     * @author Liew Chun Kit
+     * @param idCheck
+     * @return
+     */
+    public static boolean isExistBookingRecordID(int idCheck) {
+        boolean isExist = false;
+        if (idCheck == bookingRecord[findIndexBookingRecord(idCheck)].ID) {
+            isExist = true;
+        }
+        return isExist;
     }
 
     /**
@@ -198,43 +236,6 @@ public class GymBookingManagement {
             num++;
         }
         return num;
-    }
-
-    /**
-     * currently an idea only, provide for delete element in array
-     *
-     * @author Liew Chun Kit
-     * @param indexDelete
-     */
-    public static void deleteElementArray(int indexDelete) {
-        // let say indexDelete = 1;
-        // index = 0, *1, 2, 3, 4
-        // value = 1, *2, 3, 4, 5
-        int[] oriNum = {1, 2, 3, 4, 5};
-        int[] objCopy = new int[oriNum.length];
-        // System.out.println("before :"+oriNum.length);
-        for (int i = 0, j = 0; i < oriNum.length; i++) {
-            if (i != indexDelete) {
-                objCopy[j++] = oriNum[i];
-            }
-        }
-        oriNum = objCopy;
-        // System.out.println("after :"+oriNum.length);
-        for (int p : oriNum) {
-            System.out.println(p);
-
-            /*
-			 * ;Object[] objCopy = new Object[ objOri.length];
-			 * 
-			 * for (int i = 0, j = 0; i < objOri.length; i++) {
-			 *  if (i != indexDelete) {
-			 *  objCopy[j++] = objOri[i]; 
-			 *  }
-			 * } 
-			 * objOri = objCopy
-			 * 
-             */
-        }
     }
 
     /**
@@ -445,11 +446,13 @@ public class GymBookingManagement {
         viewTimeSlot();
         System.out.println("Please Enter Time Slot For Booking: ");
         idTimeSlot = input.nextInt();
-
-        indexGymRoom = findIndexGymRoomList(idGymRoom);
-        indexTimeSlot = findIndexTimeSlotList(idTimeSlot);
-        bookingRecord[findNullObject(bookingRecord)] = new BookingGym(findLatestIDBooking(), usernameLogin, LocalDate.now(), gymRoomList[indexGymRoom], timeSlotList[indexTimeSlot]);
-
+        if (isExistGymRoomListID(idGymRoom) && isExistTimeSlotListID(idTimeSlot)) {
+            indexGymRoom = findIndexGymRoomList(idGymRoom);
+            indexTimeSlot = findIndexTimeSlotList(idTimeSlot);
+            bookingRecord[findNullObject(bookingRecord)] = new BookingGym(findLatestIDBooking(), usernameLogin, LocalDate.now(), gymRoomList[indexGymRoom], timeSlotList[indexTimeSlot]);
+        } else {
+            System.out.println("No such Gym Room or Time Slot exists! You will be exit Add Booking option!\n");
+        }
     }
 
     /**
@@ -475,45 +478,68 @@ public class GymBookingManagement {
      */
     // edit booking
     public static void editBooking() {
+        boolean flag = true;//if true display edited list
         System.out.println("Current Booking:");
         viewBooking();
         System.out.println("Please Select Which ID To Edit:");
         int ID = input.nextInt();
         int indexToEdit = findIndexBookingRecord(ID);
-        bookingRecord[indexToEdit].setDate(LocalDate.now());
-        System.out.println("Please Select Which To Edit(1-Gym Room, 2-Time Slot, 3-Both :)");
-        int option = input.nextInt();
-        if (option == 1) {
-            System.out.println("Your Choice: 1 - Gym Room");
-            System.out.println("Gym Room Option Have:");
-            viewGymRoom();
-            System.out.println("Please Enter New Gym Room ID: ");
-            int RoomID = input.nextInt();
-            bookingRecord[indexToEdit].setGymRoom(gymRoomList[findIndexGymRoomList(RoomID)]);
-            System.out.println("Your Choice Has Been Recorded.");
-        } else if (option == 2) {
-            System.out.println("Your Choice: 2 - Time Slot");
-            System.out.println("Time Slot Option Have:");
-            viewTimeSlot();
-            System.out.println("Please Enter New Time Slot ID: ");
-            int TimeID = input.nextInt();
-            bookingRecord[indexToEdit].setTimeSlot(timeSlotList[findIndexTimeSlotList(TimeID)]);
-            System.out.println("Your Choice Has Been Recorded.");
-        } else if (option == 3) {
-            System.out.println("Your Choice: 3 - Both");
-            System.out.println("Gym Room Option Have:");
-            viewGymRoom();
-            System.out.println("Please Enter New Gym Room ID: ");
-            int RoomID = input.nextInt();
-            bookingRecord[indexToEdit].setGymRoom(gymRoomList[findIndexGymRoomList(RoomID)]);
-            System.out.println("Time Slot Option Have:");
-            viewTimeSlot();
-            System.out.println("Please Enter New Time Slot ID: ");
-            int TimeID = input.nextInt();
-            bookingRecord[indexToEdit].setTimeSlot(timeSlotList[findIndexTimeSlotList(TimeID)]);
-            System.out.println("Your Choice Has Been Recorded.");
+        if (isExistBookingRecordID(ID) && bookingRecord[indexToEdit].getCustomer().equals(usernameLogin)) {//match user and id to edit
+            System.out.println("Please Select Which To Edit(1-Gym Room, 2-Time Slot, 3-Both :)");
+            int option = input.nextInt();
+            if (option == 1) {
+                System.out.println("Your Choice: 1 - Gym Room");
+                System.out.println("Gym Room Option Have:");
+                viewGymRoom();
+                System.out.println("Please Enter New Gym Room ID: ");
+                int RoomID = input.nextInt();
+                if (isExistGymRoomListID(RoomID)) {
+                    bookingRecord[indexToEdit].setGymRoom(gymRoomList[findIndexGymRoomList(RoomID)]);
+                } else {
+                    System.out.println("No Such Gym Room Exists!");
+                }
+
+            } else if (option == 2) {
+                System.out.println("Your Choice: 2 - Time Slot");
+                System.out.println("Time Slot Option Have:");
+                viewTimeSlot();
+                System.out.println("Please Enter New Time Slot ID: ");
+                int TimeID = input.nextInt();
+                if (isExistTimeSlotListID(TimeID)) {
+                    bookingRecord[indexToEdit].setTimeSlot(timeSlotList[findIndexTimeSlotList(TimeID)]);
+                } else {
+                    System.out.println("No Such Time Slot Exists!");
+                }
+
+            } else if (option == 3) {
+                System.out.println("Your Choice: 3 - Both");
+                System.out.println("Gym Room Option Have:");
+                viewGymRoom();
+                System.out.println("Please Enter New Gym Room ID: ");
+                int RoomID = input.nextInt();
+                System.out.println("Time Slot Option Have:");
+                viewTimeSlot();
+                System.out.println("Please Enter New Time Slot ID: ");
+                int TimeID = input.nextInt();
+                if (isExistTimeSlotListID(TimeID) && isExistGymRoomListID(RoomID)) {
+                    bookingRecord[indexToEdit].setTimeSlot(timeSlotList[findIndexTimeSlotList(TimeID)]);
+                    bookingRecord[indexToEdit].setGymRoom(gymRoomList[findIndexGymRoomList(RoomID)]);
+                } else {
+                    System.out.println("No Such Gym Room OR Time Slot Exists!");
+                }
+            } else {
+                System.out.println("Invalid Option!");
+                flag = false;
+            }
+            if (flag) {
+                bookingRecord[indexToEdit].setDate(LocalDate.now());
+                System.out.println("Your Choice Has Been Recorded.");
+                viewBooking();
+            } else {
+                System.out.println("No Change To Your Record.");
+            }
         } else {
-            System.out.println("Invalid Option");
+            System.out.println("No such Booking Record exists! You will be exit Edit Booking option!\n");
         }
     }
 
@@ -526,22 +552,21 @@ public class GymBookingManagement {
         //newnewnew
         System.out.println("\nWhich Booking need delete?");
         viewBooking();
-        System.out.println("\nEnter the Bookking ID need to delete: ");
+        System.out.println("\nEnter the Booking ID need to delete: ");
         int ID = input.nextInt();
-        if (ID == bookingRecord[findIndexBookingRecord(ID)].ID) {
+        int deleteIndex = findIndexBookingRecord(ID);
+        if (isExistBookingRecordID(ID) && bookingRecord[deleteIndex].getCustomer().equals(usernameLogin)) {//exist id and match user login
             System.out.println("--------------------------------------------------------------------");
             System.out.println("\t\t\tBOOKING RECORD \t");
             System.out.println("---------------------------------------------------------------------");
             System.out.println("ID" + "\t" + "CUSTOMER NAME" + "\t" + "BOOKING DATE" + "\t" + "GYM ROOM ID" + "\t" + "TIME SLOT ID");
             System.out.println("---------------------------------------------------------------------");
-            System.out.println(bookingRecord[findIndexBookingRecord(ID)].ID + "\t" + usernameLogin + "\t\t" + bookingRecord[findIndexBookingRecord(ID)].getDate() + "\t    " + bookingRecord[findIndexBookingRecord(ID)].getGymRoom().ID + "\t\t    " + bookingRecord[findIndexBookingRecord(ID)].getTimeSlot().ID);
+            System.out.println(bookingRecord[deleteIndex].ID + "\t" + bookingRecord[deleteIndex].getCustomer() + "\t\t" + bookingRecord[deleteIndex].getDate() + "\t    " + bookingRecord[deleteIndex].getGymRoom().ID + "\t\t    " + bookingRecord[deleteIndex].getTimeSlot().ID);
             System.out.println("\nDeleting Booking Detail...");
-            //int deleteIndex = ID;
-            int deleteIndex = findIndexBookingRecord(ID);
             deleteElementArrayBooking(deleteIndex);
-            System.out.println("Booking Record After Delete ID " + (deleteIndex + 1) + "\n");
+            System.out.println("Booking Record After Delete ID " + (ID) + "\n");
             viewBooking();
-        }else{
+        } else {
             System.out.println("No such Booking Record exists! You will be exit Delete option!\n");
         }
     }
@@ -569,11 +594,12 @@ public class GymBookingManagement {
         System.out.println("---------------------------------------------------------------------");
         System.out.println("ID" + "\t" + "CUSTOMER NAME" + "\t" + "BOOKING DATE" + "\t" + "GYM ROOM ID" + "\t" + "TIME SLOT ID");
         System.out.println("---------------------------------------------------------------------");
-       for (int i = 0; i < findNullObject(bookingRecord); i++) {
+        for (int i = 0; i < findNullObject(bookingRecord); i++) {
             if (bookingRecord[i].getCustomer().equals(usernameLogin)) {
-                System.out.println(bookingRecord[i].ID + "\t" + bookingRecord[i].getCustomer() + "\t\t" + bookingRecord[i].getDate() + "\t    " + bookingRecord[i].getGymRoom().ID + "\t\t    " + bookingRecord[i].getTimeSlot().ID );
+                System.out.println(bookingRecord[i].ID + "\t" + bookingRecord[i].getCustomer() + "\t\t" + bookingRecord[i].getDate() + "\t    " + bookingRecord[i].getGymRoom().ID + "\t\t    " + bookingRecord[i].getTimeSlot().ID);
             }
         }
+        System.out.println("--------------------------------------------------------------------");
     }
 
     /**
@@ -629,9 +655,10 @@ public class GymBookingManagement {
     }
 
     /**
+     * prompt user based on the input option, do the add, edit, delete, view and
+     * exit promptManageGymRoom
      *
-     * @author TYL prompt user based on the input option, do the add, edit,
-     * delete, view and exit promptManageGymRoom
+     * @author TYL
      */
     // manage gym Room
     public static void manageGymRoom() {
@@ -670,6 +697,11 @@ public class GymBookingManagement {
         }
     }
 
+    /**
+     * add gym room
+     *
+     * @author TYL
+     */
     public static void addGymRoom() {
         System.out.println("Previous Gym Room Record.");
         viewGymRoom();
@@ -679,10 +711,10 @@ public class GymBookingManagement {
         input.nextLine();
         String name = null;
         String level = null;
-        
-        if (ID == gymRoomList[findIndexGymRoomList(ID)].ID) {
+
+        if (isExistGymRoomListID(ID)) {
             System.out.println("This Gym Room ID already exists! You will be exit Add option!\n");
-        }else{
+        } else {
             System.out.println("Name: ");
             name = input.nextLine();
             System.out.println("Level ( Gold / Silver / Bronze ): ");
@@ -693,76 +725,91 @@ public class GymBookingManagement {
         }
     }
 
+    /**
+     * edit gym room
+     *
+     * @author TYL
+     */
     public static void editGymRoom() {
         System.out.println("\nWhich Gym Room need to edit?\n");
         viewGymRoom();
         System.out.println("Enter the Gym Room ID need to edit: ");
         int ID = input.nextInt();
         input.nextLine();
-        if (ID == gymRoomList[findIndexGymRoomList(ID)].ID) {
-            System.out.println("ID: " + gymRoomList[findIndexGymRoomList(ID)].ID + "\tNAME: " + gymRoomList[findIndexGymRoomList(ID)].getName() + "\tLEVEL: " + gymRoomList[findIndexGymRoomList(ID)].getLevel());
+        int editIndex = findIndexGymRoomList(ID);
+        if (isExistGymRoomListID(ID)) {
+            System.out.println("ID: " + gymRoomList[editIndex].ID + "\tNAME: " + gymRoomList[editIndex].getName() + "\tLEVEL: " + gymRoomList[editIndex].getLevel());
             System.out.println("\nEditing Gym Room Detail...");
-            int editIndex = findIndexGymRoomList(ID);
 
-            int loop = 1;
+            boolean flag = true;//check valid input option and display edited list
 
-            while (loop != 0) {
-                System.out.println("\nPlease select which section to edit (1 = Gym Room Name / 2 = Level / 3 = Both Name & Level): ");
-                int option = input.nextInt();
-                input.nextLine();
+            System.out.println("\nPlease select which section to edit (1 = Gym Room Name / 2 = Level / 3 = Both Name & Level): ");
+            int option = input.nextInt();
+            input.nextLine();
 
-                if (option == 1) {
-                    System.out.println("Edit Gym Room Name...\n");
-                    System.out.println("Please enter new Gym Room Name: ");
-                    String newName = input.nextLine();
-                    gymRoomList[editIndex].setName(newName);
-                    loop = 0;
-                } else if (option == 2) {
-                    System.out.println("Edit Gym Room Level...\n");
-                    System.out.println("Please enter new Gym Room Level: ");
-                    System.out.println("Level: ");
-                    String newLevel = input.nextLine();
-                    gymRoomList[editIndex].setLevel(newLevel);
-                    loop = 0;
-                } else if (option == 3) {
-                    System.out.println("Edit Gym Room Name...\n");
-                    System.out.println("Please enter new Gym Room Name: ");
-                    String newName = input.nextLine();
-                    gymRoomList[editIndex].setName(newName);
-                    System.out.println("Edit Gym Room Level...\n");
-                    System.out.println("Please enter new Gym Room Level: ");
-                    System.out.println("Level: ");
-                    String newLevel = input.nextLine();
-                    gymRoomList[editIndex].setLevel(newLevel);
-                    loop = 0;
-                } else {
-                    System.out.println("Error input option! You will be exit Edit option!");
-                    loop = 1;
-                }
+            if (option == 1) {
+                System.out.println("Edit Gym Room Name...\n");
+                System.out.println("Please enter new Gym Room Name: ");
+                String newName = input.nextLine();
+                gymRoomList[editIndex].setName(newName);
+            } else if (option == 2) {
+                System.out.println("Edit Gym Room Level...\n");
+                System.out.println("Please enter new Gym Room Level: ");
+                System.out.println("Level: ");
+                String newLevel = input.nextLine();
+                gymRoomList[editIndex].setLevel(newLevel);
+            } else if (option == 3) {
+                System.out.println("Edit Gym Room Name...\n");
+                System.out.println("Please enter new Gym Room Name: ");
+                String newName = input.nextLine();
+                gymRoomList[editIndex].setName(newName);
+                System.out.println("Edit Gym Room Level...\n");
+                System.out.println("Please enter new Gym Room Level: ");
+                System.out.println("Level: ");
+                String newLevel = input.nextLine();
+                gymRoomList[editIndex].setLevel(newLevel);
+            } else {
+                System.out.println("Error input option! You will be exit Edit option!");
+                flag = false;
             }
-            viewGymRoom();
-        }else{
+            if (flag) {
+                System.out.println("Your Choice Has Been Recorded.");
+                viewGymRoom();
+            } else {
+                System.out.println("No Change To Your Record.");
+            }
+        } else {
             System.out.println("No such Gym Room exists! You will be exit Edit option!\n");
         }
     }
 
+    /**
+     * delete gym room
+     *
+     * @author TYL
+     */
     public static void deleteGymRoom() {
         System.out.println("\nWhich Gym Room need delete?");
         viewGymRoom();
         System.out.println("Enter the Gym Room ID need to delete: ");
         int ID = input.nextInt();
-        if (ID == gymRoomList[findIndexGymRoomList(ID)].ID) {
-            System.out.println("ID: " + gymRoomList[findIndexGymRoomList(ID)].ID + "\tNAME: " + gymRoomList[findIndexGymRoomList(ID)].getName() + "\tLEVEL: " + gymRoomList[findIndexGymRoomList(ID)].getLevel());
+        int deleteIndex = findIndexGymRoomList(ID);
+        if (isExistGymRoomListID(ID)) {
+            System.out.println("ID: " + gymRoomList[deleteIndex].ID + "\tNAME: " + gymRoomList[deleteIndex].getName() + "\tLEVEL: " + gymRoomList[deleteIndex].getLevel());
             System.out.println("\nDeleting Gym Room Detail...");
-            int deleteIndex = findIndexGymRoomList(ID);
             deleteElementArrayGymRoom(deleteIndex);
             System.out.println("Gym Room List After Delete ID " + deleteIndex + "\n");
             viewGymRoom();
-        }else{
+        } else {
             System.out.println("No such Gym Room exists! You will be exit Edit option!\n");
         }
     }
 
+    /**
+     * delete gym room element in array
+     *
+     * @author TYL
+     */
     public static void deleteElementArrayGymRoom(int deleteIndex) {
 
         GymRoom[] gymRoomListCopy = new GymRoom[gymRoomList.length];
@@ -774,6 +821,11 @@ public class GymBookingManagement {
         gymRoomList = gymRoomListCopy;
     }
 
+    /**
+     * view gym room
+     *
+     * @author TYL
+     */
     public static void viewGymRoom() {
         System.out.println("\tGYM ROOM LIST");
         System.out.println("--------------------------------------------");
@@ -796,7 +848,7 @@ public class GymBookingManagement {
         int askMenu = 1;
         while (askMenu != 0) {
             System.out.println("Please Select The Option Below.");
-            System.out.println(" 1 = Add Time Slot\n 2 = Edit\n 3 = Delete\n 4 = View\n 0 = Log Out");
+            System.out.println(" 1 = Add Time Slot\n 2 = Edit\n 3 = Delete\n 4 = View\n 0 = Exit");
             System.out.println("Your Option: ");
             askMenu = input.nextInt();
             input.nextLine();
@@ -809,15 +861,14 @@ public class GymBookingManagement {
                     System.out.println("Edit Time Slot:");
                     editTimeSlot();
                     break;
-                case 3:// view all booking in system
-                    System.out.println("View Time Slot");
+                case 3:// Delete time slot
+                    System.out.println("Delete Time Slot");
                     deleteTimeSlot();
                     break;
-                case 4:// view all booking in system
+                case 4:// view time slot
                     System.out.println("View Time Slot");
                     viewTimeSlot();
                     break;
-                    
                 case 0:// exit
                     System.out.println("Exit!");
                     askMenu = 0;
@@ -830,92 +881,110 @@ public class GymBookingManagement {
 
     }
 
-     /**
+    /**
      * base on user input option, do the add new Time Slot
      *
      *
      * @author KC
      */
     // Add Time Slot
-        public static void addTimeSlot() {
+    public static void addTimeSlot() {
         System.out.println("Previous Time Slot Record.");
         viewTimeSlot();
         System.out.println("\nADD TIME SLOT");
         System.out.println("\nID: ");
         int ID = input.nextInt();
-        System.out.println("ADD TIME START");
-        String timestart = input.next();
-        System.out.println("ADD TIME END");
-        String timeend = input.next();
-        timeSlotList[findNullObject(timeSlotList)] = new TimeSlot(ID, timestart, timeend);
-        viewTimeSlot();
-        System.out.println("\nSuccessful Added New Time Slot!");
+
+        if (isExistTimeSlotListID(ID)) {
+            System.out.println("This Time Slot ID already exists! You will be exit Add option!\n");
+        } else {
+            System.out.println("ADD TIME START");
+            String timestart = input.next();
+            System.out.println("ADD TIME END");
+            String timeend = input.next();
+            timeSlotList[findNullObject(timeSlotList)] = new TimeSlot(ID, timestart, timeend);
+            viewTimeSlot();
+            System.out.println("\nSuccessful Added New Time Slot!");
+        }
+
     }
-        
-        
-     /**
+
+    /**
      * base on user input option, do the edit Time Slot
      *
      *
      * @author KC
      */
     // Edit Time Slot
-        public static void editTimeSlot() {
+    public static void editTimeSlot() {
         System.out.println("Time Slot Record.");
         viewTimeSlot();
         System.out.println("\nEDIT TIME SLOT");
         System.out.println("\nID: ");
         int ID = input.nextInt();
-        System.out.println("EDIT TIME START");
-        String timestart = input.next();
-        System.out.println("EDIT TIME END");
-        String timeend = input.next();
-        timeSlotList[findIndexTimeSlotList(ID)] = new TimeSlot(ID, timestart, timeend);
-        viewTimeSlot();
-        System.out.println("\nSuccessful Edit Time Slot!");
+        int editIndex = findIndexTimeSlotList(ID);
+        if (isExistTimeSlotListID(ID)) {
+            System.out.println("EDIT TIME START");
+            String timestart = input.next();
+            System.out.println("EDIT TIME END");
+            String timeend = input.next();
+            timeSlotList[editIndex] = new TimeSlot(ID, timestart, timeend);
+            viewTimeSlot();
+            System.out.println("\nSuccessful Edit Time Slot!");
+        } else {
+            System.out.println("No such Time Slot exists! You will be exit Edit option!\n");
+        }
 
     }
-           
-        
-     /**
+
+    /**
      * base on user input option, do the delete Time Slot
      *
      *
      * @author KC
      */
     // delete Time Slot
-        public static void deleteTimeSlot() {
+    public static void deleteTimeSlot() {
         System.out.println("\nWhich Time Slot need delete?");
         viewTimeSlot();
         System.out.println("\nEnter the Time Slot ID need to delete: ");
         int ID = input.nextInt();
-        System.out.println(timeSlotList[findIndexTimeSlotList(ID)].ID + " " + timeSlotList[findIndexTimeSlotList(ID)].findNameTime());
-        System.out.println("\nDeleting Time Slot Detail...");
         int deleteIndex = findIndexTimeSlotList(ID);
-        deleteElementArrayTimeSlot(deleteIndex);
-        System.out.println("Time Slot List After Delete ID " + deleteIndex + "\n");
-        viewTimeSlot();
+        if (isExistTimeSlotListID(ID)) {
+            System.out.println(timeSlotList[deleteIndex].ID + " " + timeSlotList[deleteIndex].findNameTime());
+            System.out.println("\nDeleting Time Slot Detail...");
+            deleteElementArrayTimeSlot(deleteIndex);
+            System.out.println("Time Slot List After Delete ID " + deleteIndex + "\n");
+            viewTimeSlot();
+        } else {
+            System.out.println("No such Time Slot exists! You will be exit Delete option!\n");
+        }
+
     }
-        
-        public static void deleteElementArrayTimeSlot(int deleteIndex) {
+
+    /* 
+     *
+     *
+     * @author KC
+     */
+    public static void deleteElementArrayTimeSlot(int deleteIndex) {
         TimeSlot[] timeSlotListCopy = new TimeSlot[timeSlotList.length];
         for (int i = 0, j = 0; i < timeSlotList.length; i++) {
             if (i != deleteIndex) {
                 timeSlotListCopy[j++] = timeSlotList[i];
             }
         }
-            timeSlotList = timeSlotListCopy;
+        timeSlotList = timeSlotListCopy;
     }
-    
-        
-     /**
+
+    /**
      * base on user input option, do the view Time Slot
      *
      *
      * @author KC
      */
     // View Time Slot
-        public static void viewTimeSlot() {
+    public static void viewTimeSlot() {
         System.out.println("\n");
         System.out.println("\tTIME SLOT LIST");
         System.out.println("--------------------------------------------");
@@ -938,9 +1007,10 @@ public class GymBookingManagement {
         System.out.println("---------------------------------------------------------------------");
         System.out.println("ID" + "\t" + "CUSTOMER NAME" + "\t" + "BOOKING DATE" + "\t" + "GYM ROOM ID" + "\t" + "TIME SLOT ID");
         System.out.println("---------------------------------------------------------------------");
-       for (int i = 0; i < findNullObject(bookingRecord); i++) {
-            System.out.println(bookingRecord[i].ID + "\t" + bookingRecord[i].getCustomer() + "\t\t" + bookingRecord[i].getDate() + "\t    " + bookingRecord[i].getGymRoom().ID + "\t\t    " + bookingRecord[i].getTimeSlot().ID );
+        for (int i = 0; i < findNullObject(bookingRecord); i++) {
+            System.out.println(bookingRecord[i].ID + "\t" + bookingRecord[i].getCustomer() + "\t\t" + bookingRecord[i].getDate() + "\t    " + bookingRecord[i].getGymRoom().ID + "\t\t    " + bookingRecord[i].getTimeSlot().ID);
         }
+        System.out.println("--------------------------------------------------------------------");
     }
 
 }
