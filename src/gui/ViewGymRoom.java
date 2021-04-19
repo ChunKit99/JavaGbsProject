@@ -10,5 +10,5 @@ package gui;
  * @author Yong Liang
  */
 public class ViewGymRoom {
-    
+    int i = 0;
 }
