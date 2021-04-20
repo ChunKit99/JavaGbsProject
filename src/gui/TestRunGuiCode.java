@@ -6,13 +6,15 @@
 package gui;
 
 /**
+ * you can copy this code to other file for testing gui
  *
  * @author Liew Chun Kit
  */
 public class TestRunGuiCode {
-    public static void main(String[] args){
+
+    public static void main(String[] args) {
         Login loginFrame = new Login();
         loginFrame.setVisible(true);
-        //
+        //add your code to modify
     }
 }
