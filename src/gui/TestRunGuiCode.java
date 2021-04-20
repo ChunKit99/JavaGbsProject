@@ -6,8 +6,7 @@
 package gui;
 
 /**
- * you can copy this code to other file for testing gui, or direct edit but
- * after edit when commit do not include this file
+ * you can copy this code to other file for testing gui
  *
  * @author Liew Chun Kit
  */
