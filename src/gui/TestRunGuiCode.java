@@ -10,7 +10,7 @@ package gui;
  * @author Liew Chun Kit
  */
 public class TestRunGuiCode {
-    public static void main(){
+    public static void main(String[] args){
         Login loginFrame = new Login();
         loginFrame.setVisible(true);
         //
