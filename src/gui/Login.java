@@ -25,6 +25,13 @@ public class Login extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 300);
         setResizable(false);
+        
+        //let the frame open at center
+        Dimension objDimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int iCoordX = (objDimension.width - getWidth()) / 2;
+        int iCoordY = (objDimension.height - getHeight()) / 2;
+        setLocation(iCoordX, iCoordY);
+        
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -96,32 +103,34 @@ public class Login extends JFrame {
         centerPanel.setLayout(new GridLayout(5, 1, 0, -5));
 
     }
+
     private void loginButtonActionPerformed(ActionEvent evt) {
         JOptionPane.showMessageDialog(null, "Click Login");
-                //check repeat username
-                // if () {
-                // JOptionPane.showMessageDialog(null, "Username Repeat");
-                // }else{
-                // }
-                String username = userText.getText();
-                String password = new String(passText.getPassword());
-                String typeUser = buttonGroup.getSelection().getActionCommand();
-                JOptionPane.showMessageDialog(null,
-                        "Username enter: " + username
-                        + "\nPassword enter: " + password
-                        + "\n Type user selected: " + typeUser
-                );
-                //go to customer menu of admin menu
-                //if(){
-                //}else{
-                //}
+        //check repeat username
+        // if () {
+        // JOptionPane.showMessageDialog(null, "Username Repeat");
+        // }else{
+        // }
+        String username = userText.getText();
+        String password = new String(passText.getPassword());
+        String typeUser = buttonGroup.getSelection().getActionCommand();
+        JOptionPane.showMessageDialog(null,
+                "Username enter: " + username
+                + "\nPassword enter: " + password
+                + "\n Type user selected: " + typeUser
+        );
+        //go to customer menu of admin menu
+        //if(){
+        //}else{
+        //}
     }
+
     private void registerButtonActionPerformed(ActionEvent evt) {
         JOptionPane.showMessageDialog(null, "Click Register");
-                //change frame to Resgiter
-                Register frame = new Register();
-                setVisible(false);//unshow current frame
-                frame.setVisible(true);//show new frame
+        //change frame to Resgiter
+        Register frame = new Register();
+        setVisible(false);//unshow current frame
+        frame.setVisible(true);//show new frame
     }
 
 }

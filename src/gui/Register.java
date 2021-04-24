@@ -28,6 +28,13 @@ public class Register extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 400, 400);
         setResizable(false);
+        
+        //let the frame open at center
+        Dimension objDimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int iCoordX = (objDimension.width - getWidth()) / 2;
+        int iCoordY = (objDimension.height - getHeight()) / 2;
+        setLocation(iCoordX, iCoordY);
+        
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);

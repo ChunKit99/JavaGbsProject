@@ -1,4 +1,3 @@
-
 package gui;
 
 import java.awt.*;
@@ -7,7 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.*;
 
-/**this is a code for show how to use handling event
+/**
+ * this is a code for show how to use handling event
  *
  * @author Liew Chun Kit
  */
@@ -26,6 +26,13 @@ public class ExampleEventMayUse extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 400, 400);
         setResizable(false);
+
+        //let the frame open at center
+        Dimension objDimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int iCoordX = (objDimension.width - getWidth()) / 2;
+        int iCoordY = (objDimension.height - getHeight()) / 2;
+        setLocation(iCoordX, iCoordY);
+
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -105,7 +112,7 @@ public class ExampleEventMayUse extends JFrame {
     private void addButtonActionPerformed(ActionEvent evt) {
         String name = JOptionPane.showInputDialog(null, "Enter Name");
         comboBoxList.addItem(name);
-        
+
     }
 
     private void deleteButtonActionPerformed(ActionEvent evt) {
