@@ -1,236 +1,206 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.*;
+import javax.swing.border.*;
+
 /**
+ * the first start page of gui, can go to register page or login into system
  *
  * @author KC
  */
-public class ManageTimeSlot extends JFrame implements ActionListener {
+public class ManageTimeSlot extends JFrame {
 
-    JFrame mainFrame = new JFrame();
+    private JPanel contentPane;
+    private JTextField timeslotidText;
+    private JTextField timestartText, timeendText;
+    private JFrame mainFrame;
+    private final ButtonGroup buttonGroup = new ButtonGroup();
 
-    JPanel mainPanel = new JPanel();
-    JPanel centerPanel = new JPanel();
-    JLabel header;
-    JPanel addPanel = new JPanel();
-    JPanel editPanel = new JPanel();
-    JPanel deletePanel = new JPanel();
-    JPanel viewPanel = new JPanel();
-    JPanel exitPanel = new JPanel();
-
-    JButton addButton;
-    JButton editButton;
-    JButton deleteButton;
-    JButton viewButton;
-    JButton exitButton;
-    
-    JTextField tf1,tf2,tf3;  
-    JButton b1,b2; 
-
+    /**
+     * Create the Login frame.
+     */
     public ManageTimeSlot() {
-        header = new JLabel("Manage Time Slot");
-        addButton = new JButton("ADD");
-        editButton = new JButton("EDIT");
-        deleteButton = new JButton("DELETE");
-        viewButton = new JButton("VIEW");
-        exitButton = new JButton("EXIT");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(200, 200, 600, 300);
+        setResizable(false);
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+
+        JPanel centerPanel = new JPanel();
+        contentPane.setBounds(26, 36, 325, 226);
+        contentPane.setLayout(null);
+
+        JLabel title = new JLabel("Manage Time Slot");
+        title.setFont(new Font("Tahoma", Font.BOLD, 20));
+        title.setBounds(210, 14, 204, 29);
+        contentPane.add(title);
+
+        JLabel userLabel = new JLabel("Time Slot ID");
+        userLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        userLabel.setBounds(200, 70, 70, 15);
+        contentPane.add(userLabel);
         
-        mainFrame.setSize(400, 400);
-        mainFrame.setTitle("Manage Gym Room");
-
-        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        //mainPanel.setBackground(Color.white);
-        centerPanel.setBackground(Color.white);
-        addPanel.setBackground(Color.white);
-        editPanel.setBackground(Color.white);
-        deletePanel.setBackground(Color.white);
-        viewPanel.setBackground(Color.white);
-        exitPanel.setBackground(Color.white);
-
-        getContentPane().add(mainPanel, BorderLayout.CENTER);
-
-        mainPanel.setLayout(null);
-        centerPanel.setBounds(25, 35, 325, 300);
-        mainFrame.add(mainPanel);
-        mainPanel.add(centerPanel);
-        centerPanel.setLayout(new GridLayout(6, 1, 0, -5));
-
-        header.setHorizontalAlignment(SwingConstants.CENTER);
-        header.setFont(new Font("Times New Roman", Font.BOLD, 24));
-
-        centerPanel.add(header);
-
-        centerPanel.add(addPanel);
-        addPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-        addPanel.add(addButton);
-        addButton.setFont(new Font("Times New Roman", 0, 18));
-
-        centerPanel.add(editPanel);
-        editPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-        editPanel.add(editButton);
-        editButton.setFont(new Font("Times New Roman", 0, 18));
-
-        centerPanel.add(deletePanel);
-        deletePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-        deletePanel.add(deleteButton);
-        deleteButton.setFont(new Font("Times New Roman", 0, 18));
-
-        centerPanel.add(viewPanel);
-        viewPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-        viewPanel.add(viewButton);
-        viewButton.setFont(new Font("Times New Roman", 0, 18));
-
-        centerPanel.add(exitPanel);
-        exitPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-        exitPanel.add(exitButton);
-        exitButton.setFont(new Font("Times New Roman", 0, 18));
-
-        addButton.setActionCommand("Add");
-        addButton.addActionListener(this);
-
-        /*setResizable(false);
-        setVisible(false);
-        setResizable(false);*/
-        mainFrame.setResizable(true);
-        mainFrame.setVisible(true);
-        mainFrame.setResizable(false);
+        String timeslotID[] = {"1","2","3"};
+        JComboBox timeslotIDlabel = new JComboBox(timeslotID);
+        timeslotIDlabel.setBounds(300,60,100,30);
+        contentPane.add(timeslotIDlabel);
         
-        editButton.setActionCommand("Edit");
-        editButton.addActionListener(this);
-        
-        deleteButton.setActionCommand("Delete");
-        deleteButton.addActionListener(this);
-        
-        viewButton.setActionCommand("View");
-        viewButton.addActionListener(this);
-        
-        exitButton.setActionCommand("Exit");
-        exitButton.addActionListener(this);
-        
+
+        JLabel timestartLabel = new JLabel("Time Start");
+        timestartLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        timestartLabel.setBounds(200, 115, 60, 15);
+        contentPane.add(timestartLabel);
+
+        timestartText = new JTextField();
+        timestartText.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        timestartText.setBounds(300, 112, 100, 21);
+        contentPane.add(timestartText);
+
+        JLabel timeendLabel = new JLabel("Time End");
+        timeendLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        timeendLabel.setBounds(200, 155, 54, 15);
+        contentPane.add(timeendLabel);
+
+        timeendText = new JTextField();
+        timeendText.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        timeendText.setBounds(300, 150, 100, 21);
+        contentPane.add(timeendText);
+  
+        JButton AddTimeSlot = new JButton("Add");
+        AddTimeSlot.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                addButtonActionPerformed(e);
+                
+            }
+
+
+        });
+        AddTimeSlot.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        AddTimeSlot.setBounds(20, 206, 85, 23);
+        contentPane.add(AddTimeSlot);
+
+        JButton editTimeSlot = new JButton("Edit");
+        editTimeSlot.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                
+            int a = JOptionPane.showConfirmDialog(editTimeSlot,"Are You Sure Edit?");
+              switch (a) {
+            case JOptionPane.YES_OPTION:
+                System.out.println("You clicked YES"); break;
+            case JOptionPane.NO_OPTION:
+                System.out.println("You clicked NO"); break;
+            case JOptionPane.CANCEL_OPTION:
+                System.out.println("You clicked Cancel"); break;
+                }
+            }
+        });
+        editTimeSlot.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        editTimeSlot.setBounds(110, 206, 85, 23);
+        contentPane.add(editTimeSlot);
         
         
+        JButton deleteTimeSlot = new JButton("Delete");   
+        deleteTimeSlot.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int a = JOptionPane.showConfirmDialog(deleteTimeSlot,"Are You Sure Delete?");
+              switch (a) {
+            case JOptionPane.YES_OPTION:
+                System.out.println("You clicked YES"); break;
+            case JOptionPane.NO_OPTION:
+                System.out.println("You clicked NO"); break;
+            case JOptionPane.CANCEL_OPTION:
+                System.out.println("You clicked Cancel"); break;
+                }
+            }
+        });
+        deleteTimeSlot.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        deleteTimeSlot.setBounds(200, 206, 85, 23);
+        contentPane.add(deleteTimeSlot);
         
+       JButton viewTimeSlot = new JButton("View");
+        viewTimeSlot.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                viewButtonActionPerformed(e);
+            }
+        });
+        viewTimeSlot.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        viewTimeSlot.setBounds(290, 206, 85, 23);
+        contentPane.add(viewTimeSlot);
+        
+        JButton exitTimeSlot = new JButton("Exit");
+        exitTimeSlot.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                
+            }
+        });
+        exitTimeSlot.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        exitTimeSlot.setBounds(450, 206, 85, 23);
+        contentPane.add(exitTimeSlot);
+
+        centerPanel.setLayout(new GridLayout(5, 1, 0, -5));
+
     }
-
-    public void addTimeSlot() {
-        
+    
+    private void addButtonActionPerformed(ActionEvent evt) {
+            JOptionPane.showMessageDialog(null, "Click Add");
+                 
             JFrame addMenu = new JFrame("Add Time Slot");
 
             addMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-            mainPanel.add(centerPanel);
-            
-           JTextField t1 = new JTextField("Enter Customer ID");  
-            t1.setBounds(50,100, 200,30);  
-
-           JTextField t2 = new JTextField("Enter Time Start");  
-            t2.setBounds(50,150, 200,30);  
-
-            JTextField t3 = new JTextField("Enter Time End");  
-            t3.setBounds(50,200, 200,30);  
-
-            JButton b1 = new JButton("Save");  
-            b1.setBounds(250,300,75,30); 
-
-            
-            addMenu.add(t1); addMenu.add(t2); addMenu.add(t3); addMenu.add(b1);
-                        
-            addMenu.setLayout(null);
-            addMenu.setVisible(true);
-            addMenu.setResizable(false);
-            addMenu.setSize(400, 400);
-            
-        
-    }
-      
-        public void editTimeSlot() {
-            JFrame addMenu = new JFrame("Edit Time Slot");
-            JTextField t1,t2;
-            
-            addMenu.setLayout(null);
-            addMenu.setVisible(true);
-            addMenu.setResizable(false);
-            addMenu.setSize(400, 400);
-
-            addMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-            mainPanel.add(centerPanel);
-            
-            String customerID[]={"1","2","3"};
-            JComboBox cb = new JComboBox(customerID); ; 
-            cb.setBounds(50,50,90,20);
-            addMenu.add(cb);
-
-            t1 = new JTextField("Enter Time Start");  
-            t1.setBounds(50,100, 200,30);  
-            addMenu.add(t1);
-            t2=new JTextField("Enter Time End");  
-            t2.setBounds(50,150, 200,30);  
-            addMenu.add(t2);
-        
-            JButton edit = new JButton("Edit");  
-            edit.setBounds(190,300,75,30); 
-            addMenu.add(edit);
-            
-            JButton save = new JButton("Save");  
-            save.setBounds(280,300,75,30); 
-            addMenu.add(save);
-        
-    }
- 
-    public void deleteTimeSlot() {
-        JFrame addMenu = new JFrame("Delete Time Slot");
-
-        String customerID[]={"1","2","3"};
-        JComboBox cb = new JComboBox(customerID); ; 
-        cb.setBounds(50,50,90,20);
-        addMenu.add(cb);
-        
-        JTextField t1 = new JTextField("Enter Time Start");  
-        t1.setBounds(50,100,200,30);  
-        addMenu.add(t1);
-        JTextField t2=new JTextField("Enter Time End");  
-        t2.setBounds(50,150,200,30);  
-        addMenu.add(t2);
        
+            
+            JLabel t1 = new JLabel("Enter Customer ID");  
+            t1.setBounds(100,100, 200,30); 
+            addMenu.add(t1);
+            
+            JTextField tt1 = new JTextField();
+            tt1.setBounds(250,100, 200,30);
+            addMenu.add(tt1);
+            
+           JLabel t2 = new JLabel("Enter Time Start");  
+            t2.setBounds(100,150, 200,30); 
+            addMenu.add(t2);
 
-        addMenu.setLayout(null);
-        addMenu.setVisible(true);
-        addMenu.setResizable(false);
-        addMenu.setSize(400, 400);
-
-        addMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        mainPanel.add(centerPanel);
-        
-        JButton delete = new JButton("Delete");  
-        delete.setBounds(190,300,75,30); 
-        addMenu.add(delete);
-        
-        JButton save = new JButton("Save");  
-        save.setBounds(280,300,75,30); 
-        addMenu.add(save);
+            JTextField tt2 = new JTextField();  
+            tt2.setBounds(250,150, 200,30); 
+            addMenu.add(tt2);
   
+            JLabel t3 = new JLabel("Enter Time End");  
+            t3.setBounds(100,200, 200,30);  
+            addMenu.add(t3);
+            
+            JTextField tt3 = new JTextField();  
+            tt3.setBounds(250,200, 200,30);  
+            addMenu.add(tt3);
+            
+            
+            JButton b1 = new JButton("Save");  
+            b1.setBounds(200,300,75,30); 
+            addMenu.add(b1);
+            
+  
+            JButton b2 = new JButton("Exit");  
+            b2.setBounds(290,300,75,30); 
+            addMenu.add(b2);
+                
+            addMenu.setLayout(null);
+            addMenu.setVisible(true);
+            addMenu.setResizable(false);
+            addMenu.setSize(600, 400);   
+       
     }
-     
-       public void viewTimeSlot() {
-            JFrame addMenu = new JFrame("View Time Slot");
+                   
+        private void viewButtonActionPerformed(ActionEvent evt) {
+        JOptionPane.showMessageDialog(null, "Click View");
+           JFrame addMenu = new JFrame("View Time Slot");
 
             addMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            
-            
-            mainPanel.add(centerPanel);
-            
-                JButton b1 = new JButton("Cancel");  
+
+                JButton b1 = new JButton("Exit");  
                 b1.setBounds(250,300,95,30); 
                 addMenu.add(b1);
                 
@@ -244,69 +214,11 @@ public class ManageTimeSlot extends JFrame implements ActionListener {
                 jt.setBounds(30,40,200,300);          
                 JScrollPane sp = new JScrollPane(jt);    
                 addMenu.add(sp);          
-                addMenu.setSize(400,400);
+                addMenu.setSize(600,400);
 
                 
                 addMenu.setVisible(true);    
-                        
-            //addMenu.setLayout(null);
-            //addMenu.setResizable(false);
-            //addMenu.setSize(400, 400);
-    }  
-   
-      
-    public void exitTimeSlot() {
-      
-    }
-    
-    public static void main(String[] args) {
-        ManageTimeSlot manage = new ManageTimeSlot();
-        
-
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        String command = e.getActionCommand();
-        if (command.equals("Add")) {
-            JOptionPane.showMessageDialog(this, "Click Add");
-            mainFrame.setResizable(false);
-            mainFrame.setVisible(false);
-            addTimeSlot();
-        }
-        
-        else if (command.equals("Edit")) {
-            JOptionPane.showMessageDialog(this, "Click Edit");
-            mainFrame.setResizable(false);
-            mainFrame.setVisible(false);
-            editTimeSlot(); 
-        } 
-        
-        else if (command.equals("Delete")) {
-            JOptionPane.showMessageDialog(this, "Click Delete");
-            mainFrame.setResizable(false);
-            mainFrame.setVisible(false);
-            deleteTimeSlot();   
-        }
-        
-        else if (command.equals("View")) {
-            JOptionPane.showMessageDialog(this, "Click View");
-            mainFrame.setResizable(false);
-            mainFrame.setVisible(false);
-            viewTimeSlot();   
-        }
-        
-        else
-        {
-            JOptionPane.showMessageDialog(this, "Click Exit");
-            mainFrame.setResizable(false);
-            mainFrame.setVisible(false);
-            exitTimeSlot();   
-        }
-        
  
-        
     }
-    
-    
+        
 }
