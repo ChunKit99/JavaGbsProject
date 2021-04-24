@@ -14,7 +14,12 @@ package gui;
 public class TestRunGuiCode {
 
     public static void main(String[] args) {
-        Login loginFrame = new Login();
-        loginFrame.setVisible(true);
+       /*Login loginFrame = new Login();
+        loginFrame.setVisible(true);*/
+        
+        ManageTimeSlot managetimeslot = new ManageTimeSlot();
+         managetimeslot.setVisible(true);
+        
+        
     }
 }
