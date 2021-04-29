@@ -1,5 +1,7 @@
 package gui;
 
+import main.*;
+import basic.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +15,7 @@ import javax.swing.border.*;
  */
 public class Login extends JFrame {
 
+    Controller c = Controller.getInstance();
     private JPanel contentPane;
     private JTextField userText;
     private JPasswordField passText;
@@ -25,13 +28,12 @@ public class Login extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 300);
         setResizable(false);
-        
         //let the frame open at center
         Dimension objDimension = Toolkit.getDefaultToolkit().getScreenSize();
         int iCoordX = (objDimension.width - getWidth()) / 2;
         int iCoordY = (objDimension.height - getHeight()) / 2;
         setLocation(iCoordX, iCoordY);
-        
+
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -101,32 +103,47 @@ public class Login extends JFrame {
         regisButton.setBounds(134, 206, 85, 23);
         contentPane.add(regisButton);
         centerPanel.setLayout(new GridLayout(5, 1, 0, -5));
-
     }
 
     private void loginButtonActionPerformed(ActionEvent evt) {
-        JOptionPane.showMessageDialog(null, "Click Login");
-        //check repeat username
-        // if () {
-        // JOptionPane.showMessageDialog(null, "Username Repeat");
-        // }else{
-        // }
+        c.loadDatabase("gbsdb");//connect db
         String username = userText.getText();
         String password = new String(passText.getPassword());
         String typeUser = buttonGroup.getSelection().getActionCommand();
-        JOptionPane.showMessageDialog(null,
-                "Username enter: " + username
-                + "\nPassword enter: " + password
-                + "\n Type user selected: " + typeUser
-        );
-        //go to customer menu of admin menu
-        //if(){
-        //}else{
-        //}
+//        JOptionPane.showMessageDialog(null,
+//                "Username enter: " + username
+//                + "\nPassword enter: " + password
+//                + "\n Type user selected: " + typeUser
+//        );
+        if (username.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please enter your username and password!!", "Alert", JOptionPane.WARNING_MESSAGE);
+        } else {
+            Account account = c.login(username, password, typeUser);
+
+            if (account instanceof Customer) {
+                //setVisible(false);
+                JOptionPane.showMessageDialog(null, "Login Customer Success!!");
+                //open customer menu frame
+            } else if (account instanceof Admin) {
+                //setVisible(false);
+                //temporary go to manage customer menu
+                ManageCustomer frame = new ManageCustomer();
+                setVisible(false);//unshow current frame
+                frame.setVisible(true);//show new frame
+                //JOptionPane.showMessageDialog(null, "Login Admin Success");
+                //open admin menu frame
+            } else {
+                //not match any type
+                JOptionPane.showMessageDialog(null, "Fail to login, Please try again!");
+                //c.disconnectDB();//disconnect if need other database
+                passText.setText("");
+            }
+        }
+
     }
 
     private void registerButtonActionPerformed(ActionEvent evt) {
-        JOptionPane.showMessageDialog(null, "Click Register");
+        //JOptionPane.showMessageDialog(null, "Click Register");
         //change frame to Resgiter
         Register frame = new Register();
         setVisible(false);//unshow current frame
