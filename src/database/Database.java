@@ -67,7 +67,7 @@ public abstract class Database {
     }
 
     /**
-     * connect to database
+     * connect to database, using database password and username
      *
      * @return true if connect success
      */
