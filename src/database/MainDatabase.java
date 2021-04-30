@@ -370,7 +370,7 @@ public class MainDatabase extends Database {
         try (Statement stmt = c.createStatement()) {
             try (ResultSet rs = stmt.executeQuery("SELECT MAX(GymID) AS GymID FROM GymRoom")) {
                 if (rs.next()) {
-                    maxID = rs.getInt("id");
+                    maxID = rs.getInt("GymID");
                 }
             }
         } catch (SQLException e) {
