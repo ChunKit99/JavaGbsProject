@@ -253,7 +253,7 @@ public class ManageCustomer extends JFrame {
                             cbList.removeItem(cbList.getItemAt(indexSelect));//update combobox
                         }
                     }else{
-                        JOptionPane.showMessageDialog(null, "Fail to delete!", "Alert", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Fail to delete!!\nBecause this customer have a booking record in system!!\nPlease check the booking record", "Alert", JOptionPane.WARNING_MESSAGE);
                     }
                 }
             }
