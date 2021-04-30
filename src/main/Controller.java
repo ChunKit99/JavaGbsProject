@@ -194,6 +194,7 @@ public class Controller {
     //public ArrayList<GymRoom> getAllGymRoom()
     // TYL part end
     // KC part start
+    //public boolean AddTimeSlot(String timeStart, String timeEnd)
     //public boolean updateTimeSlot(TimeSlot time)
     //public boolean deleteTimeSlot(TimeSlot time)
     //public TimeSlot getTimeSlot(int timeID)
@@ -201,7 +202,7 @@ public class Controller {
 
     // KC part end
     // OHG part start
-    //public boolean addBookingGym(int gymID, int timeID, LocalDate dateBook)
+    //public boolean addBookingGym(String username, int gymID, int timeID, LocalDate dateBook)
     //use in your gui part(controller code):
     //1. public Customer getCustomer(String username)//get customer object given username
     //2. public Account getLoggedUser() get curerent login user account object

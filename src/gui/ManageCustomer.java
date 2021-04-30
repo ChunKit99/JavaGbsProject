@@ -252,6 +252,8 @@ public class ManageCustomer extends JFrame {
                         }else{
                             cbList.removeItem(cbList.getItemAt(indexSelect));//update combobox
                         }
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Fail to delete!", "Alert", JOptionPane.WARNING_MESSAGE);
                     }
                 }
             }
