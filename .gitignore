@@ -1,3 +1,6 @@
 /nbproject/private/
 /dist/
 /build/
+/src/database/Database.java
+/src/database/ModelBuilder.java
+/src/database/Table.java
