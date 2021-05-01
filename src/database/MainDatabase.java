@@ -21,7 +21,7 @@ public class MainDatabase extends Database {
     }
 
     /**
-     * initialize create admin account, and some example data
+     * initialize create admin account; temporary add some example data
      *
      * @author Liew Chun Kit
      * @return true if success create
@@ -55,11 +55,11 @@ public class MainDatabase extends Database {
      * create table into database
      *
      * @author Liew Chun Kit
-     * @return table that need to create in database
+     * @return list table that need to create in database
      */
     @Override
     protected ArrayList<Table> createTables() {
-        ArrayList<Table> tables = new ArrayList<Table>();
+        ArrayList<Table> tables = new ArrayList<Table>();//list of table that need to create
 
         Table customer = new Table("Customer");
         customer.addColumn("Username", "varchar(30)");
@@ -146,49 +146,45 @@ public class MainDatabase extends Database {
     @Override
     public boolean validatePassword(Account account, String password) {
         String table;
+        //check type of table need to search in database
         if (account instanceof Customer) {
             table = "Customer";
         } else if (account instanceof Admin) {
             table = "Admin";
         } else {
-            return false; // if account isn't one of these, exit.
+            return false; // if account not exist, direct exit.
         }
-        String sql = String.format("SELECT password FROM %s WHERE username='%s'", table, account.username);
-
+        String sql = String.format("SELECT password FROM %s WHERE username = '%s'", table, account.username);
         try (Statement stmt = c.createStatement()) {
             try (ResultSet rs = stmt.executeQuery(sql)) {
-                if (rs.next() && rs.getString("Password").equals(password)) {
-                    return true;
+                if (rs.next() && rs.getString("Password").equals(password)) {//check password of user match or not
+                    return true;//same insert password with password in database
                 }
             }
         } catch (SQLException e) {
             logger.warning(e.toString());
         }
-
-        return false;
+        return false;//password not match
     }
 
     /**
-     * add account(customer) into database
+     * add customer into database
      *
      * @author Liew Chun kit
      * @param account account object that need to add in database
      * @return true if add success
      */
-    public boolean addAccount(Account account) {
+    public boolean addAccount(Customer account) {
         //check the username exist
-        if (getAccount(account.username, "Customer") == null && getAccount(account.username, "Admin") == null) {
+        if (getCustomer(account.username) == null && getAdmin(account.username) == null) {
             // not exist, can add
-            if (account instanceof Customer) {//only add for customer type
-                return insert((Customer) account);
-            }
+            return insert((Customer) account);
         }
-
         return false;
     }
 
     /**
-     * Returns a Customer object by it's username get from database
+     * Returns a Customer object base on username get from database
      *
      * @author Liew Chun Kit
      */
@@ -277,11 +273,11 @@ public class MainDatabase extends Database {
     public boolean updateCustomer(Customer cus) {
         // update the given service in the db
         try (Statement stmt = c.createStatement()) {
-            String sql = String.format("UPDATE Customer SET Name = '%s', Password = '%s', Email = '%s', PhoneNumber = '%s', Gender = '%s' WHERE Username = '%s'",
-                    cus.getName(), cus.getPassword(), cus.getEmail(), cus.getPhoneNumber(), cus.getGender(), cus.username);
-
+            String sql = String.format("UPDATE Customer SET Name = '%s', Email = '%s', PhoneNumber = '%s', Gender = '%s' WHERE Username = '%s'",
+                    cus.getName(), cus.getEmail(), cus.getPhoneNumber(), cus.getGender(), cus.username);
             if (stmt.executeUpdate(sql) == 1) {
-                return true; // only 1 row should be affected.
+                logger.info("Done update Cutomer " + cus.username);
+                return true; // only 1 row should be affected.      
             }
         } catch (SQLException e) {
             logger.warning(e.toString());
@@ -300,6 +296,7 @@ public class MainDatabase extends Database {
         try (Statement stmt = c.createStatement()) {
             String sql = String.format("DELETE FROM Customer WHERE Username = '%s'", cus.username);
             if (stmt.executeUpdate(sql) == 1) {
+                logger.info("Done delete Cutomer " + cus.username);
                 return true;
             }
         } catch (SQLException e) {
@@ -444,7 +441,6 @@ public class MainDatabase extends Database {
     delete TimeSlot
     show TimeSlot
      */
-
     //public boolean addTimeSlot(TimeSlot time)
     //public TimeSlot buildTimeSlot()
     //private boolean insert(TimeSlot t)
