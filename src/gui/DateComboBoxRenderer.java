@@ -14,18 +14,20 @@ import javax.swing.ListCellRenderer;
 
 /**
  * set current date for edit booking
+ *
  * @author WoeiChi Liong
  */
 public class DateComboBoxRenderer extends DefaultListCellRenderer {
-  SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-  public Component getListCellRendererComponent(JList list, Object value,
-      int index, boolean isSelected, boolean cellHasFocus) {
-    Object item = value;
-    if (item instanceof Date) {
-      item = dateFormat.format((Date) item);
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+    public Component getListCellRendererComponent(JList list, Object value,
+            int index, boolean isSelected, boolean cellHasFocus) {
+        Object item = value;
+        if (item instanceof Date) {
+            item = dateFormat.format((Date) item);
+        }
+        return super.getListCellRendererComponent(list, item, index, isSelected,
+                cellHasFocus);
     }
-    return super.getListCellRendererComponent(list, item, index, isSelected,
-        cellHasFocus);
-  }
 }

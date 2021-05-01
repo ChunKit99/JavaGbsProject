@@ -48,6 +48,7 @@ public class ManageBooking extends JFrame {
     JButton personalButton;
     JButton logoutButton;
     JButton backButton;
+    
     private JPanel contentPane;
 
     LocalDate date = LocalDate.now();

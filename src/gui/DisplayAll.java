@@ -48,18 +48,16 @@ public class DisplayAll extends JFrame {
      * @author WoeiChi Liong
      */
     public DisplayAll() {
-        
+
         header = new JLabel("Admin Menu");
-        roomButton = new JButton("      Manage Gym Room       ");
-        timeButton = new JButton("      Manage Time Slot      ");
+        roomButton = new JButton("    Manage Gym Room     ");
+        timeButton = new JButton("     Manage Time Slot     ");
         viewButton = new JButton("      View All Booking      ");
         logoutButton = new JButton("LOGOUT");
         backButton = new JButton("BACK");
-        
+
         setSize(850, 850);
-
         setTitle("Admin Menu");
-
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //set colour
@@ -67,9 +65,10 @@ public class DisplayAll extends JFrame {
         roomPanel.setBackground(Color.white);
         timePanel.setBackground(Color.white);
         viewPanel.setBackground(Color.white);
+        logoutPanel.setBackground(Color.white);
 
         //set category button 
-        mainFrame.getContentPane().add(mainPanel, BorderLayout.CENTER);
+        getContentPane().add(mainPanel, BorderLayout.CENTER);
 
         mainPanel.setLayout(null);
         centerPanel.setBounds(60, 60, 700, 700);
@@ -79,49 +78,59 @@ public class DisplayAll extends JFrame {
 
         header.setHorizontalAlignment(SwingConstants.CENTER);
         header.setFont(new Font("Comic Sans MS", Font.BOLD, 40));
+
         centerPanel.add(header);
 
         centerPanel.add(roomPanel);
         roomPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 40));
-        roomPanel.add(roomButton);
         roomButton.setFont(new Font("Comic Sans MS", 0, 20));
+        roomPanel.add(roomButton);
 
         centerPanel.add(timePanel);
         timePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 40));
-        timePanel.add(timeButton);
         timeButton.setFont(new Font("Comic Sans MS", 0, 20));
+        timePanel.add(timeButton);
 
         centerPanel.add(viewPanel);
-        viewPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 30));
-        viewPanel.add(viewButton);
+        viewPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 40));
         viewButton.setFont(new Font("Comic Sans MS", 0, 20));
+        viewPanel.add(viewButton);
         //link to view booking
         viewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 viewButtonActionPerformed(e);
             }
         });
+
+        //access button
+        centerPanel.add(logoutPanel);
+        logoutPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 40));
+        logoutPanel.add(logoutButton);
+        logoutButton.setFont(new Font("Comic Sans MS", 0, 16));
+
+        setResizable(false);
+        setVisible(true);
     }
 
     public void viewAllBooking() {
-        
+
         JFrame viewAllBooking = new JFrame("View Al Booking In System");
         viewAllBooking.setSize(850, 650);
         viewAllBooking.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         viewAllBooking.setVisible(true);
         viewAllBooking.setResizable(false);
 
-        JPanel outerPanel2 = new JPanel(new BorderLayout());
-        JPanel topPanel2 = new JPanel(new BorderLayout());
-        outerPanel2.setSize(850, 850);
-        topPanel2.setSize(850, 850);
+        JPanel outerPanel = new JPanel(new BorderLayout());
+        JPanel topPanel = new JPanel(new BorderLayout());
+        outerPanel.setSize(850, 850);
+        topPanel.setSize(850, 850);
 
         JLabel currentRecord = new JLabel("All Booking Record:");
         currentRecord.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
         currentRecord.setHorizontalAlignment(SwingConstants.LEFT);
         currentRecord.setBounds(0, 40, 850, 30);
         viewAllBooking.add(currentRecord);
-        topPanel2.add(currentRecord, BorderLayout.PAGE_START);
+        topPanel.add(currentRecord, BorderLayout.PAGE_START);
 
         String data[][] = new String[35][5];
         String column[] = {"Booking ID", "CUSTOMER NAME", "BOOKING DATE", "GYM ROOM ID", "TIME SLOT ID"};
@@ -129,12 +138,12 @@ public class DisplayAll extends JFrame {
         bookRecord.setBounds(0, 700, 750, 750);
         bookRecord.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
         JScrollPane sp = new JScrollPane(bookRecord);
-        topPanel2.add(sp, BorderLayout.CENTER);
+        topPanel.add(sp, BorderLayout.CENTER);
 
         backButton.setBounds(35, 600, 750, 30);
         viewAllBooking.add(backButton);
         backButton.setFont(new Font("Comic Sans MS", 0, 20));
-        topPanel2.add(backButton, BorderLayout.PAGE_END);
+        topPanel.add(backButton, BorderLayout.PAGE_END);
 
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -143,8 +152,8 @@ public class DisplayAll extends JFrame {
             }
         });
 
-        outerPanel2.add(topPanel2);
-        viewAllBooking.add(outerPanel2);
+        outerPanel.add(topPanel);
+        viewAllBooking.add(outerPanel);
         //viewBooking.pack();
     }
 
@@ -160,7 +169,7 @@ public class DisplayAll extends JFrame {
         setVisible(false);
         DisplayAll menu = new DisplayAll();
     }
-    
+
     public static void main(String[] args) {
         /*
         Frame frame = new JFrame();//create tab
