@@ -13,9 +13,7 @@ class Table {
      * create table base on name given
      */
     protected Table(String name) {
-        this.name = name;
-
-        // init lists
+        this.name = name;//set the name of table need to create
         columns = new ArrayList<String>();
         foreignKey = new ArrayList<String>();
     }
@@ -40,7 +38,8 @@ class Table {
      *
      * @param columnName column that become FK
      * @param reference column come from where
-     * */
+     *
+     */
     void addForeignKey(String columnName, String reference) {
         foreignKey.add("FOREIGN KEY (`" + columnName + "`) REFERENCES " + reference);
     }
@@ -51,17 +50,14 @@ class Table {
      */
     @Override
     public String toString() {
-        String colString = String.join(", ", columns);
-
-        String fkString = String.join(", ", foreignKey);
-
-        String tableString;
-        if (primaryKey != null) {
+        String colString = String.join(", ", columns);//combine all the column name and data type
+        String fkString = String.join(", ", foreignKey);//combine set foreignkey statement
+        String tableString;//statement sql need to do
+        if (primaryKey != null) {//there is a pk
             tableString = colString + ", " + primaryKey;
         } else {
             tableString = colString;
         }
-
         // only join fk if there are any
         if (!fkString.equals("")) {
             tableString += ", " + fkString;
