@@ -67,7 +67,7 @@ public class Controller {
      * @return object of customer
      */
     public Customer getCustomer(String username) {
-        Account account = myDB.getAccount(username, "Customer");
+        Account account = myDB.getAccount(username);
         return (Customer) account;
     }
 
@@ -111,8 +111,8 @@ public class Controller {
      * @param typeUser
      * @return object of account
      */
-    public Account login(String username, String password, String typeUser) {
-        loggedUser = myDB.login(username, password, typeUser);
+    public Account login(String username, String password) {
+        loggedUser = myDB.login(username, password);
 
         if (loggedUser != null) {
             logger.info("Logged in user: " + loggedUser.username);

@@ -113,8 +113,8 @@ public class MainDatabase extends Database {
      *
      * @author Liew Chun Kit
      */
-    private Class<? extends Account> validateUsername(String username, String typeUser) {
-        String sql = String.format("SELECT Username, Type FROM " + typeUser + " WHERE Username = '%s'", username);
+    private Class<? extends Account> validateUsername(String username) {
+        String sql = String.format("SELECT Username, Type FROM Admin WHERE Username = '%s' Union SELECT Username, Type FROM Customer WHERE Username = '%s'", username, username);
 
         try (Statement stmt = c.createStatement()) {
             try (ResultSet rs = stmt.executeQuery(sql)) {
@@ -174,11 +174,13 @@ public class MainDatabase extends Database {
      * @param account account object that need to add in database
      * @return true if add success
      */
-    public boolean addAccount(Customer account) {
+    public boolean addAccount(Account account) {
         //check the username exist
-        if (getCustomer(account.username) == null && getAdmin(account.username) == null) {
+        if (getAccount(account.username) == null) {
             // not exist, can add
-            return insert((Customer) account);
+            if(account instanceof Customer){
+                return insert((Customer) account);
+            }  
         }
         return false;
     }
@@ -226,13 +228,11 @@ public class MainDatabase extends Database {
      *
      * @author Liew Chun Kit
      * @param username username for search
-     * @param typeUser type of user select
      * @return
      *
      */
-    @Override
-    public Account getAccount(String username, String typeUser) {
-        Class<? extends Account> type = validateUsername(username, typeUser);
+    public Account getAccount(String username) {
+        Class<? extends Account> type = validateUsername(username);
         if (type != null) {
             if (type.equals(Customer.class)) {
                 return getCustomer(username);

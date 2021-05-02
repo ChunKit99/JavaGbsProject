@@ -19,7 +19,7 @@ public class Login extends JFrame {
     private JPanel contentPane;
     private JTextField userText;
     private JPasswordField passText;
-    private final ButtonGroup buttonGroup = new ButtonGroup();
+//    private final ButtonGroup buttonGroup = new ButtonGroup();
 
     /**
      * Create the Login frame.
@@ -44,44 +44,44 @@ public class Login extends JFrame {
 
         JLabel title = new JLabel("Welcome To GBS");
         title.setFont(new Font("Tahoma", Font.BOLD, 24));
-        title.setBounds(115, 14, 204, 29);
+        title.setBounds(115, 25, 204, 29);
         contentPane.add(title);
 
         JLabel userLabel = new JLabel("Username");
         userLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        userLabel.setBounds(134, 70, 54, 15);
+        userLabel.setBounds(134,95, 54, 15);
         contentPane.add(userLabel);
 
         userText = new JTextField();
         userText.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        userText.setBounds(198, 67, 106, 21);
+        userText.setBounds(198, 92, 106, 21);
         contentPane.add(userText);
         userText.setColumns(10);
 
         JLabel passLabel = new JLabel("Password");
         passLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        passLabel.setBounds(134, 115, 51, 15);
+        passLabel.setBounds(134, 140, 51, 15);
         contentPane.add(passLabel);
 
         passText = new JPasswordField();
         passText.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        passText.setBounds(198, 112, 106, 21);
+        passText.setBounds(198, 137, 106, 21);
         contentPane.add(passText);
 
-        JRadioButton adminRadio = new JRadioButton("Admin");
-        adminRadio.setActionCommand("admin");
-        buttonGroup.add(adminRadio);
-        adminRadio.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        adminRadio.setBounds(134, 157, 59, 23);
-        contentPane.add(adminRadio);
-
-        JRadioButton customerRadio = new JRadioButton("Customer");
-        customerRadio.setActionCommand("customer");
-        customerRadio.setSelected(true);
-        buttonGroup.add(customerRadio);
-        customerRadio.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        customerRadio.setBounds(227, 157, 77, 23);
-        contentPane.add(customerRadio);
+//        JRadioButton adminRadio = new JRadioButton("Admin");
+//        adminRadio.setActionCommand("Admin");
+//        buttonGroup.add(adminRadio);
+//        adminRadio.setFont(new Font("Tahoma", Font.PLAIN, 12));
+//        adminRadio.setBounds(134, 157, 59, 23);
+//        contentPane.add(adminRadio);
+//
+//        JRadioButton customerRadio = new JRadioButton("Customer");
+//        customerRadio.setActionCommand("Customer");
+//        customerRadio.setSelected(true);
+//        buttonGroup.add(customerRadio);
+//        customerRadio.setFont(new Font("Tahoma", Font.PLAIN, 12));
+//        customerRadio.setBounds(227, 157, 77, 23);
+//        contentPane.add(customerRadio);
 
         JButton loginButton = new JButton("Login");
         loginButton.addActionListener(new ActionListener() {
@@ -90,7 +90,7 @@ public class Login extends JFrame {
             }
         });
         loginButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        loginButton.setBounds(227, 206, 77, 23);
+        loginButton.setBounds(227, 196, 77, 23);
         contentPane.add(loginButton);
 
         JButton regisButton = new JButton("Register");
@@ -100,7 +100,7 @@ public class Login extends JFrame {
             }
         });
         regisButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        regisButton.setBounds(134, 206, 85, 23);
+        regisButton.setBounds(134, 196, 85, 23);
         contentPane.add(regisButton);
         centerPanel.setLayout(new GridLayout(5, 1, 0, -5));
     }
@@ -109,7 +109,7 @@ public class Login extends JFrame {
         c.loadDatabase("gbsdb");//connect db
         String username = userText.getText();
         String password = new String(passText.getPassword());
-        String typeUser = buttonGroup.getSelection().getActionCommand();
+//        String typeUser = buttonGroup.getSelection().getActionCommand();
 //        JOptionPane.showMessageDialog(null,
 //                "Username enter: " + username
 //                + "\nPassword enter: " + password
@@ -118,7 +118,7 @@ public class Login extends JFrame {
         if (username.isEmpty() || password.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please enter your username and password!!", "Alert", JOptionPane.WARNING_MESSAGE);
         } else {
-            Account account = c.login(username, password, typeUser);
+            Account account = c.login(username, password);
 
             if (account instanceof Customer) {
                 //setVisible(false);

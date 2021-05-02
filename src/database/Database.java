@@ -28,22 +28,22 @@ public abstract class Database {
      *
      */
     private String dbName;
-    protected Logger logger;
+    protected Logger logger;//use to log message for system
 
     /**
      * database about, will initialize the database if empty
-     *
+     * 
      */
     public Database(String dbName) {
         // get the logger
         logger = Logger.getLogger(getClass().getName());
         this.dbName = dbName;
         if (open()) {
-            CreateDatabase();
+            createDatabase();
         }
     }
 
-    public abstract Account getAccount(String username, String typeUser);
+    public abstract Account getAccount(String username);
 
     protected abstract boolean validatePassword(Account account, String password);
 
@@ -55,9 +55,10 @@ public abstract class Database {
      * login into database and get account if valid
      *
      * @author Liew Chun Kit
+     * @return account object that login success, null means fail login
      */
-    public Account login(String username, String password, String typeUser) {
-        Account account = getAccount(username, typeUser);
+    public Account login(String username, String password) {
+        Account account = getAccount(username);
 
         if (validatePassword(account, password)) {
             return account;
@@ -123,8 +124,8 @@ public abstract class Database {
         logger.fine("Executing query: " + query);
 
         try {
-            Statement stmt = c.createStatement();
-            stmt.execute(query);
+            Statement stm = c.createStatement();
+            stm.execute(query);
             return true;
         } catch (SQLException e) {
             logger.warning("SQL Exception: " + e.toString());
@@ -132,22 +133,31 @@ public abstract class Database {
         }
     }
 
+    /**
+     * statement that perform in database
+     *
+     * @return object found in database
+     */
     protected <T> ArrayList<T> query(String sql, ModelBuilder<T> builder) {
         ArrayList<T> resultArray = new ArrayList<T>();
 
-        try (Statement stmt = c.createStatement()) {
-            try (ResultSet rs = stmt.executeQuery(sql)) {
-                while (rs.next()) {
+        try (Statement stm = c.createStatement()) {
+            try (ResultSet rs = stm.executeQuery(sql)) {
+                while (rs.next()) {// there is a result return from database
                     resultArray.add(builder.build(rs));
                 }
             }
         } catch (SQLException e) {
             logger.warning("Query failed :" + e);
         }
-
         return resultArray;
     }
 
+    /**
+     * only return the first result found in database
+     *
+     *
+     */
     protected <T> T querySingle(String sql, ModelBuilder<T> builder) {
         ArrayList<T> resultArray = query(sql, builder);
 
@@ -159,14 +169,15 @@ public abstract class Database {
     }
 
     /**
-     * create data into database if empty
+     * create data into database if empty, will check every time when login to
+     * database
      *
      *
      */
-    private void CreateDatabase() {
-        try (Statement stmt = c.createStatement()) {
+    private void createDatabase() {
+        try (Statement stm = c.createStatement()) {
             //check empty database
-            try (ResultSet rs = stmt.executeQuery("SELECT count(*) AS TOTALNUMBEROFTABLES"
+            try (ResultSet rs = stm.executeQuery("SELECT count(*) AS TOTALNUMBEROFTABLES"
                     + "    FROM INFORMATION_SCHEMA.TABLES"
                     + "    WHERE TABLE_SCHEMA = 'gbsdb';")) {
                 if (rs.next() && rs.getInt(1) == 0) {
@@ -188,10 +199,10 @@ public abstract class Database {
      *
      */
     private void insertTables(ArrayList<Table> tables) {
-        try (Statement stmt = c.createStatement()) {
-            for (Table table : tables) {
+        try (Statement stm = c.createStatement()) {
+            for (Table table : tables) {//create table one by one
                 logger.fine("Creating table: " + table);
-                stmt.execute(table.toString());
+                stm.execute(table.toString());
             }
         } catch (SQLException e) {
             logger.severe("SQL Exception in table creation: " + e);
