@@ -194,11 +194,35 @@ public class Controller {
     // TYL part end
     // KC part start
     //public boolean AddTimeSlot(String timeStart, String timeEnd)
+    public boolean addTimeSlot(String timeStart, String timeEnd) {
+        TimeSlot time = myDB.buildTimeSlot();//build a gymrooom object with latest id
+        time.setTimeStart(timeStart);
+        time.setTimeEnd(timeEnd);
+        return myDB.addTimeSlot(time);//pass and add to database
+    }
+    
     //public boolean updateTimeSlot(TimeSlot time)
+    public boolean updateTimeSlot(TimeSlot time) {
+        return myDB.updateTimeSlot(time);
+    }
+        
     //public boolean deleteTimeSlot(TimeSlot time)
+    public boolean deleteTimeSlot(TimeSlot time) {
+        return myDB.deleteTimeSlot(time);
+    }
+    
     //public TimeSlot getTimeSlot(int timeID)
+    public TimeSlot getTimeSlot(int timeID) {
+        TimeSlot ts = myDB.getTimeSlot(timeID);
+        return ts;
+    }
+        
     //public ArrayList<TimeSlot> getAllTimeSlot()
-
+    public ArrayList<TimeSlot> getAllTimeSlot() {
+        ArrayList<TimeSlot> list = myDB.getAllTimeSlot();
+        return list;
+    }
+    
     // KC part end
     // OHG part start
     //public boolean addBookingGym(String username, int gymID, int timeID, LocalDate dateBook)
