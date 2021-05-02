@@ -178,9 +178,9 @@ public class MainDatabase extends Database {
         //check the username exist
         if (getAccount(account.username) == null) {
             // not exist, can add
-            if(account instanceof Customer){
+            if (account instanceof Customer) {
                 return insert((Customer) account);
-            }  
+            }
         }
         return false;
     }
@@ -445,7 +445,7 @@ public class MainDatabase extends Database {
     public boolean addTimeSlot(TimeSlot time) {
         return insert(time);
     }
-    
+
     //public TimeSlot buildTimeSlot()
     public TimeSlot buildTimeSlot() {
         // find the highest current ID
@@ -463,12 +463,12 @@ public class MainDatabase extends Database {
 
         return new TimeSlot(maxID + 1, "", "");//create gymroom with id only
     }
-    
+
     //private boolean insert(TimeSlot t)
     private boolean insert(TimeSlot t) {
         return insert("TimeSlot", Integer.toString(t.ID), t.getTimeStart(), t.getTimeEnd());
     }
-    
+
     //public boolean updateTimeSlot(TimeSlot time)
     public boolean updateTimeSlot(TimeSlot time) {
         // update the given service in the db
@@ -476,7 +476,7 @@ public class MainDatabase extends Database {
             String sql = String.format("UPDATE TimeSlot SET TimeStart = '%s', TimeEnd = '%s' WHERE TimeID = %d",
                     time.getTimeStart(), time.getTimeEnd(), time.ID);
             if (stmt.executeUpdate(sql) == 1) {
-                logger.info("Done update Cutomer " + time.ID);
+                logger.info("Done update TimeSlot " + time.ID);
                 return true; // only 1 row should be affected.      
             }
         } catch (SQLException e) {
@@ -490,7 +490,7 @@ public class MainDatabase extends Database {
         try (Statement stmt = c.createStatement()) {
             String sql = String.format("DELETE FROM TimeSlot WHERE TimeID = %d", time.ID);
             if (stmt.executeUpdate(sql) == 1) {
-                logger.info("Done delete Cutomer " + time.ID);
+                logger.info("Done delete TimeSlot " + time.ID);
                 return true;
             }
         } catch (SQLException e) {
@@ -498,7 +498,7 @@ public class MainDatabase extends Database {
         }
         return false;
     }
-    
+
     //public ArrayList<TimeSlot> getAllTimeSlot()
     public ArrayList<TimeSlot> getAllTimeSlot() {
         ArrayList<TimeSlot> list = new ArrayList<TimeSlot>();
@@ -518,7 +518,7 @@ public class MainDatabase extends Database {
         }
         return list;
     }
-    
+
     //public TimeSlot getTimeSlot(int timeID){
     public TimeSlot getTimeSlot(int timeID) {
         String sql = String.format("SELECT * FROM TimeSlot WHERE TimeID = %d", timeID);
@@ -533,7 +533,7 @@ public class MainDatabase extends Database {
         });
         return ts;
     }
-    
+
     // KC part end
     // OHG part start
     /*

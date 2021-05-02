@@ -4,7 +4,6 @@ import basic.*;
 import com.sun.xml.internal.bind.v2.model.core.ID;
 import main.*;
 
-
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -20,7 +19,7 @@ import javax.swing.JTable;
 
 /**
  *
- * @author Liew Chun Kit
+ * @author
  */
 public class ViewAllTimeSlot extends JFrame {
 
@@ -51,7 +50,7 @@ public class ViewAllTimeSlot extends JFrame {
         Object[] timeslot = list.toArray();
         String[][] dataList = new String[list.size()][column.length];
         for (int i = 0; i < timeslot.length; i++) {
-            //dataList[i][0] = Integer.toString(((TimeSlot) timeslot[i].ID));
+            dataList[i][0] = Integer.toString(((TimeSlot) timeslot[i]).ID);
             dataList[i][1] = ((TimeSlot) timeslot[i]).getTimeStart();
             dataList[i][2] = ((TimeSlot) timeslot[i]).getTimeEnd();
         }

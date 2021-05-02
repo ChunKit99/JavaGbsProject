@@ -24,19 +24,23 @@ public class ManageTimeSlot extends JFrame {
     private JTextField timeslotidText;
     private JTextField timestartText;
     private JTextField timeendText;
- 
-    
+
     //private JFrame mainFrame;
     //private final ButtonGroup buttonGroup = new ButtonGroup();
-
     /**
      * Create the Login frame.
      */
     public ManageTimeSlot() {
-        c.loadDatabase("gbsdb");//connect db
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(200, 200, 600, 330);
         setResizable(false);
+
+        //let the frame open at center
+        Dimension objDimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int iCoordX = (objDimension.width - getWidth()) / 2;
+        int iCoordY = (objDimension.height - getHeight()) / 2;
+        setLocation(iCoordX, iCoordY);
+
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -56,8 +60,7 @@ public class ManageTimeSlot extends JFrame {
         timeslotidLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
         timeslotidLabel.setBounds(200, 70, 70, 15);
         contentPane.add(timeslotidLabel);
-               
-         
+
         String[] listAvailable = getTimeSlotList();
         timeslotidList = new JComboBox(listAvailable);
         timeslotidList.addActionListener(new ActionListener() {
@@ -67,7 +70,7 @@ public class ManageTimeSlot extends JFrame {
         });
         timeslotidList.setBounds(300, 70, 100, 21);
         contentPane.add(timeslotidList);
-        
+
         JLabel timeidLabel = new JLabel("Time Slot ID");
         timeidLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
         timeidLabel.setBounds(200, 115, 100, 15);
@@ -76,9 +79,10 @@ public class ManageTimeSlot extends JFrame {
         timeslotidText = new JTextField();
         timeslotidText.setFont(new Font("Tahoma", Font.PLAIN, 12));
         timeslotidText.setBounds(300, 112, 100, 21);
+        timeslotidText.setEditable(false);
         contentPane.add(timeslotidText);
         timeslotidText.setColumns(10);
-        
+
         JLabel timestartLabel = new JLabel("Time Start");
         timestartLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
         timestartLabel.setBounds(200, 155, 100, 15);
@@ -89,7 +93,7 @@ public class ManageTimeSlot extends JFrame {
         timestartText.setBounds(300, 150, 100, 21);
         contentPane.add(timestartText);
         timestartText.setColumns(10);
-        
+
         JLabel timeendLabel = new JLabel("Time End");
         timeendLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
         timeendLabel.setBounds(200, 190, 54, 15);
@@ -100,50 +104,49 @@ public class ManageTimeSlot extends JFrame {
         timeendText.setBounds(300, 190, 100, 21);
         contentPane.add(timeendText);
         timeendText.setColumns(10);
- 
+
         JButton AddTimeSlot = new JButton("Add");
         AddTimeSlot.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 addButtonActionPerformed(e);
-                
+
             }
 
         });
         AddTimeSlot.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        AddTimeSlot.setBounds(20, 206, 85, 23);
+        AddTimeSlot.setBounds(20, 240, 85, 23);
         contentPane.add(AddTimeSlot);
 
         JButton editTimeSlot = new JButton("Edit");
         editTimeSlot.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            saveCusButtonActionPerformed(e);  
+                saveCusButtonActionPerformed(e);
             }
         });
         editTimeSlot.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        editTimeSlot.setBounds(110, 206, 85, 23);
+        editTimeSlot.setBounds(110, 240, 85, 23);
         contentPane.add(editTimeSlot);
-        
-        
-        JButton deleteTimeSlot = new JButton("Delete");   
+
+        JButton deleteTimeSlot = new JButton("Delete");
         deleteTimeSlot.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 delCusButtonActionPerformed(e);
             }
         });
         deleteTimeSlot.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        deleteTimeSlot.setBounds(200, 206, 85, 23);
+        deleteTimeSlot.setBounds(200, 240, 85, 23);
         contentPane.add(deleteTimeSlot);
-        
-       JButton viewTimeSlot = new JButton("View");
+
+        JButton viewTimeSlot = new JButton("View");
         viewTimeSlot.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 viewButtonActionPerformed(e);
             }
         });
         viewTimeSlot.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        viewTimeSlot.setBounds(290, 206, 85, 23);
+        viewTimeSlot.setBounds(290, 240, 85, 23);
         contentPane.add(viewTimeSlot);
-        
+
         JButton exitTimeSlot = new JButton("Exit");
         exitTimeSlot.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -151,14 +154,14 @@ public class ManageTimeSlot extends JFrame {
             }
         });
         exitTimeSlot.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        exitTimeSlot.setBounds(450, 206, 85, 23);
+        exitTimeSlot.setBounds(450, 240, 85, 23);
         contentPane.add(exitTimeSlot);
 
         centerPanel.setLayout(new GridLayout(5, 1, 0, -5));
 
     }
-    
-        private String[] getTimeSlotList() {
+
+    private String[] getTimeSlotList() {
         ArrayList<TimeSlot> list = c.getAllTimeSlot();
         Object[] time = list.toArray();
         String[] dataList = new String[list.size()];
@@ -167,7 +170,7 @@ public class ManageTimeSlot extends JFrame {
         }
         return dataList;
     }
-        
+
     private void selectCbListActionPerformed(ActionEvent evt) {
         timeslotidText.setText((String) timeslotidList.getItemAt(timeslotidList.getSelectedIndex()));//username
         String TimeID = (String) timeslotidList.getItemAt(timeslotidList.getSelectedIndex());//get username from combobox
@@ -177,63 +180,27 @@ public class ManageTimeSlot extends JFrame {
         timeendText.setText(time.getTimeEnd());//passsword
 
     }
-        
+
     private void addButtonActionPerformed(ActionEvent evt) {
-            JOptionPane.showMessageDialog(null, "Click Add");
-                 
-            JFrame addMenu = new JFrame("Add Time Slot");
-
-            addMenu.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-            JLabel t1 = new JLabel("Enter Customer ID");  
-            t1.setBounds(100,100, 200,30); 
-            addMenu.add(t1);
-            
-            JTextField tt1 = new JTextField();
-            tt1.setBounds(250,100, 200,30);
-            addMenu.add(tt1);
-            
-           JLabel t2 = new JLabel("Enter Time Start");  
-            t2.setBounds(100,150, 200,30); 
-            addMenu.add(t2);
-
-            JTextField tt2 = new JTextField();  
-            tt2.setBounds(250,150, 200,30); 
-            addMenu.add(tt2);
-  
-            JLabel t3 = new JLabel("Enter Time End");  
-            t3.setBounds(100,200, 200,30);  
-            addMenu.add(t3);
-            
-            JTextField tt3 = new JTextField();  
-            tt3.setBounds(250,200, 200,30);  
-            addMenu.add(tt3);
-            
-            
-            JButton b1 = new JButton("Save");  
-            b1.setBounds(200,300,75,30); 
-            addMenu.add(b1);
-            
-            addMenu.setLayout(null);
-            addMenu.setVisible(true);
-            addMenu.setResizable(false);
-            addMenu.setSize(600, 400);   
+        AddTimeSLot frame = new AddTimeSLot();
+        setVisible(false);//unshow current frame
+        frame.setVisible(true);//show new frame
 
     }
-    
-        private void saveCusButtonActionPerformed(ActionEvent evt) {
+
+    private void saveCusButtonActionPerformed(ActionEvent evt) {
         //store index of selected
-        int indexSelect =  timeslotidList.getSelectedIndex();
+        int indexSelect = timeslotidList.getSelectedIndex();
         //get the username
         String IDSelect = (String) timeslotidList.getItemAt(indexSelect);
         //customer object to update
         int idselect = Integer.parseInt(IDSelect);
         TimeSlot timeslot = c.getTimeSlot(idselect);
-        
+
         timeslot.setTimeStart(timestartText.getText());
         timeslot.setTimeEnd(timeendText.getText());
         if (timeslotidList.getItemCount() != 0) {
-            int a = JOptionPane.showConfirmDialog(null, "Are you sure to change " + IDSelect  + " ?");
+            int a = JOptionPane.showConfirmDialog(null, "Are you sure to change " + IDSelect + " ?");
             if (a == JOptionPane.YES_OPTION) {
                 //send to update control
                 if (c.updateTimeSlot(timeslot)) {//update success will true
@@ -246,12 +213,12 @@ public class ManageTimeSlot extends JFrame {
         }
 
     }
-        
-        private void clearTextField() {
+
+    private void clearTextField() {
         timeslotidText.setText("");
         timestartText.setText("");
         timeendText.setText("");
- 
+
     }
 
     private void loadList() {
@@ -279,10 +246,10 @@ public class ManageTimeSlot extends JFrame {
                         if (timeslotidList.getItemCount() == 1) {
                             clearTextField();
                             timeslotidList.removeAllItems();//clear all item comboBoxList
-                        }else{
+                        } else {
                             timeslotidList.removeItem(timeslotidList.getItemAt(indexSelect));//update combobox
                         }
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(null, "Fail to delete!!\nBecause this customer have a booking record in system!!\nPlease check the booking record", "Alert", JOptionPane.WARNING_MESSAGE);
                     }
                 }
@@ -292,31 +259,18 @@ public class ManageTimeSlot extends JFrame {
         }
 
     }
-                   
-        private void viewButtonActionPerformed(ActionEvent evt) {
-        JOptionPane.showMessageDialog(null, "Click View");
-           JFrame addMenu = new JFrame("View Time Slot");
 
-            addMenu.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                
-                String data[][]={ {"1","0800","1000"},    
-                                    {"2","1000","1200"},    
-                                    {"3","1400","1600"}};   
-                
-                String column[] = {"ID","Time Start","Time End"};   
-                
-                JTable jt = new JTable(data,column);    
-                jt.setBounds(30,40,200,300);          
-                JScrollPane sp = new JScrollPane(jt);    
-                addMenu.add(sp);          
-                addMenu.setSize(600,400);
+    private void viewButtonActionPerformed(ActionEvent evt) {
+        ViewAllTimeSlot frame = new ViewAllTimeSlot();
+        setVisible(false);//unshow current frame
+        frame.setVisible(true);//show new frame
 
-                
-                addMenu.setVisible(true);    
- 
     }
+
     private void exitButtonActionPerformed(ActionEvent evt) {
-        System.exit(0);
+        AdminMenu frame = new AdminMenu();
+        setVisible(false);//unshow current frame
+        frame.setVisible(true);//show new frame
     }
-        
+
 }
