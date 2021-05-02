@@ -442,12 +442,98 @@ public class MainDatabase extends Database {
     show TimeSlot
      */
     //public boolean addTimeSlot(TimeSlot time)
+    public boolean addTimeSlot(TimeSlot time) {
+        return insert(time);
+    }
+    
     //public TimeSlot buildTimeSlot()
+    public TimeSlot buildTimeSlot() {
+        // find the highest current ID
+        int maxID = 0;
+
+        try (Statement stmt = c.createStatement()) {
+            try (ResultSet rs = stmt.executeQuery("SELECT MAX(TimeID) AS TimeID FROM TimeSlot")) {
+                if (rs.next()) {
+                    maxID = rs.getInt("TimeID");
+                }
+            }
+        } catch (SQLException e) {
+            logger.warning(e.toString());
+        }
+
+        return new TimeSlot(maxID + 1, "", "");//create gymroom with id only
+    }
+    
     //private boolean insert(TimeSlot t)
-    //public boolean updateGymRoom(TimeSlot time)
-    //public boolean deleteGymRoom(TimeSlot time)
+    private boolean insert(TimeSlot t) {
+        return insert("TimeSlot", Integer.toString(t.ID), t.getTimeStart(), t.getTimeEnd());
+    }
+    
+    //public boolean updateTimeSlot(TimeSlot time)
+    public boolean updateTimeSlot(TimeSlot time) {
+        // update the given service in the db
+        try (Statement stmt = c.createStatement()) {
+            String sql = String.format("UPDATE TimeSlot SET TimeStart = '%s', TimeEnd = '%s' WHERE TimeID = %d",
+                    time.getTimeStart(), time.getTimeEnd(), time.ID);
+            if (stmt.executeUpdate(sql) == 1) {
+                logger.info("Done update Cutomer " + time.ID);
+                return true; // only 1 row should be affected.      
+            }
+        } catch (SQLException e) {
+            logger.warning(e.toString());
+        }
+        return false;
+    }
+
+    //public boolean deleteTimeSlot(TimeSlot time)
+    public boolean deleteTimeSlot(TimeSlot time) {
+        try (Statement stmt = c.createStatement()) {
+            String sql = String.format("DELETE FROM TimeSlot WHERE TimeID = %d", time.ID);
+            if (stmt.executeUpdate(sql) == 1) {
+                logger.info("Done delete Cutomer " + time.ID);
+                return true;
+            }
+        } catch (SQLException e) {
+            logger.warning(e.toString());
+        }
+        return false;
+    }
+    
     //public ArrayList<TimeSlot> getAllTimeSlot()
+    public ArrayList<TimeSlot> getAllTimeSlot() {
+        ArrayList<TimeSlot> list = new ArrayList<TimeSlot>();
+        try (Statement stmt = c.createStatement()) {
+            try (ResultSet rs = stmt.executeQuery("SELECT * FROM TimeSlot")) {
+                while (rs.next()) {
+                    String timestart = rs.getString("TimeStart");
+                    String timeend = rs.getString("TimeEnd");
+                    int timeslotid = rs.getInt("TimeID");
+                    TimeSlot current = new TimeSlot(timeslotid, timestart, timeend);
+                    list.add(current);
+                }
+            }
+
+        } catch (SQLException e) {
+            logger.warning(e.toString());
+        }
+        return list;
+    }
+    
     //public TimeSlot getTimeSlot(int timeID){
+    public TimeSlot getTimeSlot(int timeID) {
+        String sql = String.format("SELECT * FROM TimeSlot WHERE TimeID = %d", timeID);
+        TimeSlot ts = querySingle(sql, new ModelBuilder<TimeSlot>() {
+            public TimeSlot build(ResultSet rs) throws SQLException {
+                int timeid = rs.getInt("TimeID");
+                String timestart = rs.getString("TimeStart");
+                String timeend = rs.getString("TimeEnd");;
+                TimeSlot time = createExampleTimeSlot(timeID);
+                return new TimeSlot(timeid, timestart, timeend);
+            }
+        });
+        return ts;
+    }
+    
     // KC part end
     // OHG part start
     /*
