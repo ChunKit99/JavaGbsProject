@@ -49,7 +49,7 @@ public class Login extends JFrame {
 
         JLabel userLabel = new JLabel("Username");
         userLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        userLabel.setBounds(134,95, 54, 15);
+        userLabel.setBounds(134, 95, 54, 15);
         contentPane.add(userLabel);
 
         userText = new JTextField();
@@ -82,7 +82,6 @@ public class Login extends JFrame {
 //        customerRadio.setFont(new Font("Tahoma", Font.PLAIN, 12));
 //        customerRadio.setBounds(227, 157, 77, 23);
 //        contentPane.add(customerRadio);
-
         JButton loginButton = new JButton("Login");
         loginButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -121,15 +120,11 @@ public class Login extends JFrame {
             Account account = c.login(username, password);
 
             if (account instanceof Customer) {
-                //setVisible(false);
                 JOptionPane.showMessageDialog(null, "Login Customer Success!!");
                 //open customer menu frame
+                //changePage(new CustomerMenu());
             } else if (account instanceof Admin) {
-                //setVisible(false);
-                //temporary go to manage customer menu
-                ManageCustomer frame = new ManageCustomer();
-                setVisible(false);//unshow current frame
-                frame.setVisible(true);//show new frame
+                changePage(new AdminMenu());
                 //JOptionPane.showMessageDialog(null, "Login Admin Success");
                 //open admin menu frame
             } else {
@@ -140,6 +135,11 @@ public class Login extends JFrame {
             }
         }
 
+    }
+
+    private void changePage(JFrame frameChange) {
+        setVisible(false);//unshow current frame
+        frameChange.setVisible(true);//show new frame 
     }
 
     private void registerButtonActionPerformed(ActionEvent evt) {

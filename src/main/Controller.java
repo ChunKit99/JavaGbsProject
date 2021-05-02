@@ -108,7 +108,6 @@ public class Controller {
      * @author Liew Chun Kit
      * @param username
      * @param password
-     * @param typeUser
      * @return object of account
      */
     public Account login(String username, String password) {
