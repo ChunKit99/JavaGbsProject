@@ -31,6 +31,7 @@ public class ManageTimeSlot extends JFrame {
      * Create the Login frame.
      */
     public ManageTimeSlot() {
+        c.loadDatabase("gbsdb");//connect db
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(200, 200, 600, 330);
         setResizable(false);
@@ -120,7 +121,7 @@ public class ManageTimeSlot extends JFrame {
         JButton editTimeSlot = new JButton("Edit");
         editTimeSlot.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                saveCusButtonActionPerformed(e);
+                editButtonActionPerformed(e);
             }
         });
         editTimeSlot.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -154,7 +155,7 @@ public class ManageTimeSlot extends JFrame {
             }
         });
         exitTimeSlot.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        exitTimeSlot.setBounds(450, 240, 85, 23);
+        exitTimeSlot.setBounds(470, 240, 85, 23);
         contentPane.add(exitTimeSlot);
 
         centerPanel.setLayout(new GridLayout(5, 1, 0, -5));
@@ -188,7 +189,7 @@ public class ManageTimeSlot extends JFrame {
 
     }
 
-    private void saveCusButtonActionPerformed(ActionEvent evt) {
+    private void editButtonActionPerformed(ActionEvent evt) {
         //store index of selected
         int indexSelect = timeslotidList.getSelectedIndex();
         //get the username
@@ -200,11 +201,10 @@ public class ManageTimeSlot extends JFrame {
         timeslot.setTimeStart(timestartText.getText());
         timeslot.setTimeEnd(timeendText.getText());
         if (timeslotidList.getItemCount() != 0) {
-            int a = JOptionPane.showConfirmDialog(null, "Are you sure to change " + IDSelect + " ?");
+            int a = JOptionPane.showConfirmDialog(null, "Are you sure Edit Time Slot " + IDSelect + " ?");
             if (a == JOptionPane.YES_OPTION) {
                 //send to update control
-                if (c.updateTimeSlot(timeslot)) {//update success will true
-                    //not need reflsesh comboBox, when select username at combobox will search in database
+                if (c.updateTimeSlot(timeslot)) {
                     JOptionPane.showMessageDialog(null, "Done Save");
                 }
             }
@@ -219,14 +219,6 @@ public class ManageTimeSlot extends JFrame {
         timestartText.setText("");
         timeendText.setText("");
 
-    }
-
-    private void loadList() {
-        String[] listAvailable = getTimeSlotList();
-        timeslotidList.removeAllItems();//clear all item comboBoxList
-        for (String list : listAvailable) {
-            timeslotidList.addItem(list);//add item into comboBoxList
-        }
     }
 
     private void delCusButtonActionPerformed(ActionEvent evt) {

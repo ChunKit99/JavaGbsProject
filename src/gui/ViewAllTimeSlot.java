@@ -1,9 +1,7 @@
 package gui;
 
 import basic.*;
-import com.sun.xml.internal.bind.v2.model.core.ID;
 import main.*;
-
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
