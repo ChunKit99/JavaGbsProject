@@ -196,23 +196,26 @@ public class ManageCustomer extends JFrame {
         int indexSelect = cbList.getSelectedIndex();
         //get the username
         String usernameSelect = (String) cbList.getItemAt(indexSelect);
-        //customer object to update
-        Customer cus = c.getCustomer(usernameSelect);
-        cus.setName(tfName.getText());
-        cus.setEmail(tfEmail.getText());
-        cus.setPhoneNumber(tfPhone.getText());
-        cus.setGender((String) cbGender.getItemAt(cbGender.getSelectedIndex()));
-        if (cbList.getItemCount() != 0) {
-            int a = JOptionPane.showConfirmDialog(null, "Are you sure to change " + usernameSelect + " ?");
-            if (a == JOptionPane.YES_OPTION) {
-                //send to update control
-                if (c.updateCustomer(cus)) {//update success will true
-                    //not need reflsesh comboBox, when select username at combobox will search in database
-                    JOptionPane.showMessageDialog(null, "Done Save");
+        if (!tfName.getText().isEmpty() && !tfEmail.getText().isEmpty() && !tfPhone.getText().isEmpty()) {//textfield have value
+            //customer object to update
+            Customer cus = c.getCustomer(usernameSelect);
+            cus.setName(tfName.getText());
+            cus.setEmail(tfEmail.getText());
+            cus.setPhoneNumber(tfPhone.getText());
+            cus.setGender((String) cbGender.getItemAt(cbGender.getSelectedIndex()));
+            if (cbList.getItemCount() != 0) {
+                int a = JOptionPane.showConfirmDialog(null, "Are you sure to change " + usernameSelect + " ?");
+                if (a == JOptionPane.YES_OPTION) {
+                    //send to update control
+                    if (c.updateCustomer(cus)) {//update success will true
+                        //not need reflsesh comboBox, when select username at combobox will search in database
+                        JOptionPane.showMessageDialog(null, "Done Save");
+                    }
                 }
+            } else {
+                JOptionPane.showMessageDialog(null, "Empty list, cannot edit!", "Alert", JOptionPane.WARNING_MESSAGE);
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Empty list, cannot edit!", "Alert", JOptionPane.WARNING_MESSAGE);
+
         }
 
     }
@@ -238,29 +241,30 @@ public class ManageCustomer extends JFrame {
         int indexSelect = cbList.getSelectedIndex();
         //get the username
         String usernameSelect = (String) cbList.getItemAt(indexSelect);
-        if (cbList.getItemCount() > 0) {
-            //ask confime?
-            int a = JOptionPane.showConfirmDialog(null, "Are you sure to delete " + usernameSelect + " ?");
-            if (a == JOptionPane.YES_OPTION) {
-                //customer object pass to controller to update
-                Customer cus = c.getCustomer(usernameSelect);
-                if (cus != null) {//valid to delete
-                    if (c.deleteCustomer(cus)) {//delete Success from database
-                        if (cbList.getItemCount() == 1) {
-                            clearTextField();
-                            cbList.removeAllItems();//clear all item comboBoxList
-                        }else{
-                            cbList.removeItem(cbList.getItemAt(indexSelect));//update combobox
+        if (!tfName.getText().isEmpty() && !tfEmail.getText().isEmpty() && !tfPhone.getText().isEmpty()) {//textfield have value
+            if (cbList.getItemCount() > 0) {
+                //ask confime?
+                int a = JOptionPane.showConfirmDialog(null, "Are you sure to delete " + usernameSelect + " ?");
+                if (a == JOptionPane.YES_OPTION) {
+                    //customer object pass to controller to update
+                    Customer cus = c.getCustomer(usernameSelect);
+                    if (cus != null) {//valid to delete
+                        if (c.deleteCustomer(cus)) {//delete Success from database
+                            if (cbList.getItemCount() == 1) {
+                                clearTextField();
+                                cbList.removeAllItems();//clear all item comboBoxList
+                            } else {
+                                cbList.removeItem(cbList.getItemAt(indexSelect));//update combobox
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Fail to delete!!\nBecause this customer have a booking record in system!!\nPlease check the booking record", "Alert", JOptionPane.WARNING_MESSAGE);
                         }
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Fail to delete!!\nBecause this customer have a booking record in system!!\nPlease check the booking record", "Alert", JOptionPane.WARNING_MESSAGE);
                     }
                 }
+            } else {
+                JOptionPane.showMessageDialog(null, "Empty list, cannot delete!", "Alert", JOptionPane.WARNING_MESSAGE);
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Empty list, cannot delete!", "Alert", JOptionPane.WARNING_MESSAGE);
         }
-
     }
 
     private void showCusButtonActionPerformed(ActionEvent evt) {

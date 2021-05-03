@@ -197,21 +197,23 @@ public class ManageTimeSlot extends JFrame {
         //customer object to update
         int idselect = Integer.parseInt(IDSelect);
         TimeSlot timeslot = c.getTimeSlot(idselect);
-
-        timeslot.setTimeStart(timestartText.getText());
-        timeslot.setTimeEnd(timeendText.getText());
-        if (timeslotidList.getItemCount() != 0) {
-            int a = JOptionPane.showConfirmDialog(null, "Are you sure Edit Time Slot " + IDSelect + " ?");
-            if (a == JOptionPane.YES_OPTION) {
-                //send to update control
-                if (c.updateTimeSlot(timeslot)) {
-                    JOptionPane.showMessageDialog(null, "Done Save");
+        String t1 = timestartText.getText();
+        String t2 = timeendText.getText();
+        if (!t1.isEmpty() && !t2.isEmpty()) {//check notempty textfield
+            timeslot.setTimeStart(timestartText.getText());
+            timeslot.setTimeEnd(timeendText.getText());
+            if (timeslotidList.getItemCount() != 0) {
+                int a = JOptionPane.showConfirmDialog(null, "Are you sure Edit Time Slot " + IDSelect + " ?");
+                if (a == JOptionPane.YES_OPTION) {
+                    //send to update control
+                    if (c.updateTimeSlot(timeslot)) {
+                        JOptionPane.showMessageDialog(null, "Done Save");
+                    }
                 }
+            } else {
+                JOptionPane.showMessageDialog(null, "Empty list, cannot edit!", "Alert", JOptionPane.WARNING_MESSAGE);
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Empty list, cannot edit!", "Alert", JOptionPane.WARNING_MESSAGE);
         }
-
     }
 
     private void clearTextField() {
@@ -227,29 +229,32 @@ public class ManageTimeSlot extends JFrame {
         //get the username
         String timeidSelect = (String) timeslotidList.getItemAt(indexSelect);
         int idselect = Integer.parseInt(timeidSelect);
-        if (timeslotidList.getItemCount() > 0) {
-            //ask confime?
-            int a = JOptionPane.showConfirmDialog(null, "Are you sure to delete " + timeidSelect + " ?");
-            if (a == JOptionPane.YES_OPTION) {
-                //customer object pass to controller to update
-                TimeSlot ts = c.getTimeSlot(idselect);
-                if (ts != null) {//valid to delete
-                    if (c.deleteTimeSlot(ts)) {//delete Success from database
-                        if (timeslotidList.getItemCount() == 1) {
-                            clearTextField();
-                            timeslotidList.removeAllItems();//clear all item comboBoxList
+        String t1 = timestartText.getText();
+        String t2 = timeendText.getText();
+        if (!t1.isEmpty() && !t2.isEmpty()) {//check notempty textfield
+            if (timeslotidList.getItemCount() > 0) {
+                //ask confime?
+                int a = JOptionPane.showConfirmDialog(null, "Are you sure to delete " + timeidSelect + " ?");
+                if (a == JOptionPane.YES_OPTION) {
+                    //customer object pass to controller to update
+                    TimeSlot ts = c.getTimeSlot(idselect);
+                    if (ts != null) {//valid to delete
+                        if (c.deleteTimeSlot(ts)) {//delete Success from database
+                            if (timeslotidList.getItemCount() == 1) {
+                                clearTextField();
+                                timeslotidList.removeAllItems();//clear all item comboBoxList
+                            } else {
+                                timeslotidList.removeItem(timeslotidList.getItemAt(indexSelect));//update combobox
+                            }
                         } else {
-                            timeslotidList.removeItem(timeslotidList.getItemAt(indexSelect));//update combobox
+                            JOptionPane.showMessageDialog(null, "Fail to delete!!\nBecause this customer have a booking record in system!!\nPlease check the booking record", "Alert", JOptionPane.WARNING_MESSAGE);
                         }
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Fail to delete!!\nBecause this customer have a booking record in system!!\nPlease check the booking record", "Alert", JOptionPane.WARNING_MESSAGE);
                     }
                 }
+            } else {
+                JOptionPane.showMessageDialog(null, "Empty list, cannot delete!", "Alert", JOptionPane.WARNING_MESSAGE);
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Empty list, cannot delete!", "Alert", JOptionPane.WARNING_MESSAGE);
         }
-
     }
 
     private void viewButtonActionPerformed(ActionEvent evt) {
