@@ -18,7 +18,7 @@ public class GymRoom {
 		this.level = level;
 	}
         
-        public int getID(){
+        /*public int getID(){
             return ID;
         }
         

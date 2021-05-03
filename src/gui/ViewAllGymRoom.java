@@ -50,7 +50,7 @@ public class ViewAllGymRoom extends JFrame {
         Object[] gym = list.toArray();
         String[][] dataList = new String[list.size()][column.length];
         for (int i = 0; i < gym.length; i++) {
-            //dataList[i][0] = Integer.toString(((GymRoom) gym[i]).ID）;
+            dataList[i][0] = Integer.toString(((GymRoom) gym[i]).ID);
             dataList[i][1] = ((GymRoom) gym[i]).getName();
             dataList[i][2] = ((GymRoom) gym[i]).getLevel();
         }
