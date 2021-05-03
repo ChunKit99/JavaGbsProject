@@ -228,14 +228,6 @@ public class ManageCustomer extends JFrame {
         tfUser.setText("");
     }
 
-    private void loadList() {
-        String[] listAvailable = getCustomerList();
-        cbList.removeAllItems();//clear all item comboBoxList
-        for (String list : listAvailable) {
-            cbList.addItem(list);//add item into comboBoxList
-        }
-    }
-
     private void delCusButtonActionPerformed(ActionEvent evt) {
         //store index of selected
         int indexSelect = cbList.getSelectedIndex();
@@ -274,9 +266,7 @@ public class ManageCustomer extends JFrame {
     }
 
     private void backButtonActionPerformed(ActionEvent evt) {
-        Login frame = new Login();
-        //if lpggout should do
-        //c.logout();
+        AdminMenu frame = new AdminMenu();
         setVisible(false);//unshow current frame
         frame.setVisible(true);//show new frame 
     }

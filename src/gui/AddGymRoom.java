@@ -101,7 +101,7 @@ public class AddGymRoom extends JFrame {
     }
 
     private void backButtonActionPerformed(ActionEvent evt) {
-        ManageTimeSlot frame = new ManageTimeSlot();
+        ManageGymRoom frame = new ManageGymRoom();
         setVisible(false);//unshow current frame
         frame.setVisible(true);//show new frame
     }
@@ -113,8 +113,8 @@ public class AddGymRoom extends JFrame {
         if (name.isEmpty() || level.isEmpty()) {//empty at textfield
             JOptionPane.showMessageDialog(null, "Please Enter the Name and Level", "Alert", JOptionPane.WARNING_MESSAGE);
         } else {//not empty
-            if (c.addTimeSlot(name, level)) {//true is sucess add
-                JOptionPane.showMessageDialog(null, "You have done to Add new Gym Room ID. Now You will return to Manage Gym Room page.", "Add Success", JOptionPane.PLAIN_MESSAGE);
+            if (c.addGymRoom(name, level)) {//true is sucess add
+                JOptionPane.showMessageDialog(null, "You have done to Add new Gym Room ID.\nNow You will return to Manage Gym Room page.", "Add Success", JOptionPane.PLAIN_MESSAGE);
                 ManageGymRoom manage = new ManageGymRoom();
                 setVisible(false);
                 manage.setVisible(true);
