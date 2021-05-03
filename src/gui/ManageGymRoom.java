@@ -1,12 +1,15 @@
 package gui;
 
+import basic.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import main.Controller;
 
 /**
  *
@@ -14,6 +17,8 @@ import javax.swing.JTable;
  */
 public class ManageGymRoom extends JFrame/* implements ListSelectionListener/* implements ActionListener*/ {
 
+    Controller c = Controller.getInstance();
+    
     JFrame mainFrame = new JFrame();
 
     JPanel mainPanel = new JPanel();
@@ -33,12 +38,15 @@ public class ManageGymRoom extends JFrame/* implements ListSelectionListener/* i
     JButton backButton;
 
     private JPanel contentPane;
-
-    JTextField idText = new JTextField();
-    JTextField nameText = new JTextField();
-    JTextField typeText = new JTextField();
+    
+    private JComboBox gymRoomIdList;
+    private JTextField gymRoomIdText;
+    private JTextField nameText;
+    private JTextField levelText;
 
     public ManageGymRoom() {
+        c.loadDatabase("gbsdb");//connect db
+        
         header = new JLabel("Manage Gym Room");
         addButton = new JButton("ADD");
         editButton = new JButton("EDIT");
@@ -126,10 +134,25 @@ public class ManageGymRoom extends JFrame/* implements ListSelectionListener/* i
         setResizable(false);
         setVisible(true);
     }
+    
+    private String[] getGymRoom() {
+        ArrayList<GymRoom> list = c.getAllGymRoom();
+        Object[] gym = list.toArray();
+        String[] dataList = new String[list.size()];
+        for (int i = 0; i < gym.length; i++) {
+            dataList[i] = Integer.toString(((GymRoom) gym[i]).ID);
+        }
+        return dataList;
+    }
+    
+    private void selectCbListActionPerformed(ActionEvent evt) {
+        gymRoomIdText.setText((String) gymRoomIdList.getItemAt(gymRoomIdList.getSelectedIndex()));//id
+        String GymID = (String) gymRoomIdList.getItemAt(gymRoomIdList.getSelectedIndex());//get name from combobox
+        int gymRoomSelect = Integer.valueOf(GymID);
+        GymRoom gym = c.getGymRoom(gymRoomSelect);//get gymRoom from database base on id given
+        nameText.setText(gym.getName());//name
+        levelText.setText(gym.getLevel());//level
 
-    public static void main(String[] args) {
-        //public static void initialize(){
-        ManageGymRoom manage = new ManageGymRoom();
     }
 
     /**
@@ -141,9 +164,9 @@ public class ManageGymRoom extends JFrame/* implements ListSelectionListener/* i
 
         JOptionPane.showMessageDialog(this, "Added Gym Room record !");
 
-        String id = idText.getText();
+        String id = gymRoomIdText.getText();
         String name = nameText.getText();
-        String type = typeText.getText();
+        String type = levelText.getText();
 
         JOptionPane.showMessageDialog(null, "Added Gym Room List.\n" + "ID: "
                       + id + "\nNAME: " + name + "\nTYPE: " + type);
@@ -238,11 +261,37 @@ public class ManageGymRoom extends JFrame/* implements ListSelectionListener/* i
      * @author Yong Liang
      */
     private void deleteButtonActionPerformed(ActionEvent e) {
-
-        JOptionPane.showMessageDialog(this, "Delete Gym Room record !");
+        //store index of selected
+        int indexSelect = gymRoomIdList.getSelectedIndex();
+        //get the username
+        String gymIdSelect = (String) gymRoomIdList.getItemAt(indexSelect);
+        int idselect = Integer.parseInt(gymIdSelect);
+        if (gymRoomIdList.getItemCount() > 0) {
+            //ask confime?
+            int a = JOptionPane.showConfirmDialog(null, "Are you sure to delete " + gymIdSelect + " ?");
+            if (a == JOptionPane.YES_OPTION) {
+                //customer object pass to controller to update
+                GymRoom gr = c.getGymRoom(idselect);
+                if (gr != null) {//valid to delete
+                    if (c.deleteGymRoom(gr)) {//delete Success from database
+                        if (gymRoomIdList.getItemCount() == 1) {
+                            clearTextField();
+                            gymRoomIdList.removeAllItems();//clear all item comboBoxList
+                        }else{
+                            gymRoomIdList.removeItem(gymRoomIdList.getItemAt(indexSelect));//update combobox
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Fail to delete!!\nBecause this customer have a booking record in system!!\nPlease check the booking record", "Alert", JOptionPane.WARNING_MESSAGE);
+                    }
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Empty list, cannot delete!", "Alert", JOptionPane.WARNING_MESSAGE);
+        }
+        /*JOptionPane.showMessageDialog(this, "Delete Gym Room record !");
         setResizable(false);
         setVisible(false);
-        showPanel();
+        showPanel();*/
     }
 
     /**
@@ -252,37 +301,10 @@ public class ManageGymRoom extends JFrame/* implements ListSelectionListener/* i
      */
     private void viewButtonActionPerformed(ActionEvent e) {
 
-        JOptionPane.showMessageDialog(this, "View Gym Room List !");
+        ViewAllGymRoom view = new ViewAllGymRoom();
         setResizable(false);
         setVisible(false);
-
-        JFrame viewMenu = new JFrame("View Gym Room");
-
-        viewMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JButton backButton = new JButton("Back");
-        backButton.setBounds(250, 300, 95, 30);
-        backButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                backButtonActionPerformed(e);
-                viewMenu.setVisible(false);
-            }
-        });
-        viewMenu.add(backButton);
-
-        String data[][] = {{"1", "Room 1", "Gold"},
-        {"2", "Room 2", "Silver"},
-        {"3", "Room 3", "Bronze"}};
-
-        String column[] = {"ID", "Name", "Type"};
-
-        JTable jt = new JTable(data, column);
-        jt.setBounds(30, 40, 200, 300);
-        JScrollPane sp = new JScrollPane(jt);
-        viewMenu.add(sp);
-        viewMenu.setSize(600, 400);
-
-        viewMenu.setVisible(true);
+        view.setVisible(true);
     }
 
     /**
@@ -318,19 +340,54 @@ public class ManageGymRoom extends JFrame/* implements ListSelectionListener/* i
      * @author Yong Liang
      */
     private void saveButtonActionPerformed(ActionEvent e) {
+        //store index of selected
+        int indexSelect =  gymRoomIdList.getSelectedIndex();
+        //get the id
+        String IDSelect = (String) gymRoomIdList.getItemAt(indexSelect);
+        //customer object to update
+        int idselect = Integer.parseInt(IDSelect);
+        GymRoom gym = c.getGymRoom(idselect);
+        
         JOptionPane.showMessageDialog(null, "Clicked Save");
-        String id = idText.getText();
-        String name = nameText.getText();
-        String type = typeText.getText();
-
-        JOptionPane.showMessageDialog(null, "Added Gym Room List.\n" + "ID: "
+        
+        gym.setName(nameText.getText());
+        gym.setLevel(levelText.getText());
+        if (gymRoomIdList.getItemCount() !=0){
+            int a = JOptionPane.showConfirmDialog(null, "Are you sure to change " + IDSelect  + " ?");
+            if (a == JOptionPane.YES_OPTION) {
+                //send to update control
+                if (c.updateGymRoom(gym)) {//update success will true
+                    //not need reflsesh comboBox, when select username at combobox will search in database
+                    JOptionPane.showMessageDialog(null, "Done Save");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Empty list, cannot edit!", "Alert", JOptionPane.WARNING_MESSAGE);
+        }
+        
+        /*JOptionPane.showMessageDialog(null, "Added Gym Room List.\n" + "ID: "
                       + id + "\nNAME: " + name + "\nTYPE: " + type);
 
         ManageGymRoom manage = new ManageGymRoom();
         setVisible(false);
-        manage.setVisible(true);
+        manage.setVisible(true);*/
     }
-
+    
+    private void clearTextField() {
+        gymRoomIdText.setText("");
+        nameText.setText("");
+        levelText.setText("");
+ 
+    }
+    
+    private void loadList() {
+        String[] listAvailable = getGymRoom();
+        gymRoomIdList.removeAllItems();//clear all item comboBoxList
+        for (String list : listAvailable) {
+            gymRoomIdList.addItem(list);//add item into comboBoxList
+        }
+    }    
+    
     /**
      * GUI that contain edit & delete panel
      *
@@ -360,10 +417,10 @@ public class ManageGymRoom extends JFrame/* implements ListSelectionListener/* i
         idLabel.setBounds(200, 70, 70, 15);
         contentPane.add(idLabel);
 
-        String gymRoomListID[] = {"1", "2", "3"};
-        JComboBox gymRoomListIDlabel = new JComboBox(gymRoomListID);
-        gymRoomListIDlabel.setBounds(300, 60, 100, 21);
-        contentPane.add(gymRoomListIDlabel);
+        gymRoomIdText = new JTextField();
+        gymRoomIdText.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        gymRoomIdText.setBounds(300, 60, 100, 21);
+        contentPane.add(gymRoomIdText);
 
         JLabel nameLabel = new JLabel("Name");
         nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -380,10 +437,10 @@ public class ManageGymRoom extends JFrame/* implements ListSelectionListener/* i
         typeLabel.setBounds(200, 155, 54, 15);
         contentPane.add(typeLabel);
 
-        typeText = new JTextField();
-        typeText.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        typeText.setBounds(300, 150, 100, 21);
-        contentPane.add(typeText);
+        levelText = new JTextField();
+        levelText.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        levelText.setBounds(300, 150, 100, 21);
+        contentPane.add(levelText);
 
         JButton addGymRoom = new JButton("Save");
         addGymRoom.addActionListener(new ActionListener() {

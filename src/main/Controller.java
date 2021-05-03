@@ -186,12 +186,53 @@ public class Controller {
         BookingGym book = myDB.getExampleBookingGym(bookID);
         return book;
     }
+    
     // TYL part start
     //public boolean updateGymRoom(GymRoom gym)
+    /**
+     * change data of gymRoom
+     *
+     * @author Yong Laing
+     * @param gym GymRoom object to update in database
+     * @return true if success update
+     */
+    public boolean updateGymRoom(GymRoom gym) {
+        return myDB.updateGymRoom(gym);
+    }
     //public boolean deleteGymRoom(GymRoom gym)
+    /**
+     * delete data of gymRoom
+     *
+     * @author Yong Laing
+     * @param gym GymRoom object to delete in database
+     * @return true if success delete
+     */
+    public boolean deleteGymRoom(GymRoom gym) {
+        return myDB.deleteGymRoom(gym);
+    }
     //public GymRoom getGymRoom(int gymID)
+    /**
+     * show how to get object GymRoom from database to GUI
+     *
+     * @author Yong Laing
+     */
+    public GymRoom getGymRoom(int gymID) {
+        GymRoom gym = myDB.getGymRoom(gymID);
+        return gym;
+    }
     //public ArrayList<GymRoom> getAllGymRoom()
+    /**
+     * get the customer object all in the database
+     *
+     * @author Yong Laing
+     * @return array list of customer object
+     */
+    public ArrayList<GymRoom> getAllGymRoom() {
+        ArrayList<GymRoom> list = myDB.getAllGymRoom();
+        return list;
+    }
     // TYL part end
+    
     // KC part start
     //public boolean AddTimeSlot(String timeStart, String timeEnd)
     public boolean addTimeSlot(String timeStart, String timeEnd) {

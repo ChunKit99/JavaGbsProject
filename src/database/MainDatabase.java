@@ -421,18 +421,76 @@ public class MainDatabase extends Database {
     }
 
     // TYL part start
-    /*
-    GymRoom about
-    add gymroom (LCK do already)
-    edit gymroom
-    delete gymroom
-    show gymroom
-     */
+    
+    //GymRoom about
+    //add gymroom (LCK do already)
+    //edit gymroom
+    //delete gymroom
+    //show gymroom
+    
     //public boolean updateGymRoom(GymRoom gym)
+    public boolean updateGymRoom(GymRoom gym) {
+        // update the given service in the db
+        try (Statement stmt = c.createStatement()) {
+            String sql = String.format("UPDATE GymRoom SET Name = '%s', Level = '%s' WHERE GymID = %d",
+                    gym.getName(), gym.getLevel(), gym.ID);
+            if (stmt.executeUpdate(sql) == 1) {
+                logger.info("Done update GymRoom " + gym.ID);
+                return true; // only 1 row should be affected.      
+            }
+        } catch (SQLException e) {
+            logger.warning(e.toString());
+        }
+        return false;
+    }
     //public boolean deleteGymRoom(GymRoom gym)
+    public boolean deleteGymRoom(GymRoom gym) {
+        try (Statement stmt = c.createStatement()) {
+            String sql = String.format("DELETE FROM GymRoom WHERE GymID = %d", gym.ID);
+            if (stmt.executeUpdate(sql) == 1) {
+                logger.info("Done delete GymRoom " + gym.ID);
+                return true;
+            }
+        } catch (SQLException e) {
+            logger.warning(e.toString());
+        }
+        return false;
+    }
     //public ArrayList<GymRoom> getAllGymRoom()
+    public ArrayList<GymRoom> getAllGymRoom() {
+        ArrayList<GymRoom> list = new ArrayList<GymRoom>();
+        try (Statement stmt = c.createStatement()) {
+            try (ResultSet rs = stmt.executeQuery("SELECT * FROM GymRoom")) {
+                while (rs.next()) {
+                    String name = rs.getString("Name");
+                    String level = rs.getString("Level");
+                    int gymRoomId = rs.getInt("GymID");
+                    GymRoom current = new GymRoom(gymRoomId, name, level);
+                    list.add(current);
+                }
+            }
+
+        } catch (SQLException e) {
+            logger.warning(e.toString());
+        }
+        return list;
+    }
     //public GymRoom getGymRoom(int gymID){
+    public GymRoom getGymRoom(int gymID) {
+        String sql = String.format("SELECT * FROM GymRoom WHERE GymID = %d", gymID);
+        GymRoom gr = querySingle(sql, new ModelBuilder<GymRoom>() {
+            public GymRoom build(ResultSet rs) throws SQLException {
+                int gymRoomId = rs.getInt("GymID");
+                String name = rs.getString("Name");
+                String level = rs.getString("Level");;
+                GymRoom gym = createExampleGymRoom(gymID);
+                return new GymRoom(gymRoomId, name, level);
+            }
+        });
+        return gr;
+    }
     // TYL part end
+    
     // KC part start
     /*
     TimeSlot about

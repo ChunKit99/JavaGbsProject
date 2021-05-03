@@ -7,7 +7,7 @@ package basic;
  * This is GymRoom class, function to set ID, name, level
  */
 public class GymRoom {
-	public int ID;
+	public final int ID;
 	private String name;
 	private String level;
 	
@@ -22,9 +22,9 @@ public class GymRoom {
             return ID;
         }
         
-        public void setID(int ID){
+        /*public void setID(int ID){
             this.ID = ID;
-        }
+        }*/
 
 	public String getName() {
 		return name;
