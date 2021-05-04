@@ -634,10 +634,100 @@ public class MainDatabase extends Database {
     delete booking
     show customer booking record(customer menu)
     show all booking record(admin menu)
- */
+     */
 //public boolean updateBookingGym(BookingGym book)
+    public boolean updateBookingGym(BookingGym book) {
+        // update the given service in the db
+        try (Statement stmt = c.createStatement()) {
+            String sql = String.format("UPDATE BookingGym SET GymID = %d ,TimeID = %d, BookDate = '%s' WHERE BookID = %d",
+                    book.getGymRoom().ID, book.getTimeSlot().ID, book.getDate().toString(),  book.ID);
+            if (stmt.executeUpdate(sql) == 1) {
+                logger.info("Done update BookingGym " + book.ID);
+                return true; // only 1 row should be affected.      
+            }
+        } catch (SQLException e) {
+            logger.warning(e.toString());
+        }
+        return false;
+    }
 //public boolean deleteBookingGym(BookingGym book)
-//public BookingGym getBookingGym(int bookID)
+
+    public boolean deleteBookingGym(BookingGym book) {
+        try (Statement stmt = c.createStatement()) {
+            String sql = String.format("DELETE FROM BookingGym WHERE BookID = %d", book.ID);
+            if (stmt.executeUpdate(sql) == 1) {
+                logger.info("Done delete BookingGym " + book.ID);
+                return true;
+            }
+        } catch (SQLException e) {
+            logger.warning(e.toString());
+        }
+        return false;
+    }
+//public BookingGym getBookingGym(int bookID){
+
+    public BookingGym getBookingGym(int bookID) {
+        String sql = String.format("SELECT * FROM BookingGym WHERE BookID = %d", bookID);
+        BookingGym bkg = querySingle(sql, new ModelBuilder<BookingGym>() {
+            public BookingGym build(ResultSet rs) throws SQLException {
+                String username = rs.getString("Customer");//customer in database represent username of customer
+                int gymID = rs.getInt("GymID");
+                int timeID = rs.getInt("TimeID");
+                GymRoom gym = getGymRoom(gymID);
+                TimeSlot time = getTimeSlot(timeID);
+                LocalDate bookDate = rs.getDate("BookDate").toLocalDate();
+                return new BookingGym(bookID, username, bookDate, gym, time);
+            }
+        });
+        return bkg;
+    }
+
+    public ArrayList<BookingGym> getBookingGym(String username) {
+        String sql = String.format("SELECT * FROM BookingGym WHERE Customer = '%s'", username);
+        ArrayList<BookingGym> list = new ArrayList<BookingGym>();
+        try (Statement stmt = c.createStatement()) {
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    int bookID = rs.getInt("BookID");
+                    int gymID = rs.getInt("GymID");
+                    int timeID = rs.getInt("TimeID");
+                    GymRoom gym = getGymRoom(gymID);
+                    TimeSlot time = getTimeSlot(timeID);
+                    LocalDate bookDate = rs.getDate("BookDate").toLocalDate();
+                    BookingGym current = new BookingGym(bookID, username, bookDate, gym, time);
+                    list.add(current);
+                }
+            }
+
+        } catch (SQLException e) {
+            logger.warning(e.toString());
+        }
+        return list;
+    }
 //public ArrayList<BookingGym> getAllBookingGym()
+
+    public ArrayList<BookingGym> getAllBookingGym() {
+        String sql = String.format("SELECT * FROM BookingGym");
+        ArrayList<BookingGym> list = new ArrayList<BookingGym>();
+        try (Statement stmt = c.createStatement()) {
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    int bookID = rs.getInt("BookID");
+                    String username = rs.getString("Customer");
+                    int gymID = rs.getInt("GymID");
+                    int timeID = rs.getInt("TimeID");
+                    GymRoom gym = getGymRoom(gymID);
+                    TimeSlot time = getTimeSlot(timeID);
+                    LocalDate bookDate = rs.getDate("BookDate").toLocalDate();
+                    BookingGym current = new BookingGym(bookID, username, bookDate, gym, time);
+                    list.add(current);
+                }
+            }
+
+        } catch (SQLException e) {
+            logger.warning(e.toString());
+        }
+        return list;
+    }
 // LWC part end
 }

@@ -110,17 +110,17 @@ public class CustomerMenu extends JFrame {
         changePage(new AddBooking());//goto AddBooking.java
     }
     private void editButtonActionPerformed(ActionEvent e) {
-        //changePage(new EditBooking());//goto EditBooking.java
+        changePage(new ChangeBooking());//goto EditBooking.java
     }
     private void deleteButtonActionPerformed(ActionEvent e) {
-        //changePage(new DeleteBooking());//goto DeleteBooking.java
+        changePage(new ChangeBooking());//goto DeleteBooking.java
     }
     private void personalButtonActionPerformed(ActionEvent e) {
         changePage(new PersonalDetail());
     }
 
     private void viewButtonActionPerformed(ActionEvent e) {
-        //changePage(new ViewBooking()); goto ViewBooking.java
+        changePage(new ViewBooking()); //goto ViewBooking.java
     }
 
     private void btnLogOutPerformed(ActionEvent e) {

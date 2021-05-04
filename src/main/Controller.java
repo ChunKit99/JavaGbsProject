@@ -186,7 +186,7 @@ public class Controller {
         BookingGym book = myDB.getExampleBookingGym(bookID);
         return book;
     }
-    
+
     // TYL part start
     //public boolean updateGymRoom(GymRoom gym)
     /**
@@ -199,6 +199,7 @@ public class Controller {
     public boolean updateGymRoom(GymRoom gym) {
         return myDB.updateGymRoom(gym);
     }
+
     //public boolean deleteGymRoom(GymRoom gym)
     /**
      * delete data of gymRoom
@@ -210,6 +211,7 @@ public class Controller {
     public boolean deleteGymRoom(GymRoom gym) {
         return myDB.deleteGymRoom(gym);
     }
+
     //public GymRoom getGymRoom(int gymID)
     /**
      * show how to get object GymRoom from database to GUI
@@ -220,6 +222,7 @@ public class Controller {
         GymRoom gym = myDB.getGymRoom(gymID);
         return gym;
     }
+
     //public ArrayList<GymRoom> getAllGymRoom()
     /**
      * get the customer object all in the database
@@ -232,7 +235,7 @@ public class Controller {
         return list;
     }
     // TYL part end
-    
+
     // KC part start
     //public boolean AddTimeSlot(String timeStart, String timeEnd)
     public boolean addTimeSlot(String timeStart, String timeEnd) {
@@ -241,33 +244,33 @@ public class Controller {
         time.setTimeEnd(timeEnd);
         return myDB.addTimeSlot(time);//pass and add to database
     }
-    
+
     //public boolean updateTimeSlot(TimeSlot time)
     public boolean updateTimeSlot(TimeSlot time) {
         return myDB.updateTimeSlot(time);
     }
-        
+
     //public boolean deleteTimeSlot(TimeSlot time)
     public boolean deleteTimeSlot(TimeSlot time) {
         return myDB.deleteTimeSlot(time);
     }
-    
+
     //public TimeSlot getTimeSlot(int timeID)
     public TimeSlot getTimeSlot(int timeID) {
         TimeSlot ts = myDB.getTimeSlot(timeID);
         return ts;
     }
-        
+
     //public ArrayList<TimeSlot> getAllTimeSlot()
     public ArrayList<TimeSlot> getAllTimeSlot() {
         ArrayList<TimeSlot> list = myDB.getAllTimeSlot();
         return list;
     }
-    
+
     // KC part end
     // OHG part start
     //public boolean addBookingGym(String username, int gymID, int timeID, LocalDate dateBook)
-    public boolean addBookingGym(String username, int gymID, int timeID, LocalDate dateBook){
+    public boolean addBookingGym(String username, int gymID, int timeID, LocalDate dateBook) {
         BookingGym bg = myDB.buildBookingGym();//build a booking object with latest id
         bg.setCustomer(username);
         bg.setDate(dateBook);
@@ -275,6 +278,7 @@ public class Controller {
         bg.setTimeSlot(getTimeSlot(timeID));
         return myDB.addBookingGym(bg);//pass and add to database
     }
+
     //use in your gui part(controller code):
     //1. public Customer getCustomer(String username)//get customer object given username
     //2. public Account getLoggedUser() get curerent login user account object
@@ -282,8 +286,30 @@ public class Controller {
     // LWC part start
     //
     //public boolean updateBookingGym(BookingGym book)
+    public boolean updateBookingGym(BookingGym book) {
+        return myDB.updateBookingGym(book);
+    }
+
     //public boolean deleteBookingGym(BookingGym book)
+    public boolean deleteBookingGym(BookingGym book) {
+        return myDB.deleteBookingGym(book);
+    }
+
     //public BookingGym getBookingGym(int bookID)
+    public BookingGym getBookingGym(int bookID) {
+        BookingGym book = myDB.getBookingGym(bookID);
+        return book;
+    }
+
+    public ArrayList<BookingGym> getBookingGym(String username) {
+        ArrayList<BookingGym> list = myDB.getBookingGym(username);
+        return list;
+    }
+
     //public ArrayList<BookingGym> getAllBookingGym()
+    public ArrayList<BookingGym> getAllBookingGym() {
+        ArrayList<BookingGym> list = myDB.getAllBookingGym();
+        return list;
+    }
     // LWC part end
 }
