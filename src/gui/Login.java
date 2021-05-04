@@ -120,7 +120,8 @@ public class Login extends JFrame {
             Account account = c.login(username, password);
 
             if (account instanceof Customer) {
-                JOptionPane.showMessageDialog(null, "Login Customer Success!!");
+                //JOptionPane.showMessageDialog(null, "Login Customer Success!!");
+                changePage(new CustomerMenu());
                 //open customer menu frame
                 //changePage(new CustomerMenu());
             } else if (account instanceof Admin) {

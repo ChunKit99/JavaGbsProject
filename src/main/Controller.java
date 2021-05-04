@@ -267,6 +267,14 @@ public class Controller {
     // KC part end
     // OHG part start
     //public boolean addBookingGym(String username, int gymID, int timeID, LocalDate dateBook)
+    public boolean addBookingGym(String username, int gymID, int timeID, LocalDate dateBook){
+        BookingGym bg = myDB.buildBookingGym();//build a booking object with latest id
+        bg.setCustomer(username);
+        bg.setDate(dateBook);
+        bg.setGymRoom(getGymRoom(gymID));
+        bg.setTimeSlot(getTimeSlot(timeID));
+        return myDB.addBookingGym(bg);//pass and add to database
+    }
     //use in your gui part(controller code):
     //1. public Customer getCustomer(String username)//get customer object given username
     //2. public Account getLoggedUser() get curerent login user account object

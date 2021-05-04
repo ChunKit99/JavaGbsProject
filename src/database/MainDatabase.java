@@ -421,13 +421,11 @@ public class MainDatabase extends Database {
     }
 
     // TYL part start
-    
     //GymRoom about
     //add gymroom (LCK do already)
     //edit gymroom
     //delete gymroom
     //show gymroom
-    
     //public boolean updateGymRoom(GymRoom gym)
     public boolean updateGymRoom(GymRoom gym) {
         // update the given service in the db
@@ -443,6 +441,7 @@ public class MainDatabase extends Database {
         }
         return false;
     }
+
     //public boolean deleteGymRoom(GymRoom gym)
     public boolean deleteGymRoom(GymRoom gym) {
         try (Statement stmt = c.createStatement()) {
@@ -456,6 +455,7 @@ public class MainDatabase extends Database {
         }
         return false;
     }
+
     //public ArrayList<GymRoom> getAllGymRoom()
     public ArrayList<GymRoom> getAllGymRoom() {
         ArrayList<GymRoom> list = new ArrayList<GymRoom>();
@@ -475,6 +475,7 @@ public class MainDatabase extends Database {
         }
         return list;
     }
+
     //public GymRoom getGymRoom(int gymID){
     public GymRoom getGymRoom(int gymID) {
         String sql = String.format("SELECT * FROM GymRoom WHERE GymID = %d", gymID);
@@ -483,14 +484,13 @@ public class MainDatabase extends Database {
                 int gymRoomId = rs.getInt("GymID");
                 String name = rs.getString("Name");
                 String level = rs.getString("Level");;
-                GymRoom gym = createExampleGymRoom(gymID);
                 return new GymRoom(gymRoomId, name, level);
             }
         });
         return gr;
     }
     // TYL part end
-    
+
     // KC part start
     /*
     TimeSlot about
@@ -585,7 +585,6 @@ public class MainDatabase extends Database {
                 int timeid = rs.getInt("TimeID");
                 String timestart = rs.getString("TimeStart");
                 String timeend = rs.getString("TimeEnd");;
-                TimeSlot time = createExampleTimeSlot(timeID);
                 return new TimeSlot(timeid, timestart, timeend);
             }
         });
@@ -599,22 +598,46 @@ public class MainDatabase extends Database {
     show customer personal detail
      */
     //public boolean addBookingGym(BookingGym book)
-    //public BookingGym buildTimeSlot()
+    public boolean addBookingGym(BookingGym book) {
+        return insert(book);
+    }
+
+    public BookingGym buildBookingGym() {
+        // find the highest current ID
+        int maxID = 0;
+
+        try (Statement stmt = c.createStatement()) {
+            try (ResultSet rs = stmt.executeQuery("SELECT MAX(BookID) AS BookID FROM BookingGym")) {
+                if (rs.next()) {
+                    maxID = rs.getInt("BookID");
+                }
+            }
+        } catch (SQLException e) {
+            logger.warning(e.toString());
+        }
+
+        return new BookingGym(maxID + 1, "", LocalDate.now(), new GymRoom(1, "", ""), new TimeSlot(1, "", ""));//create BookingGym with need id only
+    }
+
     //private boolean insert(BookingGym book)
-    //use only, this method create already!!(to do show customer personal detail)
-    //(database code part)
-    // (use only)private Customer getCustomer(String username)//for get a customer object given username
-    // OHG part end
-    // LWC part start
-    /*
+    private boolean insert(BookingGym book) {
+        return insert("BookingGym", Integer.toString(book.ID), book.getCustomer(), Integer.toString(book.getGymRoom().ID), Integer.toString(book.getTimeSlot().ID), book.getDate().toString());
+    }
+
+//use only, this method create already!!(to do show customer personal detail)
+//(database code part)
+// (use only)private Customer getCustomer(String username)//for get a customer object given username
+// OHG part end
+// LWC part start
+/*
     edit booking
     delete booking
     show customer booking record(customer menu)
     show all booking record(admin menu)
-     */
-    //public boolean updateBookingGym(BookingGym book)
-    //public boolean deleteBookingGym(BookingGym book)
-    //public BookingGym getBookingGym(int bookID)
-    //public ArrayList<BookingGym> getAllBookingGym()
-    // LWC part end
+ */
+//public boolean updateBookingGym(BookingGym book)
+//public boolean deleteBookingGym(BookingGym book)
+//public BookingGym getBookingGym(int bookID)
+//public ArrayList<BookingGym> getAllBookingGym()
+// LWC part end
 }
