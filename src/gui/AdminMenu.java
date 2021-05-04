@@ -108,7 +108,7 @@ public class AdminMenu extends JFrame {
     }
 
     private void btnAllBookPerformed(ActionEvent e) {
-        //changePage(new ViewAllBooking());
+        changePage(new ViewAllBooking());
     }
 
     private void btnLogOutPerformed(ActionEvent e) {
