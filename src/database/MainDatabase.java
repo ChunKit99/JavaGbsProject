@@ -21,7 +21,7 @@ public class MainDatabase extends Database {
     }
 
     /**
-     * initialize create admin account; temporary add some example data
+     * initialize create admin account
      *
      * @author Liew Chun Kit
      * @return true if success create
@@ -29,25 +29,6 @@ public class MainDatabase extends Database {
      */
     @Override
     protected boolean seed() {
-//        LocalDate dateToday = LocalDate.now();
-//        insert(new Customer("chunkit", "liew123", "Liew Chun Kit", "liewchunkit@email.com", "0112345678", "Male"));//when pass to insert, tablename,  username, password, name, email, phonenumber, gender, type.
-//        insert(new Customer("angie", "ong123", "Ong Hui Gie", "onghuigie@email.com", "0112334444", "Female"));
-//        insert(new Customer("woeichi", "liong123", "Liong Woei Chi", "liongwoeichi@email.com", "0112335555", "Female"));
-//        insert(new Customer("kc", "kc123", "Kong Choon", "kingchoon@email.com", "0112332222", "Male"));
-//        insert(new Customer("yongliang", "tua123", "Tua Yong Liang", "tuayongliang@email.com", "0112336666", "Male"));
-//        insert(new GymRoom(1, "Room 1", "Gold"));//when pass ot insert, tablename, id, room name, level
-//        insert(new GymRoom(2, "Room 2", "Silver"));
-//        insert(new GymRoom(3, "Room 3", "Bronze"));
-//        //insert(new TimeSlot(1, "1000", "1200"));//when pass ot insert, tablename, id, timestart, timeend
-//        //insert(new BookingGym(1, "chunkit", 1, 1, dateToday));//when pass ot insert, tablename, id, username, id, id, datebook;
-//        insert("TimeSlot", Integer.toString(1), "1000", "1200");
-//        insert("TimeSlot", Integer.toString(2), "1200", "1400");
-//        insert("TimeSlot", Integer.toString(3), "1400", "1600");
-//        insert("BookingGym", Integer.toString(1), "chunkit", Integer.toString(1), Integer.toString(2), dateToday.toString());//dateToday.toString() means covert date into string
-//        insert("BookingGym", Integer.toString(2), "angie", Integer.toString(2), Integer.toString(3), dateToday.toString());
-//        insert("BookingGym", Integer.toString(3), "woeichi", Integer.toString(3), Integer.toString(1), dateToday.toString());
-//        insert("BookingGym", Integer.toString(4), "kc", Integer.toString(2), Integer.toString(1), dateToday.toString());
-//        insert("BookingGym", Integer.toString(5), "yongliang", Integer.toString(1), Integer.toString(1), dateToday.toString());
         return insert(new Admin("Admin", "Admin"));//when pass to insert, tablename, username, password, type.
     }
 

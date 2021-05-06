@@ -1,12 +1,9 @@
 package gui;
 
-import basic.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import javax.swing.*;
-import javax.swing.border.*;
 import main.Controller;
 
 /**
@@ -37,8 +34,6 @@ public class ManageGymRoom extends JFrame {
     JButton backButton;
 
     public ManageGymRoom() {
-        c.loadDatabase("gbsdb");//connect db
-
         header = new JLabel("Manage Gym Room");
         addButton = new JButton("ADD");
         editButton = new JButton("EDIT");
@@ -127,8 +122,6 @@ public class ManageGymRoom extends JFrame {
             }
         });
 
-        /*setVisible(false);
-        setResizable(false);*/
         setResizable(false);
         setVisible(true);
     }
@@ -177,11 +170,9 @@ public class ManageGymRoom extends JFrame {
      */
     private void exitButtonActionPerformed(ActionEvent e) {
 
-        //JOptionPane.showMessageDialog(this, "Exit to ADMIN Menu !");
         AdminMenu frame = new AdminMenu();
         setVisible(false);
         frame.setVisible(true);
-        //exitGymRoom();
     }
 
 }

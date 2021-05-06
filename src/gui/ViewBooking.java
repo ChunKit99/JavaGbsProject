@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui;
 
 import basic.BookingGym;
 import basic.Customer;
-import basic.TimeSlot;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -47,7 +41,7 @@ public class ViewBooking extends JFrame {
         });
         add(backButton);
 
-        ArrayList<BookingGym> list = c.getBookingGym(((Customer)c.getLoggedUser()).username);
+        ArrayList<BookingGym> list = c.getBookingGym(((Customer) c.getLoggedUser()).username);
         String column[] = {"Booking ID", "CUSTOMER NAME", "BOOKING DATE", "GYM ROOM ID", "TIME SLOT ID"};
         Object[] booking = list.toArray();
         String[][] dataList = new String[list.size()][column.length];

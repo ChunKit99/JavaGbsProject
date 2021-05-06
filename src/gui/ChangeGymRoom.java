@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui;
 
 import basic.GymRoom;
@@ -34,7 +29,6 @@ public class ChangeGymRoom extends JFrame {
     private JPanel contentPane;
 
     private JComboBox gymRoomIdList;
-    //private JTextField gymRoomIdText;
     private JTextField nameText;
     private JTextField levelText;
 
@@ -79,19 +73,6 @@ public class ChangeGymRoom extends JFrame {
         gymRoomIdList.setBounds(300, 70, 100, 21);
         contentPane.add(gymRoomIdList);
 
-        /*gymRoomIdText = new JTextField();
-        gymRoomIdText.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        gymRoomIdText.setBounds(300, 60, 100, 21);
-        contentPane.add(gymRoomIdText);*/
-
-
-//        gymRoomIdText = new JTextField();
-//        gymRoomIdText.setFont(new Font("Tahoma", Font.PLAIN, 12));
-//        gymRoomIdText.setBounds(300, 112, 100, 21);
-//        gymRoomIdText.setEditable(false);
-//        contentPane.add(gymRoomIdText);
-        //gymRoomIdText.setColumns(10);
-
         JLabel nameLabel = new JLabel("Name");
         nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
         nameLabel.setBounds(200, 115, 60, 15);
@@ -120,7 +101,7 @@ public class ChangeGymRoom extends JFrame {
         });
 
         saveGymRoom.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        saveGymRoom.setBounds(20, 206, 85, 23);
+        saveGymRoom.setBounds(410, 206, 85, 23);
         contentPane.add(saveGymRoom);
 
         JButton deleteGymRoom = new JButton("Delete");
@@ -130,7 +111,7 @@ public class ChangeGymRoom extends JFrame {
             }
         });
         deleteGymRoom.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        deleteGymRoom.setBounds(110, 206, 85, 23);
+        deleteGymRoom.setBounds(315, 206, 85, 23);
         contentPane.add(deleteGymRoom);
 
         JButton exitGymRoom = new JButton("Back");
@@ -140,7 +121,7 @@ public class ChangeGymRoom extends JFrame {
             }
         });
         exitGymRoom.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        exitGymRoom.setBounds(450, 206, 85, 23);
+        exitGymRoom.setBounds(54, 206, 85, 23);
         contentPane.add(exitGymRoom);
 
         centerPanel.setLayout(new GridLayout(5, 1, 0, -5));
@@ -157,7 +138,6 @@ public class ChangeGymRoom extends JFrame {
     }
 
     private void selectListActionPerformed(ActionEvent evt) {
-        //gymRoomIdText.setText((String) gymRoomIdList.getItemAt(gymRoomIdList.getSelectedIndex()));//id
         String GymID = (String) gymRoomIdList.getItemAt(gymRoomIdList.getSelectedIndex());//get name from combobox
         int gymRoomSelect = Integer.valueOf(GymID);
         GymRoom gym = c.getGymRoom(gymRoomSelect);//get gymRoom from database base on id given
@@ -175,9 +155,7 @@ public class ChangeGymRoom extends JFrame {
 
         //store index of selected
         int indexSelect = gymRoomIdList.getSelectedIndex();
-        //get the username
         String IDSelect = (String) gymRoomIdList.getItemAt(indexSelect);
-        //customer object to update
         int idselect = Integer.parseInt(IDSelect);
         GymRoom gym = c.getGymRoom(idselect);
         String t1 = nameText.getText();
@@ -200,7 +178,6 @@ public class ChangeGymRoom extends JFrame {
     }
 
     private void clearTextField() {
-        //gymRoomIdText.setText("");
         nameText.setText("");
         levelText.setText("");
 
@@ -212,8 +189,6 @@ public class ChangeGymRoom extends JFrame {
      * @author Yong Liang
      */
     private void backButtonActionPerformed(ActionEvent e) {
-
-        //JOptionPane.showMessageDialog(this, "Back to Manage Gym Room Menu !");
         setResizable(false);
         setVisible(false);
         ManageGymRoom menu = new ManageGymRoom();

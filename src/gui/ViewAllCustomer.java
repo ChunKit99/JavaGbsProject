@@ -3,17 +3,13 @@ package gui;
 import basic.*;
 import main.*;
 
-
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
@@ -70,14 +66,5 @@ public class ViewAllCustomer extends JFrame {
         ManageCustomer frame = new ManageCustomer();
         setVisible(false);//unshow current frame
         frame.setVisible(true);//show new frame 
-//        BookingGym bookshow = c.getExampleBookingGym(1);//here get the booking record with id 1, deatil refer to method
-//        JOptionPane.showMessageDialog(null,
-//                "Booking ID = " + bookshow.ID
-//                + "\nUser book = " + bookshow.getCustomer()
-//                + "\nDate book = " + bookshow.getDate()
-//                + "\nGymID" + bookshow.getGymRoom().ID
-//                + "\nTimeID" + bookshow.getTimeSlot().ID
-//        );
-
     }
 }

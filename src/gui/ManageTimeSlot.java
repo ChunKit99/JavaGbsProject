@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import main.*;
 
 /**
- * the first start page of gui, can go to register page or login into system
+ *
  *
  * @author KC
  */
@@ -25,13 +25,7 @@ public class ManageTimeSlot extends JFrame {
     private JTextField timestartText;
     private JTextField timeendText;
 
-    //private JFrame mainFrame;
-    //private final ButtonGroup buttonGroup = new ButtonGroup();
-    /**
-     * Create the Login frame.
-     */
     public ManageTimeSlot() {
-        c.loadDatabase("gbsdb");//connect db
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(200, 200, 600, 330);
         setResizable(false);
@@ -115,7 +109,7 @@ public class ManageTimeSlot extends JFrame {
 
         });
         AddTimeSlot.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        AddTimeSlot.setBounds(20, 240, 85, 23);
+        AddTimeSlot.setBounds(110, 240, 85, 23);
         contentPane.add(AddTimeSlot);
 
         JButton editTimeSlot = new JButton("Edit");
@@ -125,7 +119,7 @@ public class ManageTimeSlot extends JFrame {
             }
         });
         editTimeSlot.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        editTimeSlot.setBounds(110, 240, 85, 23);
+        editTimeSlot.setBounds(200, 240, 85, 23);
         contentPane.add(editTimeSlot);
 
         JButton deleteTimeSlot = new JButton("Delete");
@@ -135,7 +129,7 @@ public class ManageTimeSlot extends JFrame {
             }
         });
         deleteTimeSlot.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        deleteTimeSlot.setBounds(200, 240, 85, 23);
+        deleteTimeSlot.setBounds(290, 240, 85, 23);
         contentPane.add(deleteTimeSlot);
 
         JButton viewTimeSlot = new JButton("View");
@@ -145,17 +139,17 @@ public class ManageTimeSlot extends JFrame {
             }
         });
         viewTimeSlot.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        viewTimeSlot.setBounds(290, 240, 85, 23);
+        viewTimeSlot.setBounds(380, 240, 85, 23);
         contentPane.add(viewTimeSlot);
 
-        JButton exitTimeSlot = new JButton("Exit");
+        JButton exitTimeSlot = new JButton("Back");
         exitTimeSlot.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 exitButtonActionPerformed(e);
             }
         });
         exitTimeSlot.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        exitTimeSlot.setBounds(470, 240, 85, 23);
+        exitTimeSlot.setBounds(20, 240, 85, 23);
         contentPane.add(exitTimeSlot);
 
         centerPanel.setLayout(new GridLayout(5, 1, 0, -5));

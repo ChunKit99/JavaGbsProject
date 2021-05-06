@@ -180,14 +180,6 @@ public class Register extends JFrame {
         String username = userText.getText();
         String password = new String(passText.getPassword());
         String passwordConf = new String(passConfText.getPassword());
-//        JOptionPane.showMessageDialog(null,
-//                "Name enter: " + name
-//                + "\nemail enter: " + email
-//                + "\nPhone Number enter: " + phone
-//                + "\nGender Selected: " + genderSelect
-//                + "\nUsername enter: " + username
-//                + "\nPassword enter: " + password
-//        );
         c.loadDatabase("gbsdb");
         if (name.isEmpty() || email.isEmpty() || phone.isEmpty() || genderSelect.isEmpty() || username.isEmpty() || password.isEmpty()) {//any data not fill
             JOptionPane.showMessageDialog(null, "Please fill all the column!!", "Alert", JOptionPane.WARNING_MESSAGE);
@@ -196,7 +188,6 @@ public class Register extends JFrame {
                 labelError1.setVisible(false);//unshow the error
                 //add new data to database
                 // try to register
-
                 if (c.addCustomer(username, password, name, email, phone, genderSelect)) {//if success register, true
                     //go back the login page to login 
                     JOptionPane.showMessageDialog(null, "You have done to Register. Now You will return to Login page.", "Register Success", JOptionPane.PLAIN_MESSAGE);

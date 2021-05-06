@@ -55,49 +55,38 @@ public class AddGymRoom extends JFrame {
 
         JLabel t2 = new JLabel("New Name:");
         t2.setBounds(100, 70, 200, 30);
-        add(t2);
+        getContentPane().add(t2);
 
-//        JTextField tt2 = new JTextField();
-//        tt2.setBounds(250, 150, 200, 30);
-//        add(tt2);
         nameText = new JTextField();
         nameText.setFont(new Font("Tahoma", Font.PLAIN, 12));
         nameText.setBounds(250, 70, 200, 30);
         contentPane.add(nameText);
-        //timestartText.setColumns(10);
 
         JLabel t3 = new JLabel("New Level:");
         t3.setBounds(100, 115, 200, 30);
-        add(t3);
+        getContentPane().add(t3);
 
-//        JTextField tt3 = new JTextField();
-//        tt3.setBounds(250, 200, 200, 30);
-//        add(tt3);
         levelText = new JTextField();
         levelText.setFont(new Font("Tahoma", Font.PLAIN, 12));
         levelText.setBounds(250, 115, 200, 30);
         contentPane.add(levelText);
-//        timeendText.setColumns(10);
 
         JButton saveButton = new JButton("Save");
-        saveButton.setBounds(180, 190, 75, 30);
+        saveButton.setBounds(375, 190, 75, 30);
         saveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 saveButtonActionPerformed(e);
             }
         });
-        add(saveButton);
+        getContentPane().add(saveButton);
         JButton backButton = new JButton("Back");
-         backButton.setBounds(100, 190, 75, 30);
+        backButton.setBounds(100, 190, 75, 30);
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 backButtonActionPerformed(e);
             }
         });
-        add(backButton);
-//        JButton b1 = new JButton("Save");
-//        b1.setBounds(200, 300, 75, 30);
-//        add(b1);
+        getContentPane().add(backButton);
     }
 
     private void backButtonActionPerformed(ActionEvent evt) {

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui;
 
 import basic.Customer;
@@ -28,7 +23,6 @@ public class PersonalDetail extends JFrame {
 
     Controller c = Controller.getInstance();
     private JPanel contentPane;
-    private JLabel title;
     private JTextField nameText;
     private JTextField emailText;
     private JTextField phoneText;
@@ -126,7 +120,6 @@ public class PersonalDetail extends JFrame {
     }
 
     private void backButtonActionPerformed(ActionEvent evt) {
-        //JOptionPane.showMessageDialog(null, "Back to Gym Booking Menu");
         //back to Manage Booking
         CustomerMenu menu = new CustomerMenu();
         setVisible(false);//unshow current frame

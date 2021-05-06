@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
- * Controller class, use for communicate between gui and database
+ * Controller class, use for communicate between GUI and database
  *
  * @author Liew Chun Kit, TYL, KC, OHG, LWC
  */

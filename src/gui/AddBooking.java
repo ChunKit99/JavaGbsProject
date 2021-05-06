@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui;
 
 import basic.Customer;
@@ -39,9 +34,8 @@ public class AddBooking extends JFrame {
 
     public AddBooking() {
 
-        JFrame addBook = new JFrame("Add Booking");
-
-        addBook.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle("Add Booking");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setBounds(200, 200, 600, 300);
         setResizable(false);
@@ -78,14 +72,6 @@ public class AddBooking extends JFrame {
         timeSlotLable.setBounds(150, 120, 200, 30);
         contentPane.add(timeSlotLable);
 
-//        JButton viewTime = new JButton("View Time Slot");
-//        viewTime.setBounds(400, 125, 170, 30);
-//        viewTime.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                viewTimeButtonActionPerformed(e);
-//            }
-//        });
-//        contentPane.add(viewTime);
         String timeSlotList[] = getTimeSlot();
         timeSlotListLabel = new JComboBox(timeSlotList);
         timeSlotListLabel.setBounds(270, 125, 170, 20);
@@ -104,7 +90,7 @@ public class AddBooking extends JFrame {
         tf.setEditable(false);
 
         JButton b1 = new JButton("Add");
-        b1.setBounds(190, 220, 75, 30);
+        b1.setBounds(365, 220, 75, 30);
         b1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 addActionPerformed(e);
@@ -112,8 +98,8 @@ public class AddBooking extends JFrame {
         });
         contentPane.add(b1);
 
-        JButton backButton = new JButton("Cancel");
-        backButton.setBounds(350, 220, 75, 30);
+        JButton backButton = new JButton("Back");
+        backButton.setBounds(150, 220, 75, 30);
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 backButtonActionPerformed(e);
@@ -168,13 +154,13 @@ public class AddBooking extends JFrame {
         //user login, c.getLoggedUser();
         // call controller add booking gym method
         //addBookingGym(String username, int gymID, int timeID, LocalDate dateBook)
-        if (c.addBookingGym(((Customer) c.getLoggedUser()).username, gymSelect.ID, timeSelect.ID, date)){//add booking success
+        if (c.addBookingGym(((Customer) c.getLoggedUser()).username, gymSelect.ID, timeSelect.ID, date)) {//add booking success
             JOptionPane.showMessageDialog(null, "Done Add Booking!\nYou will return to Gym Booking Menu.");
             CustomerMenu menu = new CustomerMenu();
             setVisible(false);
             menu.setVisible(true);
-        }else{
-                JOptionPane.showMessageDialog(null, "Fail To Add Booking!", "Alert", JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Fail To Add Booking!", "Alert", JOptionPane.WARNING_MESSAGE);
         }
     }
 

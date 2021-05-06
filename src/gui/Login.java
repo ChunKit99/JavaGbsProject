@@ -68,20 +68,6 @@ public class Login extends JFrame {
         passText.setBounds(198, 137, 106, 21);
         contentPane.add(passText);
 
-//        JRadioButton adminRadio = new JRadioButton("Admin");
-//        adminRadio.setActionCommand("Admin");
-//        buttonGroup.add(adminRadio);
-//        adminRadio.setFont(new Font("Tahoma", Font.PLAIN, 12));
-//        adminRadio.setBounds(134, 157, 59, 23);
-//        contentPane.add(adminRadio);
-//
-//        JRadioButton customerRadio = new JRadioButton("Customer");
-//        customerRadio.setActionCommand("Customer");
-//        customerRadio.setSelected(true);
-//        buttonGroup.add(customerRadio);
-//        customerRadio.setFont(new Font("Tahoma", Font.PLAIN, 12));
-//        customerRadio.setBounds(227, 157, 77, 23);
-//        contentPane.add(customerRadio);
         JButton loginButton = new JButton("Login");
         loginButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -108,30 +94,21 @@ public class Login extends JFrame {
         c.loadDatabase("gbsdb");//connect db
         String username = userText.getText();
         String password = new String(passText.getPassword());
-//        String typeUser = buttonGroup.getSelection().getActionCommand();
-//        JOptionPane.showMessageDialog(null,
-//                "Username enter: " + username
-//                + "\nPassword enter: " + password
-//                + "\n Type user selected: " + typeUser
-//        );
+
         if (username.isEmpty() || password.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please enter your username and password!!", "Alert", JOptionPane.WARNING_MESSAGE);
         } else {
             Account account = c.login(username, password);
 
             if (account instanceof Customer) {
-                //JOptionPane.showMessageDialog(null, "Login Customer Success!!");
                 changePage(new CustomerMenu());
                 //open customer menu frame
-                //changePage(new CustomerMenu());
             } else if (account instanceof Admin) {
                 changePage(new AdminMenu());
-                //JOptionPane.showMessageDialog(null, "Login Admin Success");
                 //open admin menu frame
             } else {
                 //not match any type
                 JOptionPane.showMessageDialog(null, "Fail to login, Please try again!");
-                //c.disconnectDB();//disconnect if need other database
                 passText.setText("");
             }
         }
@@ -144,7 +121,6 @@ public class Login extends JFrame {
     }
 
     private void registerButtonActionPerformed(ActionEvent evt) {
-        //JOptionPane.showMessageDialog(null, "Click Register");
         //change frame to Resgiter
         Register frame = new Register();
         setVisible(false);//unshow current frame
